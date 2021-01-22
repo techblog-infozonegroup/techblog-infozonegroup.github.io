@@ -6,8 +6,8 @@
       <nav id="site-nav" class="greedy-nav">
         {% unless logo_path == empty %}
           <a class="site-logo" href="{{ '/' | relative_url }}"><img src="{{ logo_path | relative_url }}" alt=""></a>
-        {% endunless %}
-
+        {% endunless %}        
+        <span class="site-title">&nbsp;</span>        
         <ul class="visible-links">
           {%- for link in site.data.navigation.main -%}
             <li class="masthead__menu-item">
