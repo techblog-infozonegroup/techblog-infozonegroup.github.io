@@ -1,6 +1,5 @@
 ---
-title: "Posts by Year"
+title: "Senaste inläggen"
 permalink: /posts/
 layout: posts
-author_profile: true
 ---

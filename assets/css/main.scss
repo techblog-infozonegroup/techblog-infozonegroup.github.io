@@ -1,0 +1,121 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+/* overrides */
+/* system typefaces */
+$serif      : Georgia, Times, serif;
+$sans-serif : Ubuntu, Helvetica, Arial, sans-serif;
+$monospace  : Monaco, Consolas, "Lucida Console", monospace;
+
+/* default */
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
+
+
+
+/* overrides */
+.contactButton.a__override {
+    margin: 0 15px;
+    display: inline-block;
+    color: #139aaf;
+    text-decoration: none;
+}
+
+.contactButton.a__override, .contactButton.a__override, .masthead__menu-item > a:before {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -ms-transition: none !important;
+    transition: none !important;
+}
+
+.contactButton.a__override:hover {
+    text-decoration: none;
+    color: #e18823;
+}
+
+.contactButton__icon {
+    text-align: center;
+    color: #139aaf;
+    box-sizing: border-box;
+    border-style: none;
+    max-width: 100%;
+    height: auto;
+    width: 16px;
+    margin-right: 15px;
+}
+
+.contactButton__label {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.93;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.pageFooter__contactHolder {
+    font-weight: 300;
+    color: #494949;
+    font-family: Open Sans, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#footer.page__footer {
+    background-color: #fff;
+}
+
+footer {
+    margin-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 1em !important;
+    background: linear-gradient(90deg, #fbfbfb 0, #f6f6f6 50%, #fbfbfb) !important;
+    max-width: none !important;
+}
+
+.page__footer-follow.socialMedia {
+    text-align: center;
+    margin-bottom: 0.75em;
+}
+
+.socialMedia__iconHolder.a__override {
+    width: 44px;
+    height: 44px;
+    margin: 0 8px;
+    background-color: #139aaf;
+    border-radius: 53% 47% 50% 50%/53% 70% 30% 47%;
+    transition: .25s;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+    padding-right: 0;
+}
+
+.socialMedia__icon {
+    box-sizing: border-box;
+    border-style: none;
+    width: 20px;
+    height: 20px;
+}
+
+.page__footer-copyright {
+    text-align: center;
+}
+
+.archive, .page {
+    padding-left: 0 !important;
+    padding-right: 1em !important;
+    width: 100% !important;
+}
+
+.page__related {
+    float: none !important;
+    width: auto !important;
+}

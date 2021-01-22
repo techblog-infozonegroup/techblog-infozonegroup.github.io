@@ -1,9 +1,9 @@
 main:
-  - title: "Posts"
+  - title: "Inlägg"
     url: /posts/
-  - title: "Categories"
+  - title: "Kategorier"
     url: /categories/
-  - title: "Tags"
+  - title: "Taggar"
     url: /tags/
-  - title: "About"
+  - title: "Om"
     url: /about/
