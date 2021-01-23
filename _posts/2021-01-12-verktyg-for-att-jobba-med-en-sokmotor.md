@@ -2,7 +2,7 @@
 title: "Verktyg för att jobba med en sökmotor"
 tagline: "Då mitt arbete på senare tid har involverat utveckling mot sökmotorn Apache Solr har detta inspirerat till en ny bloggpost. Begrepp kommer därför därifrån men koncepten bör vara överförbara till andra sökmotorer."
 date: 2021-01-12
-author: Erik Lenells, Systemutvecklare på Infozone
+author: Erik Lenells, systemutvecklare
 header:
   overlay_image: https://www.infozone.se/wp-content/uploads/2021/01/binary-code-inspection-picture-id1128503636.jpg
 categories:
