@@ -11,12 +11,12 @@ tags:
   - microsoft
   - systemutveckling
 ---
-För att utveckla med .NET core i Visual Studio Code behövs till att börja med givetvis Visual Studio Code som du kan ladda hem här, du behöver även .NET Core SDK och Runtime.
+För att utveckla med .NET core i Visual Studio Code behövs till att börja med givetvis Visual Studio Code som du kan ladda hem [här](https://code.visualstudio.com/download), du behöver även [.NET Core SDK och Runtime](https://dotnet.microsoft.com/download).
 
 # Installera tillägg
-VSCode är en text editor snarare än en IDE – dock med det lilla extra! Med editorn följer många bra funktioner som auto complete, intelliSense och inbyggt GIT-stöd. Men för att få ut maximalt av editorn behöver du installera tillägg (och många finns det…). Ett tillägg som måste installeras för att komma vidare är C# extension som kan hämtas via föregående länk eller via ”Extentions” inne i editorn.
+VSCode är en text editor snarare än en IDE – dock med det lilla extra! Med editorn följer många bra funktioner som auto complete, intelliSense och inbyggt GIT-stöd. Men för att få ut maximalt av editorn behöver du installera tillägg (och många finns det…). Ett tillägg som måste installeras för att komma vidare är [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) som kan hämtas via föregående länk eller via ”Extentions” inne i editorn.
 
-Andra bra tillägg för att komma närmre känslan av en IDE likt Visual Studio är .NET Core Test Explorer samt NuGet Package Manager.
+Andra bra tillägg för att komma närmre känslan av en IDE likt Visual Studio är [.NET Core Test Explorer](https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer) samt [NuGet Package Manager](https://marketplace.visualstudio.com/items?itemName=jmrog.vscode-nuget-package-manager).
 
 # Fördelar med Visual Studio Code
 Vänta nu, varför vill man gå över till Visual Studio Code när Visual Studio är en så pass bra IDE? Även om denna artikel egentligen inte handlar om VSCode jämfört med Visual Studio så vill jag kort belysa några av de stora fördelarna.
@@ -26,7 +26,7 @@ Vänta nu, varför vill man gå över till Visual Studio Code när Visual Studio
 - Lättviktigt och fokuserat på det dagliga systemutvecklingsarbetet som kodning, testning, debuging samt versionshantering av källkod
 
 # Sätt upp en .NET Core applikation
-Öppna upp editorn och navigera till ”Open Folder…” under ”File”-menyn. Skapa en ny mapp på valfritt ställe och välj den. Det är dags att skapa ett .NET core projekt. Som beskrivet tidigare behövs .NET Core SDK och Runtime.
+Öppna upp editorn och navigera till ”Open Folder…” under ”File”-menyn. Skapa en ny mapp på valfritt ställe och välj den. Det är dags att skapa ett .NET core projekt. Som beskrivet tidigare behövs [.NET Core SDK och Runtime](https://dotnet.microsoft.com/download).
 
 Öppna en ny terminal (via ”Terminal”-menyn) om en inte redan är öppen. Skriv in ”dotnet new webapi” för att skapa en ny applikation via mallen för ett WebAPI,  och tryck Enter.
 
@@ -70,7 +70,7 @@ I vänsterpanelen finns bekanta ting som brytpunkter, lokala variabler och bevak
 För att stega i koden används bekanta tangenter som t.ex. F10, F11 samt F5. Bekant är ordet.
 
 # Enhetstester i Visual Studio Code
-Det sista jag tänkte gå igenom är hur du kör enhetstester, här rekommenderar jag tillägget  .NET Core Test Explorer.
+Det sista jag tänkte gå igenom är hur du kör enhetstester, här rekommenderar jag tillägget [.NET Core Test Explorer](https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer).
 
 ![Enhetstester i Visual Studio Code](https://www.infozone.se/wp-content/uploads/2020/10/unittests.png)
 
