@@ -10,6 +10,7 @@ categories:
 tags:
   - systemutveckling
 ---
+# Om Solr
 Solr är en ledande open source-sökmotor av Apache Software. Det används av alla möjliga företag och tjänster, bland annat Netflix och Ticketmaster. Framförallt används Solr för sökfunktioner och autocomplete-funktioner där uppslagen behöver ske snabbt och ge relevanta resultat. Alla dess funktioner fokuserar på sökning och indexering.
 
 # Inledning
