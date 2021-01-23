@@ -1,5 +1,5 @@
 ---
-title: "Posts by Category"
+title: "Inlägg per kategori"
 layout: categories
 permalink: /categories/
 ---
