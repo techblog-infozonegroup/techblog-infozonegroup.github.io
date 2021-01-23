@@ -1,6 +1,6 @@
 ---
 title: "Verktyg för att jobba med en sökmotor"
-tagline: "Då mitt arbete (Erik Lenells) på senare tid har involverat utveckling mot sökmotorn Apache Solr har detta inspirerat till en ny bloggpost. Begrepp kommer därför därifrån men koncepten bör vara överförbara till andra sökmotorer."
+tagline: "Då mitt arbete på senare tid har involverat utveckling mot sökmotorn Apache Solr har detta inspirerat till en ny bloggpost. Begrepp kommer därför därifrån men koncepten bör vara överförbara till andra sökmotorer."
 date: 2021-01-12
 author: Erik Lenells, Systemutvecklare på Infozone
 header:
