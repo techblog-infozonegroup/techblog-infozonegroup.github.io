@@ -1,5 +1,6 @@
 ---
 title: "Verktyg för att jobba med en sökmotor"
+tagline: "Då mitt arbete (Erik Lenells) på senare tid har involverat utveckling mot sökmotorn Apache Solr har detta inspirerat till en ny bloggpost. Begrepp kommer därför därifrån men koncepten bör vara överförbara till andra sökmotorer."
 date: 2021-01-12
 author: Erik Lenells, Systemutvecklare på Infozone
 header:
@@ -9,8 +10,6 @@ categories:
 tags:
   - systemutveckling
 ---
-Då mitt arbete (Erik Lenells) på senare tid har involverat utveckling mot sökmotorn Apache Solr har detta inspirerat till en ny bloggpost. Begrepp kommer därför därifrån men koncepten bör vara överförbara till andra sökmotorer.
-
 # Om Solr
 Solr är en ledande open source-sökmotor av Apache Software. Det används av alla möjliga företag och tjänster, bland annat Netflix och Ticketmaster. Framförallt används Solr för sökfunktioner och autocomplete-funktioner där uppslagen behöver ske snabbt och ge relevanta resultat. Alla dess funktioner fokuserar på sökning och indexering.
 
