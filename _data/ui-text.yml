@@ -821,7 +821,7 @@ sv: &DEFAULT_SV
   meta_label                 :
   tags_label                 : "Taggar:"
   categories_label           : "Kategorier:"
-  date_label                 : "Uppdaterades:"
+  date_label                 : "Publicerades:"
   comments_label             : "Lämna en kommentar"
   comments_title             : "Kommentarer"
   more_label                 : "Lär dig mer"
