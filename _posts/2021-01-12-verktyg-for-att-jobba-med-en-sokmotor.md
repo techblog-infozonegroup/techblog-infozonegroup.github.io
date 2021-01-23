@@ -3,7 +3,7 @@ title: "Verktyg för att jobba med en sökmotor"
 date: 2021-01-12
 author: Erik Lenells, Systemutvecklare på Infozone
 header:
-  image: https://www.infozone.se/wp-content/uploads/2021/01/binary-code-inspection-picture-id1128503636.jpg
+  overlay_image: https://www.infozone.se/wp-content/uploads/2021/01/binary-code-inspection-picture-id1128503636.jpg
 categories:
   - blog
 tags:
