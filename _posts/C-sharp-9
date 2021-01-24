@@ -1,0 +1,13 @@
+---
+title: "C# 9 - Records, pattern matching och mycket mer"
+date: 2021-02-01
+author: Andreas Hagsten, systemutvecklare
+tagline: "Skapa objekt som är immutable i grunden med Records och kraftfulla nya features till Pattern matching. Det och mycket mer i denna artikel. "
+header:
+  overlay_image: https://www.infozone.se/wp-content/uploads/2020/10/close-up-of-hands-contemporary-website-developer-man-typing-and-code-picture-id1167467556.jpg
+categories:
+  - blog
+tags:
+  - microsoft
+  - systemutveckling
+---
