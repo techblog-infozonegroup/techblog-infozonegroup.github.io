@@ -1,6 +1,6 @@
 {% assign months = "januari|februari|mars|april|maj|juni|juli|augiusti|september|oktober|november|december" | split: "|" %}
 
-{% if page.last_modified_at || page.date %}
+{% if page.last_modified_at or page.date %}
   {% assign d = page.last_modified_at %}
   {% if page.date %}
     {% assign d = page.date %}
