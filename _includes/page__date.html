@@ -1,5 +1,17 @@
-{% if page.last_modified_at %}
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.last_modified_at | date: "%Y-%m-%d" }}">{{ page.last_modified_at | date: "%-d %B, %Y" }}</time></p>
-{% elsif page.date %}
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B, %Y" }}</time></p>
+{% if page.last_modified_at | page.date %}
+
+  {% assign months = "januari|februari|mars|april|maj|juni|juli|augiusti|september|oktober|november|december" | split: "|" %}
+  {% if page.last_modified_at %}
+    {% assign d = page.last_modified_at %}
+  {% else %}
+    {% assign d = page.date %}
+  {% endif %}
+  
+  {% assign m = d | date: "%-m" | minus: 1 %}
+  {% assign day = d | date: "%d" %}
+  {% assign month = months[m] %}
+  {% assign year = d | date: "%Y" %}
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ d | date: "%Y-%m-%d" }}">{{ day }} {{ month }}, {{ year }}</time></p>
+
 {% endif %}
