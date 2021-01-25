@@ -1,6 +1,6 @@
 ---
 title: "Q&A - Maskininlärning med neurala nätverk"
-date: 2020-09-99
+date: 2020-09-29
 author: Andreas Hagsten, systemutvecklare
 tagline: "Våra artiklar kring neurala nätverk i C# har lett till många intressanta läsarfrågor. I denna artikel ger vi svar på tre av dessa frågor. Fortsätt ställa intressanta frågor så ser vi till att följa upp dem med flera Q&A-artiklar!"
 header:
