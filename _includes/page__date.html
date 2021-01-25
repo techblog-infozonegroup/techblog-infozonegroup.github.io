@@ -1,16 +1,13 @@
-{% assign months = "januari|februari|mars|april|maj|juni|juli|augiusti|september|oktober|november|december" | split: "|" %}
-
 {% if page.last_modified_at or page.date %}
   {% assign d = page.last_modified_at %}
   {% if page.date %}
     {% assign d = page.date %}
   {% endif %}
   
+  {% assign months = "januari|februari|mars|april|maj|juni|juli|augiusti|september|oktober|november|december" | split: "|" %}
   {% assign m = d | date: "%-m" | minus: 1 %}
-  {% assign day = d | date: "%d" %}
   {% assign month = months[m] %}
-  {% assign year = d | date: "%Y" %}
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ d | date: "%Y-%m-%d" }}">{{ day }} {{ month }}, {{ year }}</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ d | date: "%Y-%m-%d" }}">{{ d | date: "%d" }} {{ month }}, {{ d | date: "%Y" }}</time></p>
 
 {% endif %}
