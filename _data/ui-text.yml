@@ -1856,3 +1856,18 @@ no-NN:
 # Another locale
 # --------------
 #
+
+# Months in Swedish
+months:
+ - januari
+ - februari
+ - mars
+ - april
+ - maj
+ - juni
+ - july
+ - augusti
+ - september
+ - oktober
+ - november
+ - december
