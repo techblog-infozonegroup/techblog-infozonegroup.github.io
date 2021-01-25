@@ -1,9 +1,8 @@
-{% if page.last_modified_at || page.date %}
+{% assign months = "januari|februari|mars|april|maj|juni|juli|augiusti|september|oktober|november|december" | split: "|" %}
 
-  {% assign months = "januari|februari|mars|april|maj|juni|juli|augiusti|september|oktober|november|december" | split: "|" %}
-  {% if page.last_modified_at %}
-    {% assign d = page.last_modified_at %}
-  {% else %}
+{% if page.last_modified_at || page.date %}
+  {% assign d = page.last_modified_at %}
+  {% if page.date %}
     {% assign d = page.date %}
   {% endif %}
   
