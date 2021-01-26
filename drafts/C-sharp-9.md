@@ -21,21 +21,21 @@ I denna artikel tänker jag fokusera på Records, Init only setters samt pattern
 # Records
 Records är en ny referenstyp (likt klasser) men med semantik som en värdtyp (likt structs). Med det menar jag att likhet beräknas på värdena av instansens egenskaper och inte på instansens referens. Två instanser med samma värden på egenskaper ses därför som lika. Exemplet nedan demonstrerar detta. De två kandidaterna anses lika genom Equals samt operatorn "==" men inte om man jämför referensen. Dvs, ett record är en referenstyp men med semantik som en värdetyp.
 
-{% gist 4f4a482a25728513ca4bf81e58661faa#file-valueequality-cs %}
+{% gist 4f4a482a25728513ca4bf81e58661faa ValueEquality.cs %}
 https://gist.github.com/Hagsten/4f4a482a25728513ca4bf81e58661faa#file-valueequality-cs
 
 En annan mycket trevlig egenskap som ett Record har är att den är implicit immutable. Med det menar jag att om inget annan anges i deklarationen av ett record blir alla dess egenskaper låsta för förändring. Immutability är en mycket trevlig och ofta nödvändig egenskap som gör att objekt blir trådsäkra. Ett vanligt problem som flertrådade applikationer lider av är när flera trådar ändrar på samma objekts egenskaper vilket medför intermittenta och svårlösta buggar. Med objekt som är oföränderliga (immutable) kan en säkert skicka runt dess referens till flera trådar och en garanti kan lämnas att dess tillstånd förblir detsamma. Jag skriver en hel del om detta i en annan artikel (https://www.infozone.se/2018/11/13/lita-pa-dina-objekt-mjukvaruarkitektur-del-1/).
 
 I exemplet nedan ser du tre sätt att deklarera ett record. Det första sättet medför implicit immutability på alla egenskaper, den andra är helt ekvivalent med den första men med explicit deklaration av "init settes". Det tredje exemplet skapar ett mutable record, dvs dess egenskaper kan förändras efter initiering.
 
-{% gist 4f4a482a25728513ca4bf81e58661faa#file-employee-cs %}
+{% gist 4f4a482a25728513ca4bf81e58661faa Employee.cs %}
 https://gist.github.com/Hagsten/4f4a482a25728513ca4bf81e58661faa#file-employee-cs
 
 Immutable Records är ypperliga att använda i många fall, framförallt i flertrådade applikationer av ovanstående anledning eller när dataflödet är enkelriktat genom en applikations lager (t.ex. API --> Domänlager --> Databas). Nästa applikationslager kan helt enkelt lita på objekten, något jag skriver om i https://www.infozone.se/2018/11/13/lita-pa-dina-objekt-mjukvaruarkitektur-del-1/. Ett konkret exempel på enkelriktat dataflöde är i CQS/CQRS där Commands och Queries är objekt som är enkelriktade från den som begär frågan eller kommandot ända ned till respektive hanterare (CommandHandler/QueryHandler). Svaret från en QueryHandler är ofta en läsmodell - ytterligare ett ypperligt användningsområde för records.
 
 Ofta finns dock behovet att skapa nya objekt med ett eller flera förändrade värden. Förr innebar det att skapa nya objekt och stansa av egenskaperna en efter en. Lyckligtivs stödjer records nyckelordet "with" som möjligör att skapa nya records med samma innehåll. Det fina är dock att man ges möjligheten att förändra egenskaperna innan det nya objektet skapas. Ni kan se ett exempel på detta här då vi vill göra en förändring på en kandidat efter att denne genomgått en första utvärdering.
 
-{% gist 4f4a482a25728513ca4bf81e58661faa#file-with-cs %}
+{% gist 4f4a482a25728513ca4bf81e58661faa With.cs %}
 https://gist.github.com/Hagsten/4f4a482a25728513ca4bf81e58661faa#file-with-cs
 
 Resulatet är att "evaluatedCandidate" innehåller samma värden som "candidate" men med Evaluated satt till true.
@@ -43,7 +43,7 @@ Resulatet är att "evaluatedCandidate" innehåller samma värden som "candidate"
 # Pattern matching
 Pattern matching är relativt nytt men har funnits i tidigare versioner av C#, i 9.0 kommer det dock en mängd nya features. Hela listan hittar ni på Microsofts dokumentation (https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-9#pattern-matching-enhancements). Detta är inte en djupgående genomgång av alla sätt att skriva pattern matching utan jag kommer helt enkelt ge exempel som nyttjar en del nya features. Här är ett exempel där en kandidats lön skall beräknas givet ett antal kriterier.
 
-{% gist 4f4a482a25728513ca4bf81e58661faa#file-negotiatesalary-cs %}
+{% gist 4f4a482a25728513ca4bf81e58661faa Negotiatesalary.cs %}
 https://gist.github.com/Hagsten/4f4a482a25728513ca4bf81e58661faa#file-negotiatesalary-cs
 
 Kanske är denna syntax helt främmande för er, kanske har ni stenkoll och kan direkt se de nya features som kommer med C# 9. En objektiv bedömning av koden är att den är kort och konsis och en måhända mer subjektiv bedömning är att den är lättläst. Mycket av fokuset ligger på villkoren och vad resultatet av dem är och mindre fokus på syntax och andra konstruktioner.
