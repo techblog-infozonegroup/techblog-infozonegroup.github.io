@@ -1,5 +1,6 @@
 ---
-published: false
+published: true
+comments: true
 title: "Post: Standard"
 categories:
   - blog
