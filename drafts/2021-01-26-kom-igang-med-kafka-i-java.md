@@ -12,10 +12,10 @@ tags:
 ---
 
 # Inledning
-Det finns många olika sätt att implementera Kafka, I det här fallet kommer vi att kika närmare på [Spring for Apache Kafka](https://spring.io/projects/spring-kafka). Om du inte är bekant med [Spring](https://spring.io) sedan tidigare så är det kort beskrivet ett ramverk för Java som gör många saker, t.ex. en rest endpoint eller dependency injection lättare att implementera med hjälp av annoteringar.
+Det finns många olika sätt att implementera Kafka, I det här fallet kommer vi att kika närmare på [Spring for Apache Kafka](https://spring.io/projects/spring-kafka). Om du inte är bekant med [Spring](https://spring.io) sedan tidigare så är det kort beskrivet ett ramverk för Java som gör många saker lättare att implementera med hjälp utav annoteringar. Till exempel en rest endpoint, kafka consumers/producers och dependency injection.
 
 # Kafka i docker
-För att kunna komma igång snabbt med en miljö där vi kan testa att skicka och ta emot meddelanden på Kafka så använder vi en docker image från landoop, gjord för just detta endamål. Förutsatt att du har docker installerat så kan du köra detta kommand:
+För att kunna komma igång snabbt med en miljö där vi kan testa att skicka och ta emot meddelanden med Kafka så använder vi en docker image från landoop, gjord för just detta endamål. Förutsatt att du har docker installerat så kan du köra detta kommand:
 `docker run --rm -p 3030:3030 -p 9092:9092 -p 2182:2181 -p 8081:8081 -p 8082:8082 -p 8083:8083 -e BROKER_PORT=9092 -e ADV_HOST=127.0.0.1 landoop/fast-data-dev`
 
 Det finns ett grafiskt gränssnitt på [localhost:3030](http://localhost:3030) för att se topics samt meddelanden m.m. Vår docker image kommer automatiskt att skapa några topics och skicka meddelanden på dessa. Det kan vara värt att tänka på att vissa topics använder Avro vilket vi inte kommer att gå igenom i detta inlägg.
@@ -213,4 +213,4 @@ public class KafkaDemo {
     }
 }
 ```
-I vår `@KafkaListener` måste vi minst specificera vilken/vilka topic(s) vi vill lyssna på. Vi kan även överskrida vilket group-id vi vill använda här. I vår listener ovan så lyssnar vi på kafka topicen `logs_broker`. När vi tar emot ett meddelande så printar vi ut meddelandet i konsollen. Sedan använder vi oss av en KafkaTemplate för att skicka vilken tid vi tog emot meddelandet på en ny topic vid namn `test`. `@AllArgsConstructor` är en annotering från lombok och bakom kulissen så skapar den en konstruktor som använder dependency injection för att tilldela en instans till alla våra fält (`template`). Det finns fler sätt att skicka och ta emot data från Kafka i Java men detta var det som jag tyckte var lättast.
+I vår `@KafkaListener` måste vi minst specificera vilken/vilka topic(s) vi vill lyssna på. Vi kan även överskrida vilket group-id vi vill använda här. I vår listener ovan så lyssnar vi på kafka-topic:en `logs_broker`. När vi tar emot ett meddelande så printar vi ut meddelandet i konsollen. Sedan använder vi oss av en KafkaTemplate för att skicka vilken tid vi tog emot meddelandet på en ny topic vid namn `test`. `@AllArgsConstructor` är en annotering från lombok och bakom kulissen så skapar den en konstruktor som använder dependency injection för att tilldela en instans till alla våra fält (`template`). Det finns fler sätt att skicka och ta emot data från Kafka i Java men detta var det som jag tyckte var lättast.
