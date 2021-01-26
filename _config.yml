@@ -25,6 +25,10 @@ minimal_mistakes_skin: default
 search: true
 logo: https://www.infozone.se/wp-content/themes/infozone/assets/images/logo-grey.svg
 locale: "sv-SE"
+comments:
+  provider: "disqus" # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "custom"
+  disqus:
+    shortname: techblogg-infozone-se
 
 # Build settings
 markdown: kramdown
