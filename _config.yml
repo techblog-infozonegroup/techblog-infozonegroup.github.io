@@ -126,3 +126,6 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+disqus:
+  shortname:  blogg-fjeddos-se
