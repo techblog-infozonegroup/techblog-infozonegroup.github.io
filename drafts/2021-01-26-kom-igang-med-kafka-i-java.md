@@ -113,12 +113,12 @@ namespace com.example.demo
         public IConfiguration Configuration { get; }
 
         public Dictionary<string, object> ConsumerConfigs() {
-            var props = new Dictionary<string, object>();
-            props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-            props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-consumer-group");
-            props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-            props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-            return props;
+            return new Dictionary<string, object>{
+                {ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers},
+                {ConsumerConfig.GROUP_ID_CONFIG, "test-consumer-group"},
+                {ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class},
+                {ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class}
+            };
         }
 
         public void ConfigureServices(IServiceCollection services)
