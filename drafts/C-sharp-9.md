@@ -21,7 +21,7 @@ I denna artikel tänker jag fokusera på Records, Init only setters samt pattern
 # Records
 Records är en ny referenstyp (likt klasser) men med semantik som en värdtyp (likt structs). Med det menar jag att likhet beräknas på värdena av instansens egenskaper och inte på instansens referens. Två instanser med samma värden på egenskaper ses därför som lika. Exemplet nedan demonstrerar detta. De två kandidaterna anses lika genom Equals samt operatorn "==" men inte om man jämför referensen. Dvs, ett record är en referenstyp men med semantik som en värdetyp.
 
-{% gist 4f4a482a25728513ca4bf81e58661faa#file-valueequality-cs %}
+{% gist 4f4a482a25728513ca4bf81e58661faa file-valueequality-cs %}
 https://gist.github.com/Hagsten/4f4a482a25728513ca4bf81e58661faa#file-valueequality-cs
 
 En annan mycket trevlig egenskap som ett Record har är att den är implicit immutable. Med det menar jag att om inget annan anges i deklarationen av ett record blir alla dess egenskaper låsta för förändring. Immutability är en mycket trevlig och ofta nödvändig egenskap som gör att objekt blir trådsäkra. Ett vanligt problem som flertrådade applikationer lider av är när flera trådar ändrar på samma objekts egenskaper vilket medför intermittenta och svårlösta buggar. Med objekt som är oföränderliga (immutable) kan en säkert skicka runt dess referens till flera trådar och en garanti kan lämnas att dess tillstånd förblir detsamma. Jag skriver en hel del om detta i en annan artikel (https://www.infozone.se/2018/11/13/lita-pa-dina-objekt-mjukvaruarkitektur-del-1/).
