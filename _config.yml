@@ -28,7 +28,7 @@ locale: "sv-SE"
 comments:
   provider: "disqus" # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "custom"
   disqus:
-    shortname: blogg-fjeddos-se # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+    shortname: techblogg-infozone-se
 
 # Build settings
 markdown: kramdown
