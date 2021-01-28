@@ -119,3 +119,41 @@ footer {
     float: none !important;
     width: auto !important;
 }
+
+article.archive__item {
+    display: flex;
+}
+
+.archive__item-teaser {
+    width: 160px;
+    flex-shrink: 0;
+    margin: 1em 1em 0 0;
+    font-size: $h-size-2;
+}
+
+div.page__related div.archive__item-teaser {
+    display: none;
+}
+
+.taxonomy__section div.archive__item-teaser {
+    margin-top: 0;
+}
+
+@media screen and (max-width: 64em) {
+    .archive__item-teaser {
+        width: 128px;
+    }
+}
+
+@media screen and (max-width: 48em) {
+    .archive__item-teaser {
+        width: 96px;
+    }
+}
+
+
+@media screen and (max-width: 32em) {
+    .archive__item-teaser {
+        display: none;
+    }
+}
