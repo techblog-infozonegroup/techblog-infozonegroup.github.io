@@ -2,7 +2,7 @@
 title: "Node och javascript, fixa tydliga funktionssignaturer"
 date: 2021-02-06
 author: Fredde Johnsson, systemutvecklare
-tagline: "Som C#/.NET-utvecklare så har jag brottats med effektivitetsproblem när jag kodar javascript/node. Min känsla är att verktygsstödet för javascript inte håller samma höga nivå som t.ex. Visual Studio. Problemen består ganska ofta i att funktioner man ska anropa inte är tydliga när det kommer till inparametrar och returvärden på grund av avsaknaden av datatyper på dessa. Häromdagen hittade jag dock ett sätt att deklarera funktioner för att göra det lite tydligare för konsumenter av metoden vilka typer av inparametrar som förväntas och vad funktionen returnerar."
+tagline: "Som C#/.NET-utvecklare så har jag brottats med effektivitetsproblem när jag kodar javascript/node. Problemen består ganska ofta i att funktioner man ska anropa inte är tydliga vad gäller inparametrar och returvärden på grund av avsaknaden av datatyper. Häromdagen hittade jag dock ett sätt att deklarera funktioner för att göra det lite tydligare för konsumenter av metoden vilka typer av inparametrar som förväntas och vad funktionen returnerar och samtidigt få mer hjälp av verktyget."
 header:
   overlay_image: https://media.istockphoto.com/photos/closeup-of-minified-javascript-file-computer-programming-source-code-picture-id1272017187
 categories:
@@ -46,8 +46,8 @@ Det är alltså fullt gitigt javascript-kod, båda anropen till someFunction är
 
 Det här ser ut enligt nedan i VS Code, vilket är helt korrekt då båda parametrarna är av "typen" any:
 
-- vs_code_tooltip.png
-- vs_code_intellisense
+![VS Code tooltip](https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/node-and-javascript-method-signatures/vs_code_tooltip.png)
+![VS Code intellisense](https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/node-and-javascript-method-signatures/vs_code_intellisense.png)
 
 
 Det här skapar lätt förvirring och relativt svårtolkad kod. Man måste läsa koden i someFunction för att på ett någotsånär korrekt sätt förstå typerna på parametrarna. Felaktiga typer in till funktionen resulterar i dom flesta fallen i körtidsfel, vilket i min smak är alldeles för sent.
@@ -83,12 +83,16 @@ function yetAnotherFunction(...) {
 }
 ```
 
-Vi ser här att funktionen **someFunction** har ändrats till att ta ett objekt som inparameter, där egenskaperna också tilldelas default-värden, **firstParameter = 0** respektive **secondParameter = ''**. Dessutom till tilldelas hela objektet något som kan liknas vid ett default-värde.
+Vi ser här att funktionen **someFunction** har ändrats till att ta ett objekt som inparameter, där egenskaperna också tilldelas default-värden, **firstParameter = 0** respektive **secondParameter = ''**. Dessutom tilldelas hela objektet något som kan liknas vid ett default-värde.
 
 Det kan kännas som ett ganska klumpigt och invecklat sätt att skriva såhär, men uppsidan är i mitt tycke stor. VS Code ger oss nu mycket mer hjälp:
 
-- vs_code_tooltip_w_types.png
-- vs_code_tooltip_w_types_chain.png
+![VS Code tooltip, typed](https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/node-and-javascript-method-signatures/vs_code_tooltip_w_types.png)
+*Signaturen för someFunction nu mycket tydligare*
+
+![VS Code tooltip, resolved-typed](https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/node-and-javascript-method-signatures/vs_code_tooltip_w_types_chain.png)
+
+*Ger även mer info om funktion som anropar den "typade" funktionen*
 
 På den översta bilden ser vi direkt vad someFunction förväntar sig för inparametrar, en sträng och ett tal. På den andra bilden ser vi att "typningen" följer med och funktionen yetAnotherFunction får även den en tydligare signatur där returvärdet är en sträng.
 
