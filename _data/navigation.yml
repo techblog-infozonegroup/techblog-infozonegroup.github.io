@@ -5,5 +5,3 @@ main:
     url: /categories/
   - title: "Taggar"
     url: /tags/
-  - title: "Om"
-    url: /about/
