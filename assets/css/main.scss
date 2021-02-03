@@ -21,7 +21,7 @@ $monospace  : Monaco, Consolas, "Lucida Console", monospace;
 /* overrides */
 footer.page__meta
 {
-    background-color:$background-color !important;
+    background:$background-color !important;
 }
 
 .contactButton.a__override {
@@ -75,7 +75,7 @@ footer.page__meta
 }
 
 #footer.page__footer {
-    background-color: #fff;
+    background-color: $background-color;
 }
 
 footer {
