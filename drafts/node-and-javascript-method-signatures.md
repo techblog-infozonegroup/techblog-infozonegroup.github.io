@@ -13,10 +13,10 @@ tags:
   - javascript
   - Visual Studio Code
 ---
-Sedan en tid tillbaka jobbar jag i ett kundteam där en stor del av systemen är skrivna i node/javascript. Själv kommer jag från .NET-sidan där kodandet till 90+% gjordes i C# och Visual Studio. I uppdraget nu så är C# utbytt mot node/javascript och Visual Studio utbytt mot Visual Studio Code (VS Code). I den här posten tänkte jag ta upp ett, för mig, stort problem, nämligen javascript och dess avsaknad av typning i funktionssignaturer. Detta får till följd att VS Code inte kan presentera IntelliSense med den informationen som jag känner mig van vid från Visual Studio och Resharper. 
+Sedan en tid tillbaka jobbar jag i ett kundteam där en stor del av systemen är skrivna i node/javascript. Själv kommer jag från .NET-sidan där kodandet till 90+% gjordes i C# och Visual Studio. I uppdraget nu så är C# utbytt mot node/javascript och Visual Studio utbytt mot Visual Studio Code (VS Code). I den här posten tänkte jag ta upp ett, för mig, stort problem, nämligen javascript och dess avsaknad av typning i funktionssignaturer. Detta får till följd att VS Code inte kan presentera IntelliSense med den informationen som jag känner mig van vid från Visual Studio. 
 
 # Problem
-Teamet jag, sedan en tillbaka, tillhör har utvecklat ett stort antal Azure Functions i node/javascript. Det är sammantaget en ganska stor kodbas, en hel del beroenden mellan moduler etc. Det är inte något fel med det, men ett problem är att man måste läsa en hel del kod för att förstå typning av inparametrar till funktioner. Iallafall måste jag det, men det kanske beror på ovana i node/javascript i den här tillämpningen.
+Teamet som jag jobbar i har utvecklat ett stort antal Azure Functions i node/javascript. Det är sammantaget en ganska stor kodbas, en hel del beroenden mellan moduler etc. Det är inte något fel med det, men ett problem är att man måste läsa en hel del kod för att förstå typning av inparametrar till funktioner. Iallafall måste jag det, men det kanske beror på ovana i node/javascript i den här tillämpningen.
 
 En ganska vanlig syn i node/javascript-kod är:
 
@@ -72,16 +72,10 @@ function someFunction({ firstParameter = 0, secondParameter = '' } = {}) {
     return someValue;
 }
 
-function otherFunction(...) {
-    ...
-    let val = someFunction(1,2); // Might cause runtime error
-    ...
-}
+.
+.
+.
 
-function yetAnotherFunction(...) {
-    ...
-    let anotherValue = someFunction(1,'test'); // Might also cause runtime error
-    ...
 }
 ```
 
