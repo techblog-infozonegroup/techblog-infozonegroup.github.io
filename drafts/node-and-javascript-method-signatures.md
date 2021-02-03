@@ -72,11 +72,8 @@ function someFunction({ firstParameter = 0, secondParameter = '' } = {}) {
     return someValue;
 }
 
-.
-.
-.
+...
 
-}
 ```
 
 Vi ser här att funktionen **someFunction** har ändrats till att ta ett objekt som inparameter, där egenskaperna också tilldelas default-värden, **firstParameter = 0** respektive **secondParameter = ''**. Dessutom tilldelas hela objektet något som kan liknas vid ett default-värde.
