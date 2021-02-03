@@ -23,9 +23,7 @@ En ganska vanlig syn i node/javascript-kod är:
 ```javascript
 function someFunction(firstParameter, secondParameter) {
     ...
-
     let someValue = firstParameter + secondParameter;
-
     ...
     
     return someValue;
@@ -66,9 +64,7 @@ Vi tittar på exemplet nedan:
 ```javascript
 function someFunction({ firstParameter = 0, secondParameter = '' } = {}) {
     ...
-
     let someValue = firstParameter + secondParameter;
-
     ...
     
     return someValue;
@@ -99,9 +95,7 @@ Det finns fler uppsidor enligt nedan:
 ```javascript
 function someFunction({ firstParameter = 0, secondParameter = '' } = {}) {
     ...
-
     let someValue = firstParameter + secondParameter;
-
     ...
 
     return someValue;
