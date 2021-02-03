@@ -4,7 +4,7 @@ date: 2021-02-06
 author: Fredde Johnsson, systemutvecklare
 tagline: "Som C#/.NET-utvecklare så har jag brottats med effektivitetsproblem när jag kodar javascript/node. Min känsla är att verktygsstödet för javascript inte håller samma höga nivå som t.ex. Visual Studio. Problemen består ganska ofta i att funktioner man ska anropa inte är tydliga när det kommer till inparametrar och returvärden på grund av avsaknaden av datatyper på dessa. Häromdagen hittade jag dock ett sätt att deklarera funktioner för att göra det lite tydligare för konsumenter av metoden vilka typer av inparametrar som förväntas och vad funktionen returnerar."
 header:
-  overlay_image: https://media.istockphoto.com/photos/closeup-of-minified-javascript-file-computer-programming-source-code-picture-id1272017187
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/node-and-javascript-method-signatures/pexels-markus-spiske-177598.jpg
 categories:
   - blog
 tags:
