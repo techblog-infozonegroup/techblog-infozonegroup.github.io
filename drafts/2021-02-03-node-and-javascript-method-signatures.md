@@ -1,6 +1,6 @@
 ---
 title: "Node och javascript, fixa tydliga funktionssignaturer"
-date: 2021-02-06
+date: 2021-02-03
 author: Fredde Johnsson, systemutvecklare
 tagline: "Som C#/.NET-utvecklare så har jag brottats med effektivitetsproblem när jag kodar javascript/node. Min känsla är att verktygsstödet för javascript inte håller samma höga nivå som t.ex. Visual Studio. Problemen består ganska ofta i att funktioner man ska anropa inte är tydliga när det kommer till inparametrar och returvärden på grund av avsaknaden av datatyper på dessa. Häromdagen hittade jag dock ett sätt att deklarera funktioner för att göra det lite tydligare för konsumenter av metoden vilka typer av inparametrar som förväntas och vad funktionen returnerar."
 header:
