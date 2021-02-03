@@ -24,6 +24,10 @@ En ganska vanlig syn i node/javascript-kod är:
 function someFunction(firstParameter, secondParameter) {
     ...
 
+    let someValue = firstParameter + secondParameter;
+
+    ...
+    
     return someValue;
 }
 
