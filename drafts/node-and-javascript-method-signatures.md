@@ -72,7 +72,9 @@ function someFunction({ firstParameter = 0, secondParameter = '' } = {}) {
     return someValue;
 }
 
-...
+function otherFunction(...) {...}
+
+function yetAnotherFunction(...) {...}
 
 ```
 
