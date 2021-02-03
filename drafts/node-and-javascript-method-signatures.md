@@ -94,8 +94,11 @@ Det finns fler uppsidor enligt nedan:
 
 ```javascript
 function someFunction({ firstParameter = 0, secondParameter = '' } = {}) {
+    ...
 
     let someValue = firstParameter + secondParameter;
+
+    ...
 
     return someValue;
 }
