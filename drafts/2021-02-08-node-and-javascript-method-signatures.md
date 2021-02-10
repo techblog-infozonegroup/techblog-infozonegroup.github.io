@@ -1,5 +1,4 @@
 ---
-published: false
 title: "Node och javascript, fixa tydliga funktionssignaturer"
 date: 2021-02-08
 author: Fredde Johnsson, systemutvecklare
