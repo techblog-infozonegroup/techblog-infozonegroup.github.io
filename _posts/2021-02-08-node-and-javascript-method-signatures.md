@@ -6,6 +6,7 @@ author: Fredde Johnsson, systemutvecklare
 tagline: "Som C#/.NET-utvecklare så har jag brottats med effektivitetsproblem när jag kodar javascript/node. Häromdagen hittade jag dock ett sätt att deklarera funktioner för att göra det lite tydligare för konsumenter av metoden vilka typer av inparametrar som förväntas och vad funktionen returnerar."
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/node-and-javascript-method-signatures/pexels-jorge-jesus-614117.jpg
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/node-and-javascript-method-signatures/nodejs-vscode-tooltip-teaser.png
 categories:
   - blog
 tags:
