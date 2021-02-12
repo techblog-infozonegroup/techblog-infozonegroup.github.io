@@ -1,7 +1,7 @@
 ---
 title: "Kom igång med Kafka i Java"
 tagline: "Implementera Kafka consumers och producers i Java med Spring Apache Kafka Streams"
-date: 2021-01-26
+date: 2021-02-18
 author: Anton Liljeberg, systemutvecklare
 header:
   overlay_image: https://www.infozone.se/wp-content/uploads/2020/10/close-up-of-hands-contemporary-website-developer-man-typing-and-code-picture-id1167467556.jpg
