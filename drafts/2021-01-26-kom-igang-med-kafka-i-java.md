@@ -12,16 +12,16 @@ tags:
 ---
 
 # Inledning
-Det finns många olika sätt att implementera Kafka, I det här fallet kommer vi att kika närmare på [Spring for Apache Kafka](https://spring.io/projects/spring-kafka). Om du inte är bekant med [Spring](https://spring.io) sedan tidigare så är det kort beskrivet ett ramverk för Java som gör många saker lättare att implementera med hjälp utav annoteringar. Till exempel en rest endpoint, kafka consumers/producers och dependency injection.
+Det finns många olika sätt att implementera Kafka, i det här fallet kommer vi att kika närmare på [Spring for Apache Kafka](https://spring.io/projects/spring-kafka). Om du inte är bekant med [Spring](https://spring.io) sedan tidigare så är det kort beskrivet ett ramverk för Java som gör många saker lättare att implementera med hjälp utav annoteringar. Till exempel en rest endpoint, kafka consumers/producers och dependency injection.
 
 # Kafka i docker
-För att kunna komma igång snabbt med en miljö där vi kan testa att skicka och ta emot meddelanden med Kafka så använder vi en docker image från landoop, gjord för just detta endamål. Förutsatt att du har docker installerat så kan du köra detta kommand:
+För att kunna komma igång snabbt med en miljö där vi kan testa att skicka och ta emot meddelanden med Kafka så använder vi en docker image från landoop, gjord för just detta ändamål. Förutsatt att du har docker installerat så kan du köra detta kommando:
 `docker run --rm -p 3030:3030 -p 9092:9092 -p 2182:2181 -p 8081:8081 -p 8082:8082 -p 8083:8083 -e BROKER_PORT=9092 -e ADV_HOST=127.0.0.1 landoop/fast-data-dev`
 
 Det finns ett grafiskt gränssnitt på [localhost:3030](http://localhost:3030) för att se topics samt meddelanden m.m. Vår docker image kommer automatiskt att skapa några topics och skicka meddelanden på dessa. Det kan vara värt att tänka på att vissa topics använder Avro vilket vi inte kommer att gå igenom i detta inlägg.
 
 # Spring Initializr
-För att skapa vårat project är det lättast att komma igång med [Spring Initializr](https://start.spring.io). Jag kommer att använda mig utav Gradle i detta exempel. Längst upp till höger kan du lägga till dependencies, vi kommer att använda oss av `Spring for Apache Kafka Streams [Messaging]` samt `Lombok [Developer Tools]`. När du är klar med konfigurationen så kan du trycka på `GENERATE` längst ned för att ladda ner projektet.
+För att skapa vårat projekt är det lättast att komma igång med [Spring Initializr](https://start.spring.io). Jag kommer att använda mig utav Gradle i detta exempel. Längst upp till höger kan du lägga till dependencies, vi kommer att använda oss av `Spring for Apache Kafka Streams [Messaging]` samt `Lombok [Developer Tools]`. När du är klar med konfigurationen så kan du trycka på `GENERATE` längst ned för att ladda ner projektet.
 
 # Öppna Projektet
 Det finns många olika java-utvecklingsmiljöer att välja på, i detta exempel kommer vi att använda oss av [IntelliJ](https://www.jetbrains.com/idea/download). Packa upp projektet som vi genererade i Spring Initializer på valfri plats. Öppna sedan projektet i IntelliJ genom att klicka på `Open` och välj sedan mappen som du packade upp.
@@ -35,7 +35,7 @@ implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
 i dependencies listan.
 
 # Konfigurera vår Kafka Consumer
-En consumer är precis vad det låter som, det är den kod som konsumerar eller tar emot meddelanden från Kafka. För att denna ska kunna fungera behöver vi ange en address till vår kafka server och ett grupp-id. Om två consumers har samma grupp-id så kommer meddelanden att spridas ut mellan dessa två, de kommer med andra ord inte ta del av alla meddelandena individuellt.
+En consumer är precis vad det låter som, det är den kod som konsumerar eller tar emot meddelanden från Kafka. För att denna ska kunna fungera behöver vi ange en adress till vår kafka server och ett grupp-id. Om två consumers har samma grupp-id så kommer meddelanden att spridas ut mellan dessa två, de kommer med andra ord inte ta del av alla meddelandena individuellt.
 
 Varje meddelande består av ett key-value par med okänd datatyp. För att kunna tyda dessa behöver vi lägga till en key deserializer samt en value deserializer. 
 ``` java
