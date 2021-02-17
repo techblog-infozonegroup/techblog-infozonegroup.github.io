@@ -1,6 +1,6 @@
 ---
 title: "Kom igång med Kafka i Java"
-tagline: "Implementera Kafka consumers och producers i Java med Spring Apache Kafka Streams"
+tagline: "Implementera Kafka consumers och producers i Java med Spring Apache Kafka Streams."
 date: 2021-02-18
 author: Anton Liljeberg, systemutvecklare
 header:
