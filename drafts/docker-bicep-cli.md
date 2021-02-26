@@ -1,3 +1,18 @@
+---
+title: "Test av draft"
+date: 2021-01-16
+author: Fredde, systemutvecklare
+tagline: "Hej hopp!"
+header:
+  overlay_image: https://www.infozone.se/wp-content/uploads/2020/03/programmering-i-team.jpg
+categories:
+  - blog
+tags:
+  - bicep
+  - azure
+  - arm
+  - devops
+---
 [Docker](https://www.docker.com/), [kubernetes](https://kubernetes.io/) och annan containerteknik kanske ibland känns som verktyg eller plattformar för servrar, hosting, PaaS och stora jättar uppe bland molnen. För mig har det däremot dom senaste 4-5 åren varit en naturlig del av mitt verktygsbälte med utvecklingsverktyg.
 
 I den här posten tänkte jag, bara som ett exempel, visa hur jag använde docker för att slippa installera grejor på min arbetsmaskin. I dom flesta fallen kanske det handlar om att slippa installera serverkomponenter såsom Elasticsearch, Redis, Sql Server (for Linux) osv, men i det här exemplet beskriver jag hur jag använder docker för att testa [Project Bicep](https://github.com/Azure/bicep) och dess CLI för att generera ARM Templates (Azure Resource Manager).
