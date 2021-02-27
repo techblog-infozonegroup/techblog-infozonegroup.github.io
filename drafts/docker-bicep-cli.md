@@ -1,10 +1,11 @@
 ---
-title: "Test av draft"
+title: "Kör (Bicep) CLI i en docker-container"
 date: 2021-02-28
-author: Fredde, systemutvecklare
-tagline: "Hej hopp!"
+author: Fredde Johnsson, systemutvecklare
+tagline: "[Docker](https://www.docker.com/), [kubernetes](https://kubernetes.io/) och annan containerteknik kanske ibland känns som verktyg eller plattformar för servrar, hosting, PaaS och stora jättar uppe bland molnen. För mig har det däremot dom senaste 4-5 åren varit en naturlig del av mitt verktygsbälte med utvecklingsverktyg."
 header:
-  overlay_image: https://www.infozone.se/wp-content/uploads/2020/03/programmering-i-team.jpg
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/docker-bicep-cli/colors-1838392_640.jpg
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/docker-bicep-cli/teaser.png
 categories:
   - blog
 tags:
@@ -112,10 +113,10 @@ Mode                 LastWriteTime         Length Name
 ...\lab\bicep-docker\src>
 ```
 Start-kommandot av containerinstansen innehåller, förutom mountningen, två saker att notera:
-- `'-it'`-växeln => kör contianern interaktivt, det vill säga "anslut till den startade instansen"
+- `'-it'`-växeln => kör containern interaktivt, det vill säga "anslut till den startade instansen"
 - `'/bin/bash'` => exekvera /bin/bash i containern
 
 Det här gör att man kommer att hamna i bash-skalet i containern och man kan alltså exekvera vidare andra kommandon där, precis som om man anslutit till vilken linux-instans som helst.
 
-Jag hoppas att jag i och med detta har lockat till att försöka använda docker som ett utvecklingsverktyg, även sådana verktyg som inte är server-mjukvara.
+Jag hoppas att jag i och med detta har lockat till att försöka använda docker som ett utvecklingsverktyg, även för sådant som inte är server-mjukvara.
 
