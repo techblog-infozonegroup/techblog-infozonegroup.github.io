@@ -62,9 +62,14 @@ RUN bicep --help
 ```
 > Notera att förutom dom två översta raderna, `FROM ...` och `RUN apt-get ...` så är det en rak kopiering av installationsanvisningen för CLIn i Linux.
 
-När jag sedan kunde starta containern och ansluta till ett bash-skal så kunde jag exekvera `bicep --version´ och få ett korrekt svar.
+Det som nu återstod var att kunna komma åt dom bicep-filer som jag byggde i VS Code på min Windows-maskin. Detta gjorde jag genom att starta containern och mounta den aktuella katalogen till `/src/` i containern. 
 
-Det som nu återstod var att kunna komma åt dom bicep-filer som jag byggde i VS Code på min Windows-maskin. Detta gjorde jag genom att starta containern och mounta den aktuella katalogen till `/src/` i containern:
+Se sekvensen av kommandon nedan:
+-  före start av containern, 
+- mountning av katalogen med bicep-filer, 
+- bicep build, 
+- exit och 
+- kontroll så att den genererade json-filen finns i katalogen:
 ```
 ...\lab\bicep-docker\src> ls 
 
@@ -105,5 +110,5 @@ Mode                 LastWriteTime         Length Name
 
 ...\lab\bicep-docker\src>
 ```
-Värt att notera här är att i aktuell katalog ligger några bicep-filer och där väljer jag att starta en containerinstans och mounta just den katalogen i containern. Detta gör att filerna är åtkomliga i src-katalogen och där kör jag bicep build-kommandot. Det skapar en functionApp.json-fil, ARM-templaten som genererats från bicep-filen.
+> Värt att notera här är att i aktuell katalog ligger några bicep-filer och där väljer jag att starta en containerinstans och mounta just den katalogen i containern genom `'-v ${pwd}:/src'`-växeln till docker run. Detta gör att filerna är åtkomliga i src-katalogen i containern och där kör jag `'bicep build functionApp.bicep'`-kommandot. Det skapar en `'functionApp.json'`-fil, alltså ARM-templaten som genererats från bicep-filen.
 
