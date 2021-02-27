@@ -112,6 +112,10 @@ Mode                 LastWriteTime         Length Name
 
 ...\lab\bicep-docker\src>
 ```
+
+> ${pwd} returnerar aktuell katalog i PowerShell.
+
+
 Start-kommandot av containerinstansen innehåller, förutom mountningen, två saker att notera:
 - `'-it'`-växeln => kör containern interaktivt, det vill säga "anslut till den startade instansen"
 - `'/bin/bash'` => exekvera /bin/bash i containern
