@@ -70,6 +70,7 @@ Se sekvensen av kommandon nedan:
 - bicep build, 
 - exit och 
 - kontroll så att den genererade json-filen finns i katalogen:
+
 ```
 ...\lab\bicep-docker\src> ls 
 
