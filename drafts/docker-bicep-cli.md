@@ -25,6 +25,13 @@ Den absoluta merparten av tiden köra jag Linux-containrar, så även i det här
 Vad docker är och containerization innebär finns det oändlig information på Internet.
 
 # Project Bicep och ARM Templates
+Den som gett sig i kast med Azure-resurser med hjälp av ARM Templates har säkert haft åsikter om hur mycket stök och strul det kan vara med att få den stora mängden json-data som måste vara helt korrekt. Det underlättas såklart om man har ett bra verktyg till hands. Jag rekommenderar ett extension till VS Code, [Azure Resource Manager (ARM) Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools). Det ger mycket stöd i form av Intellisense för stora delar av json-strukturen. Det skulle såklart vara önskvärt att förenkla så mycket som möjligt, skala bort allt "onödigt" runt omkring och kunna deklarera variabler etc. Jag blev otroligt glad när jag hörde om [Project Bicep](https://github.com/Azure/bicep) och att det skulle vara ett DSL med just dom egenskaperna.
+
+Dom två största uppsidorna med Bicep, som jag ser det teoretiskt, är:
+- Modularisering av resurser som förenklar återanvändande av kod.
+- En abstraktion som översätts till "vanlig" ARM-json-struktur som ger en extra validering av deklarationerna INNAN man försöker deploya till målmiljön.
+
+Med detta i tankarna planerar jag att inom kort antingen hålla en lunch-dragning om Bicep eller att skriva en bloggpost i ämnet. Nedan tänkte jag visa hur man kan köra Bicep CLI i en docker-container och på så sätt kanske locka till att använda en container i andra sammanhang där man behöver en CLI-installation men inte önskar ta det beroendet som installation på sin utvecklardator.
 
 # Bicep CLI i container
 
