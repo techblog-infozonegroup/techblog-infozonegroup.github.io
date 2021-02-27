@@ -111,5 +111,11 @@ Mode                 LastWriteTime         Length Name
 
 ...\lab\bicep-docker\src>
 ```
+Start-kommandot av containerinstansen innehåller, förutom mountningen, två saker att notera:
+- `'-it'`-växeln => kör contianern interaktivt, det vill säga "anslut till den startade instansen"
+- `'/bin/bash'` => exekvera /bin/bash i containern
 
+Det här gör att man kommer att hamna i bash-skalet i containern och man kan alltså exekvera vidare andra kommandon där, precis som om man anslutit till vilken linux-instans som helst.
+
+Jag hoppas att jag i och med detta har lockat till att försöka använda docker som ett utvecklingsverktyg, även sådana verktyg som inte är server-mjukvara.
 
