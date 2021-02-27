@@ -111,5 +111,5 @@ Mode                 LastWriteTime         Length Name
 
 ...\lab\bicep-docker\src>
 ```
-> Värt att notera här är att i aktuell katalog ligger några bicep-filer och där väljer jag att starta en containerinstans och mounta just den katalogen i containern genom `'-v ${pwd}:/src'`-växeln till docker run. Detta gör att filerna är åtkomliga i src-katalogen i containern och där kör jag `'bicep build functionApp.bicep'`-kommandot. Det skapar en `'functionApp.json'`-fil, alltså ARM-templaten som genererats från bicep-filen.
+
 
