@@ -150,7 +150,7 @@ ENTRYPOINT [ "watch", "-p *.bicep", "-c bicep build main.bicep" ]
 Det som har kommit till är installation av npm genom `RUN apt-get install -y npm ` samt installation av npm-paketet watch genom `RUN npm i -g watch-cli`. `WORKDIR`och `ENTRYPOINT` ser till att watch körs i `/src/`-katalogen och triggas när en `.bicep`-fil förändras eller skapas. Då körs `bicep build ...`.
 
 
-Jag byggden en ny image från ovan dockerfile genom `docker build -t bicep-watch .`. Det tog lite tid eftersom npm och watch var två nya installationer i imagen. Efter en liten stund var det klar och en instans av den körs ser det ut enligt:
+Jag byggden en ny image från ovan dockerfile genom `docker build -t bicep-watch .`. Det tog lite tid eftersom npm och watch var två nya installationer i imagen. Efter en liten stund var det klar och när en instans av den körs ser det ut enligt:
 ```
 ...\lab\bicep-docker\src> docker run -v ${pwd}:/src --rm -it bicep-watch
 Watching started
