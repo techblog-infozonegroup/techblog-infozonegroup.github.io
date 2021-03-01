@@ -14,8 +14,6 @@ tags:
   - arm
   - devops
 ---
-[Docker](https://www.docker.com/), [kubernetes](https://kubernetes.io/) och annan containerteknik kanske ibland känns som verktyg eller plattformar för servrar, hosting, PaaS och stora jättar uppe bland molnen. För mig har det däremot dom senaste 4-5 åren varit en naturlig del av mitt verktygsbälte med utvecklingsverktyg.
-
 I den här posten tänkte jag, bara som ett exempel, visa hur jag använde docker för att slippa installera grejor på min arbetsmaskin. I dom flesta fallen kanske det handlar om att slippa installera serverkomponenter såsom Elasticsearch, Redis, Sql Server (for Linux) osv, men i det här exemplet beskriver jag hur jag använder docker för att testa [Project Bicep](https://github.com/Azure/bicep) och dess CLI för att generera [ARM Templates (Azure Resource Manager)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/).
 
 # Docker (Desktop for Windows)
@@ -23,27 +21,29 @@ Eftersom jag till 100% sitter och utvecklar på en Windowsmaskin så var det en 
 
 Den absoluta merparten av tiden köra jag Linux-containrar, så även i det här exemplet. En stor anledning till att det är så är att Microsoft gör ett allt bättre jobb vad gäller plattformsoberoende verktyg och kompatibilitet i sina SDK:er och plattformar.
 
-Vad docker är och containerization innebär finns det oändlig information på Internet.
+Vad docker är och containerization innebär finns det oändligt mycket information om på Internet.
+
+Nedan följer dock en kort introduktion till Prject Bicep och ARM Templates. Det kommer eventuellt en längre post i ämnet senare, där intrycken av Bicep efter lite testande sammanfattas.
 
 # Project Bicep och ARM Templates
-Den som gett sig i kast med Azure-resurser med hjälp av [ARM Templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/) har säkert haft åsikter om hur mycket stök och strul det kan vara med att få den stora mängden json-data som måste vara helt korrekt. Det underlättas såklart om man har ett bra verktyg till hands. Jag rekommenderar ett extension till VS Code, [Azure Resource Manager (ARM) Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools). Det ger mycket stöd i form av Intellisense för stora delar av json-strukturen. Det skulle såklart vara önskvärt att förenkla så mycket som möjligt, skala bort allt "onödigt" runt omkring och kunna deklarera variabler etc. Jag blev otroligt glad när jag hörde om [Project Bicep](https://github.com/Azure/bicep) och att det skulle vara ett DSL med just dom egenskaperna.
+Den som gett sig i kast med att hantera Azure-resurser med hjälp av [ARM Templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/) har säkert haft åsikter om hur mycket stök och strul det kan vara med att få huvudet runt den stora mängden json-data som måste vara helt korrekt. Det underlättas såklart om man har ett bra verktyg till hands. Jag rekommenderar ett extension till VS Code, [Azure Resource Manager (ARM) Tools](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools). Det ger mycket stöd i form av Intellisense för stora delar av json-strukturen. Det skulle såklart vara önskvärt att förenkla så mycket som möjligt, skala bort allt "onödigt" runt omkring och kunna deklarera variabler etc. Jag blev otroligt glad när jag hörde om [Project Bicep](https://github.com/Azure/bicep) och att det skulle vara ett DSL med just dom egenskaperna. Den här avsnittet [https://channel9.msdn.com/Shows/DevOps-Lab/Project-Bicep--Next-generation-ARM-Templates](https://channel9.msdn.com/Shows/DevOps-Lab/Project-Bicep--Next-generation-ARM-Templates) av [DevOps Lab på Channel 9](https://channel9.msdn.com/Shows/DevOps-Lab) var det som fångade mitt intresse, en alldeles lysande introduktion till vad Project Bicep är och dess grundläggande egenskaper.
 
-Dom två största uppsidorna med Bicep, som jag ser det teoretiskt, är:
+Dom två största uppsidorna, som jag ser det teoretiskt, är:
 - Modularisering av resurser som förenklar återanvändande av kod.
 - En abstraktion som översätts till "vanlig" ARM-json-struktur som ger en extra validering av deklarationerna INNAN man försöker deploya till målmiljön.
 
-Med detta i tankarna planerar jag att inom kort antingen hålla en lunch-dragning om Bicep eller att skriva en bloggpost i ämnet. Nedan tänkte jag visa hur man kan köra Bicep CLI i en docker-container och på så sätt kanske locka till att använda en container i andra sammanhang där man behöver en CLI-installation men inte önskar ta det beroendet som installation på sin utvecklardator.
+Med detta i tankarna planerar jag att inom kort eventuellt hålla en lunch-dragning om Bicep eller iallafall att skriva en bloggpost i ämnet. Nedan tänkte jag visa hur man kan köra **Bicep CLI i en docker-container** och på så sätt kanske locka till att använda en container i andra sammanhang där man behöver en CLI-installation men inte önskar ta det beroendet i form av en installation på sin utvecklardator.
 
 # Bicep CLI i container
-Jag tänkte jag skulle testa Bicep och då behövs en Bicep CLI-installation, beskriven här [https://github.com/Azure/bicep/blob/main/docs/installing.md](https://github.com/Azure/bicep/blob/main/docs/installing.md). Jag kände ganska omgående att jag inte ville installera något på min utvecklarmaskin. Det var inte så att jag inte litade på installationen, jag bara ville inte. Däremot kände jag att det skulle vara kul att prova att bygga en dockercontainer, starta och ansluta till den och köra `bicep build ...` i den och på så sätt generera ARM-template-json-filen med hjälp av CLIn i containern. 
+Jag tänkte alltså att jag skulle testa Bicep och då behövdes en Bicep CLI-installation, beskriven här [https://github.com/Azure/bicep/blob/main/docs/installing.md](https://github.com/Azure/bicep/blob/main/docs/installing.md). Jag kände ganska omgående att jag inte ville installera något på min utvecklarmaskin. Det var inte så att jag inte litade på installationen, jag bara ville inte. Däremot kände jag att det skulle vara kul att prova att bygga en dockercontainer, starta och ansluta till den och köra `bicep build ...` där och på så sätt generera ARM-template-json-filen med hjälp av CLIn i containern. 
 
-Sagt och gjort, så här gjorde jag (detaljer nedan):
+Sagt och gjort, så här gjorde jag:
 - Försök hitta en base-image att bygga på => `mcr.microsoft.com/dotnet/runtime:3.1`
-- Vald image bygger på Debian, uppdatera den och installera curl => `RUN apt-get update; apt-get install -y curl`
-- Kopiera installationen av Bicep CLI, Linux-versionen => bicep installeras och OS:et konfigureras
+- Vald image bygger på Debian, uppdatera den och installera curl vilket behövdes för att nedladdning av Bicep CLI => `RUN apt-get update; apt-get install -y curl`
+- Kopiera installationsstegen, Linux-versionen => bicep installeras och OS:et konfigureras
 - Bygg imagen => `docker build -t bicep-lab .`
 - Kör igång en containerinstans och exekvera/anslut till bash => `> docker run --rm -it bicep-lab /bin/bash`
-- Prova att köra `bicep --version` ansluten till bash i containern => `Bicep CLI version 0.2.328 (a13b032755)` => **success**
+- Prova att köra `bicep --version` ansluten till bash i containern => `Bicep CLI version 0.2.328 (a13b032755)` <br>=> **success**
 
 Dockerfilen som jag byggde imagen med ser alltså ut enligt
 ```yml
