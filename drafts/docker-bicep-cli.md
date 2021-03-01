@@ -122,5 +122,62 @@ Start-kommandot av containerinstansen innehåller, förutom mountningen, två sa
 
 Det här gör att man kommer att hamna i bash-skalet i containern och man kan alltså exekvera vidare andra kommandon där, precis som om man anslutit till vilken linux-instans som helst.
 
-Jag hoppas att jag i och med detta har lockat till att försöka använda docker som ett utvecklingsverktyg, även för sådant som inte är server-mjukvara.
+# Lite extra
+Ovan verkade funka fint! Varför inte låta containern göra jobbet lite mer automatiskt i bakgrunden? Man borde väl kunna låta den reagera på förändringar i `/src/`-katalogen och då atuomatiskt köra `bicep build ...bicep`?
+
+Modifierade dockerfile enligt nedan ger det önskade beteendet:
+```yml
+FROM mcr.microsoft.com/dotnet/runtime:3.1
+
+RUN apt-get update; apt-get install -y curl
+
+# Fetch the latest Bicep CLI binary
+RUN curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+# Mark it as executable
+RUN chmod +x ./bicep
+# Add bicep to your PATH (requires admin)
+RUN mv ./bicep /usr/local/bin/bicep
+# Verify you can now access the 'bicep' command
+RUN bicep --help
+# Done!
+
+RUN apt-get install -y npm 
+RUN npm i -g watch-cli 
+
+WORKDIR /src
+ENTRYPOINT [ "watch", "-p *.bicep", "-c bicep build main.bicep" ]
+```
+Det som har kommit till är installation av npm genom `RUN apt-get install -y npm ` samt installation av npm-paketet watch genom `RUN npm i -g watch-cli`. `WORKDIR`och `ENTRYPOINT` ser till att watch körs i `/src/`-katalogen och triggas när en `.bicep`-fil förändras eller skapas. Då körs `bicep build ...`.
+Jag byggden ny image med från ovan dockerfile `docker build -t bicep-watch .` och när den körs ser det ut enligt
+```
+...\lab\bicep-docker\src> docker run -v ${pwd}:/src --rm -it bicep-watch
+Watching started
+-----> Här sparade jag om main.bicep (omdöpt functionApp.json från tidigare exempel)
+/src/main.bicep changed
+Running  bicep build main.bicep
+Finished  bicep build main.bicep
+Watching started
+```
+En listning av katalogen på min Windows-maskin ser nu ut enligt:
+```
+...\lab\bicep-docker\src> ls
+
+
+    Directory: D:\develop\lab\bicep-docker\src
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         2/22/2021   8:56 PM            353 appInsights.bicep
+-a----         2/22/2021   8:50 PM            283 appService.bicep
+-a----          3/1/2021   6:32 AM           1230 main.bicep
+-a----          3/1/2021   6:32 AM           6157 main.json
+-a----         2/23/2021   8:12 AM            519 storageAccount.bicep
+
+
+...\lab\bicep-docker\src>
+```
+Där syns den nybyggda `main.json`.
+
+Nu tänkte jag inte ta det här längre. Hoppas att jag i och med detta har lockat fler till att försöka använda docker som ett utvecklingsverktyg, även för sådant som inte är server-mjukvara.
 
