@@ -66,10 +66,10 @@ RUN bicep --help
 Det som nu återstod var att kunna komma åt dom bicep-filer som jag byggde i VS Code på min Windows-maskin. Detta gjorde jag genom att starta containern och mounta den aktuella katalogen till `/src/` i containern. 
 
 Se sekvensen av kommandon nedan:
--  före start av containern, 
-- mountning av katalogen med bicep-filer, 
-- bicep build, 
-- exit och 
+- före start av containern 
+- start och mountning av katalogen med bicep-filer 
+- `bicep build ...bicep` i containern
+- `exit` i containern 
 - kontroll så att den genererade json-filen finns i katalogen:
 
 ```
