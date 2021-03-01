@@ -5,7 +5,7 @@ date: 2021-02-18
 author: Anton Liljeberg, systemutvecklare
 header:
   overlay_image: https://www.infozone.se/wp-content/uploads/2020/10/close-up-of-hands-contemporary-website-developer-man-typing-and-code-picture-id1167467556.jpg
-  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/kom-igang-med-kafka-i-java/kafka_teaser_160_px_wide.png
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/kom-igang-med-kafka-i-java/kafka_teaser.png
 categories:
   - blog
 tags:
