@@ -125,7 +125,7 @@ Det här gör att man kommer att hamna i bash-skalet i containern och man kan al
 # Lite extra
 Ovan verkade funka fint! Varför inte låta containern göra jobbet lite mer automatiskt i bakgrunden? Man borde väl kunna låta den reagera på förändringar i `/src/`-katalogen och då atuomatiskt köra `bicep build ...bicep`?
 
-Modifierade dockerfile enligt nedan ger det önskade beteendet:
+Jag modifierade dockerfile enligt nedan i ett försöka att få det önskade beteendet:
 ```yml
 FROM mcr.microsoft.com/dotnet/runtime:3.1
 
@@ -148,8 +148,10 @@ WORKDIR /src
 ENTRYPOINT [ "watch", "-p *.bicep", "-c bicep build main.bicep" ]
 ```
 Det som har kommit till är installation av npm genom `RUN apt-get install -y npm ` samt installation av npm-paketet watch genom `RUN npm i -g watch-cli`. `WORKDIR`och `ENTRYPOINT` ser till att watch körs i `/src/`-katalogen och triggas när en `.bicep`-fil förändras eller skapas. Då körs `bicep build ...`.
-Jag byggden ny image med från ovan dockerfile `docker build -t bicep-watch .` och när den körs ser det ut enligt
-```
+
+
+Jag byggden ny image med från ovan dockerfile genom `docker build -t bicep-watch .`. Det tog lite tid eftersom npm och watch var två nya installationer i imagen. Efter en liten stund var det klar och en instans av den körs ser det ut enligt:
+```powershell
 ...\lab\bicep-docker\src> docker run -v ${pwd}:/src --rm -it bicep-watch
 Watching started
 -----> Här sparade jag om main.bicep (omdöpt functionApp.json från tidigare exempel)
@@ -159,7 +161,7 @@ Finished  bicep build main.bicep
 Watching started
 ```
 En listning av katalogen på min Windows-maskin ser nu ut enligt:
-```
+```powershell
 ...\lab\bicep-docker\src> ls
 
 
