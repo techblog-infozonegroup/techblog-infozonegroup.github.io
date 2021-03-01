@@ -154,7 +154,9 @@ Jag byggden en ny image från ovan dockerfile genom `docker build -t bicep-watch
 ```
 ...\lab\bicep-docker\src> docker run -v ${pwd}:/src --rm -it bicep-watch
 Watching started
-###---> Här sparade jag om main.bicep (omdöpt functionApp.json från tidigare exempel)
+###
+# Här sparade jag om main.bicep (omdöpt functionApp.json från tidigare exempel)
+###
 /src/main.bicep changed
 Running  bicep build main.bicep
 Finished  bicep build main.bicep
