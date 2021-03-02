@@ -6,3 +6,39 @@ excerpt: "I vår techblogg sammanfattar vi för er nyheter som sker på marknade
 header:
   overlay_image: /assets/images/close-up-on-man-hand-using-tab-pad-on-laptop-to-working-about-of-picture-id1169192820.jpg
 ---
+
+
+<html>
+<head></head>
+<body>
+  <nav>
+    <ul>
+      <li>Menu item 1</li>
+      <li>Menu item 2</li>
+      <li>Menu item 3</li>
+    </ul>
+  </nav>
+  <div class="main-content">Hello world</div>
+</body>
+</html>
+
+
+
+html>head+body>(nav>ul>li*3>{Menu item $})+.main-content>{Hello world}
+
+
+<html>
+<head></head>
+<body>
+  <nav class="main-nav" role="navigation">
+    <ul>
+      <li class="nav-item">Menu item 1</li>
+      <li class="nav-item">Menu item 2</li>
+      <li class="nav-item">Menu item 3</li>
+    </ul>
+  </nav>
+  <div class="main-content" id="main" role="main">
+    <p>Hello world</p>
+  </div>
+</body>
+</html>
