@@ -23,14 +23,14 @@ Emmet följer med Visual Studio Code vilket gör att du inte behöver installera
 Emmet har en syntax som är snarlik CSS och bygger till mycket på de operatorer som du redan idag använder i CSS:
 
 - \# för ID
-- . för klass
-- + för sibling
-- > för nästa nivå
+- \. för klass
+- \+ för sibling
+- \> för nästa nivå
 
 Men också andra operatorer som
 
 - ^ för att gå upp en nivå
-- * för att duplicera ett element
+- \* för att duplicera ett element
 - () för att gruppera element
 
 På samma sätt som man i CSS skulle skriva följande för att applicera CSS på alla list items 
