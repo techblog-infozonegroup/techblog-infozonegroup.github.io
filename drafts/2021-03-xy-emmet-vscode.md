@@ -4,7 +4,8 @@ date: 2021-03-03
 author: Andreas Hagsten, systemutvecklare
 tagline: "Öka din produktivitet i ditt webbutvecklande"
 header:
-  overlay_image: https://www.infozone.se/wp-content/uploads/2020/03/programmering-i-team.jpg
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/lego-1044891_1920.jpg
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/emmet.svg
 categories:
   - blog
 tags:
