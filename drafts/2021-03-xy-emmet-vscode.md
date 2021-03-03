@@ -14,7 +14,7 @@ tags:
   - IDE
 ---
 
-Emmet är ett produktivitetsverktyg för webbutvecklare som tar kodsnuttar, så kallade "snippets", till en helt ny nivå! Emmet är primärt riktat för dig som frekvent arbetar med HTML och CSS. I denna artikel tänker jag visa hur du kan använda Emmet i VSCode. Häng med!
+Emmet är ett produktivitetsverktyg för webbutvecklare som tar kodsnuttar, så kallade "snippets", till en helt ny nivå! Emmet är primärt riktat för dig som frekvent arbetar med HTML och CSS. I denna artikel tänker jag visa hur du kan använda [Emmet i VSCode](https://code.visualstudio.com/docs/editor/emmet). Häng med!
 
 # Syntax
 Emmet har en syntax som är snarlik CSS och bygger till stor del på de operatorer som du redan idag använder i CSS:
@@ -56,9 +56,13 @@ vilket genererar denna HTML
 </body>
 ```
 
-Rätt najs tycker jag. Det fina är att Emmet fungerar med andra filtyper än HTML, t.ex. jsx (React), php, scss, sass, less med mera. Man kan också mappa om filtyper som det inte finns stöd för, razor t.ex
+Rätt najs tycker jag. Det fina är att Emmet fungerar med andra filtyper än HTML, t.ex. jsx (React), php, scss, sass, less med mera. Man kan också mappa om filtyper som det inte finns stöd för via inställningar i VSCode. Nedan följer ett exempel för razor-filer. Inställningar hittar du genom F1 och "default settings (JSON)".
 
-```{"razor": "html"}```
+``` json
+"emmet.includeLanguages": {
+    "razor": "html"
+}
+```
 
 ## CSS
 Emmet fungerar även i CSS-filer för egenskaper och dess värden. Den kortaste formen kan användas när egenskapens värde är numeriskt, t.ex padding. I dessa fall kan man helt enkelt börja skriva på egenskapens namn, eller dess förkortning, och när VSCode föreslår egenskapen du är ute efter fylla på med det numeriska värdet. Defaultenhet används om enhet ej är angiven. 
@@ -116,4 +120,4 @@ html>head+body>(nav.main-nav[role="navigation"]>ul>li.nav-item*3>{Menu item $})+
 </html>
 ```
 
-Detta kanske är old news för många av er, men jag hade inte insett att detta stöd finns i VSCode förens nyligen. Jag tycker att detta verkar riktigt bra och kommer testa på det nästa gång jag sitter och utvecklar en Webbapplikation. 
+Detta kanske är old news för många av er, men jag insåg alldeles nyligen att detta stöd finns i VSCode. Jag tycker att detta verkar riktigt bra och kommer testa på det nästa gång jag sitter och utvecklar en webbapplikation. 
