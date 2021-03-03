@@ -115,3 +115,5 @@ html>head+body>(nav.main-nav[role="navigation"]>ul>li.nav-item*3>{Menu item $})+
     </body>
 </html>
 ```
+
+Detta kanske är old news för många av er, men jag hade inte insett att detta stöd finns i VSCode förens nyligen. Jag tycker att detta verkar riktigt bra och kommer testa på det nästa gång jag sitter och utvecklar en Webbapplikation. 
