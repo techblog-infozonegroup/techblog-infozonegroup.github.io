@@ -1,5 +1,5 @@
 ---
-title: "Test av draft"
+title: "Stabilisera genom att ta kontrollen på din happy, sad och error path"
 date: 2021-01-16
 author: Fredde, systemutvecklare
 tagline: "Kod som är svår att förvalta är lätt att skriva, men det betyder inte att det är svårt att skriva kod som är mycket lättare att förvalta. Om man håller koll på sina 'happy paths', 'sad paths' och sin felhantering så har man kommit en bra bit påväg!"
