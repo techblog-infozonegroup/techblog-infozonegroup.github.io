@@ -40,9 +40,9 @@ Ett par uppmuntrande ord på vägen och så lite förmaning också:
 **Var inte rädd att refaktorera, ändra implementation men *ändra inte funktion*.**
 
 # Exempel
-Jag tänkte visa en Azure Function App skriven i C#-version. Den är implementerad i ett, vad jag tror, ganska typiskt mönster för en serverless funktion.
+Jag tänkte visa en Azure Function App skriven i C#-version. Den är implementerad i ett, vad jag tror, ganska typiskt mönster för en serverless funktion och borde vara tillräckligt stor för att påvisa vad lite refaktorering kan göra.
 
-## C#
+## Före, under och efter
 Så här skulle en implementation kunna se, som i sig är liten och hanterbar, men om man låter den leva och växa en tid framöver, alltså få fler funktioner, så kan den bli svår att hantera ganska snart:
 
 ```csharp
