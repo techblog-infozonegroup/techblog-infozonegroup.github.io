@@ -35,6 +35,10 @@ Jag skulle vilja ta med följande två påståenden in i avsnitten med kodexempe
 - har man koll på dom här tre punkterna så kommer man höja förvaltningsbarheten i den skrivna kod avservärt
 - känslan är att det är väldigt lätt att göra avsteg från ovan när man utvecklar serverless
 
+Ett par uppmuntrande ord på vägen och så lite förmaning också:
+
+**Var inte rädd att refaktorera, ändra implementation men *ändra inte funktion*.**
+
 # Exempel
 Jag tänkte visa en Azure Function App skriven i C#-version. Den är implementerad i ett, vad jag tror, ganska typiskt mönster för en serverless funktion.
 
