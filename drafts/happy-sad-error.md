@@ -4,7 +4,8 @@ date: 2021-01-16
 author: Fredde, systemutvecklare
 tagline: "Kod som är svår att förvalta är lätt att skriva, men det betyder inte att det är svårt att skriva kod som är mycket lättare att förvalta. Om man håller koll på sina 'happy paths', 'sad paths' och sin felhantering så har man kommit en bra bit påväg!"
 header:
-  overlay_image: https://www.infozone.se/wp-content/uploads/2020/03/programmering-i-team.jpg
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/happy-sad-error/wide_traffic_light.jpg
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/happy-sad-error/teaser-traffic_light.jpg
 categories:
   - blog
 tags:
