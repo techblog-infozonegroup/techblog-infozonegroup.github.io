@@ -1,7 +1,7 @@
 ---
 title: "Stabilisera genom att ta kontrollen på din happy, sad och error path"
-date: 2021-01-16
-author: Fredde, systemutvecklare
+date: 2021-03-10
+author: Fredde Johnsson, systemutvecklare
 tagline: "Kod som är svår att förvalta är lätt att skriva, men det betyder inte att det är svårt att skriva kod som är mycket lättare att förvalta. Om man håller koll på sina 'happy paths', 'sad paths' och sin felhantering så har man kommit en bra bit påväg!"
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/happy-sad-error/wide_traffic_light.jpg
