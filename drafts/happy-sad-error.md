@@ -80,7 +80,7 @@ public class CustomerService
 ```
 
 Vid en första anblick kan den se bra ut. Vi tittar efter:
-- den utnyttjar dependency injection, HttpClient och ILogger
+- den utnyttjar dependency injection, `HttpClient` och `ILogger`
 - den har någon slags felhantering i och med try-catch
 - den har bra stöd för loggning om något skulle gå fel
 
@@ -246,10 +246,10 @@ public class Customers
 
 ## Övriga kodkommentarer
 Båda lösningarna, före och efter refaktor, finns att [titta på här](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp). Man kan sammanfatta jobbet med refaktoreringen som gjorts såhär:
-- felhantering i form av att fånga fel just där dom kastas gör beroenden sundare
-- returnera ett tydligt resultat vid lyckad exekvering/invokering
-- returnera ett tydligt resultat vid ej lyckad exekvering/invokering
-- returnera samma typ i alla ovan fallen för att förenkla för konsumenterna
+- felhantering i form av att **fånga fel just där dom kastas** gör beroenden sundare
+- returnera ett **tydligt resultat vid lyckad** exekvering/invokering
+- returnera ett **tydligt resultat vid ej lyckad** exekvering/invokering
+- returnera **samma typ** i alla ovan fallen för att förenkla för konsumenterna
 
 => **En konsument ska inte behöva veta om mer än kontraktet som dess beroende exponerar. Kontraktet bör innehålla en tydlig happy path, en tydlig sad path OCH gömma implementationsdetaljer kring felhantering**.
 
