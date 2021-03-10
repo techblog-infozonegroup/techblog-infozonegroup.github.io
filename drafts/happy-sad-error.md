@@ -83,7 +83,7 @@ public class CustomerService
 
 Vid en första anblick kan den se bra ut. Vi tittar efter:
 - den utnyttjar dependency injection, HttpClient och ILogger
-- den har byggt någon slags felhantering i och med try-catch
+- den har någon slags felhantering i och med try-catch
 - den har bra stöd för loggning om något skulle gå fel
 
 Det som gör den här implementation en smula svår att hantera är dom tre utgångarna från funktionen, en *happy path* där ett kundobjekt returneras, en *sad path* där null returneras och sen har vi en felhantering där felet som fångats loggas och kastas vidare till anroparen.
@@ -112,7 +112,7 @@ public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "
     }
 }
 ```
-Vad händer här? Anropet till servicen kan ge lyckat resultat, null eller så kan ett fel kastas, dvs precis samma utseende som inne i servicen. Så länge det här är den enda funktionen som ska byggas i det här api:et så kan den såklart hålla, men så fort vi ska lägga till en ny funktion, api-endpoint, så hamnar vi i ett lite svårare läge. Vi kanske måste lägga till ytterligare ett anrop till http-api:et som servicen konsumerar via http-klienten? Då måste vi även hantera dess returer, happy och sad paths och kastade fel. Ska vi inte börja med att bryta ut den interaktionen till ett bättre ställe och göra den robust?
+Vad händer här? Anropet till servicen kan ge lyckat resultat, null eller så kan ett fel kastas, dvs precis samma utseende som inne i servicen. Så länge det här är den enda funktionen som ska byggas i det här api:et så kan den såklart hålla, men så fort vi ska lägga till en ny funktion, api-endpoint, så hamnar vi i ett lite svårare läge. Vi kanske måste lägga till ytterligare ett anrop till http-api:et som servicen konsumerar via http-klienten? Då måste vi även hantera dess returer, happy och sad paths och kastade fel. Ska vi inte försöka göra den här lösningen robustare?
 
 Låt oss arbeta igenom dom tre punkterna som är ämnet för posten. 
 Vi börjar bakifrån och försöker få kontroll på felhanteringen i servicen som tvingas fram av http-klienten. Vi gör det genom att bryta loss en ny service vars enda ansvar är att se till att göra ett http-anrop, hantera resultatet och felen som kan uppkomma. 
