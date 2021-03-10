@@ -10,7 +10,8 @@ categories:
   - blog
 tags:
   - systemutveckling
-  - förvaltning
+  - dotnet
+  - c#
 ---
 Som grund tar vi och tittar på [AfterRefactor-projektet i master-branchen i Github-repot här](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/tree/master/AfterRefactor). I branchen [*usage_of_tuples_between_services* här](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/tree/usage_of_tuples_between_services/AfterRefactor) har klasserna ServiceResult och HttpResult ersatts med tuples.
 
