@@ -2,7 +2,7 @@
 title: "Stabilisera genom att ta kontrollen på din happy, sad och error path"
 date: 2021-03-10
 author: Fredde Johnsson, systemutvecklare
-tagline: "Kod som är svår att förvalta är lätt att skriva, men det betyder inte att det är svårt att skriva kod som är mycket lättare att förvalta. Om man håller koll på sina 'happy paths', 'sad paths' och sin felhantering så har man kommit en bra bit påväg!"
+tagline: "Kod som är svår att förvalta är lätt att skriva, men det betyder inte att det är svårt att skriva kod som är mycket lättare att förvalta. Om man håller koll på sina 'happy paths', 'sad paths' och sin felhantering så har man kommit en bra bit på väg!"
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/happy-sad-error/wide_traffic_light.jpg
   teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/happy-sad-error/teaser-traffic_light.jpg
@@ -12,16 +12,16 @@ tags:
   - systemutveckling
   - förvaltning
 ---
-Den här posten bygger på egna erfarenheter och upplevelser vad gäller förvaltning av kod eller försök att skapa förvaltningsbar kod. Slutsatserna är mina egna, en del kanske inte stämmer överens med totalt korrekt koddesign eller designmönster. Målet med posten är dock att vara helt mönsteragnostisk i bemärkelsen att tankarna kan appliceras oberoende av valt mönster. 
+Den här posten bygger på egna erfarenheter och upplevelser vad gäller förvaltning av kod eller försök att skapa förvaltningsbar sådan. Slutsatserna är mina egna, en del kanske inte stämmer överens med totalt korrekt koddesign eller designmönster. Målet med posten är dock att vara helt mönsteragnostisk i bemärkelsen att tankarna kan appliceras oberoende av valt mönster. 
 
 Vill man sortera in idéerna i något fack så skulle dom passa väldigt bra i S:et i S.O.L.I.D. Läs om SOLID här [https://en.wikipedia.org/wiki/SOLID](https://en.wikipedia.org/wiki/SOLID).
 
 # Bakgrund och problem
-Jag har vid några tillfällen tidigare skrivit poster i ämnet förvaltning av kod, läs här om [gammal kod](http://blog.headlight.se/ar-gammal-kod-alltid-dalig-kod/) och här om [val av mönster](http://blog.headlight.se/alla-dessa-val-av-monster/). Erfaranheten av gammal kod, nyskriven kod, kod skriven av både juniora och seniora utvecklare, kod som jag själv har skrivit, är att man ganska ofta kan hitta konstruktioner som är en genväg eller ett avsteg från det valda mönstret. Om flera utvecklare har deltagit i kodskrivandet, vilket är det absolut vanligaste, så ser man ganska tydligt olika stilar och särdrag i koden som gör att man kan se tydliga skillnader. Koden man skriver har något som kan liknas vid vanlig handstil, varje individ har en unik stil.
+Jag har vid några tillfällen tidigare skrivit poster i ämnet förvaltning av kod, läs här om [gammal kod](http://blog.headlight.se/ar-gammal-kod-alltid-dalig-kod/) och här om [val av mönster](http://blog.headlight.se/alla-dessa-val-av-monster/). Erfaranheten av gammal kod, nyskriven kod, kod skriven av både juniora och seniora utvecklare och kod som jag själv har skrivit, är att man ganska ofta kan hitta konstruktioner som är en genväg eller ett avsteg från det valda mönstret. Om flera utvecklare har deltagit i kodskrivandet, vilket är det absolut vanligaste, så ser man ganska tydligt olika stilar och särdrag i koden som gör att man kan se tydliga skillnader. Koden man skriver har något som kan liknas vid vanlig handstil, varje individ har en unik stil.
 
 **Inget ont om olika stilar! Jag uppskattar verkligen skillnader i stilar och för min del är det ett sätt att utvecklas i min egen stil att skriva kod.**
 
-Det som jag däremot har problem med är att ibland hamnar man i situationer där man INTE KAN ändra kod utan att stora delar av funktionen i aktuellt system "går sönder". Det kan handla om beroenden mellan olika komponenter, klasser eller moduler, men jag vill påstå att det i dom flesta fallen beror på *ett icke avgränsat ansvar hos enskilda komponenter*. Effekterna av detta gör att komponenter får osunda förhållanden till sina omkringliggande diton. Vad är det som gör förhållandena osunda? Jo, det handlar väldigt ofta om olika retur-vägar i komponenten, vad returnerar komponenten vid lyckats jobb, ej lyckat jobb och i felsituationer?
+Det som jag däremot har problem med är att ibland hamnar man i situationer där man INTE KAN ändra kod utan att stora delar av funktionen i aktuellt system "går sönder". Det kan handla om beroenden mellan olika komponenter, klasser eller moduler, men jag vill påstå att det i dom flesta fallen beror på *ett icke avgränsat ansvar hos enskilda komponenter*. Effekterna av detta gör att komponenter får osunda förhållanden till sina omkringliggande diton. Vad är det som gör förhållandena osunda? Jo, det handlar väldigt ofta om olika retur-vägar i komponenten, vad returnerar komponenten vid lyckat jobb, ej lyckat jobb och i felsituationer?
 
 För att formalisera bakgrunden till posten så skulle man kunna koka ner problemen ovan till:
 
@@ -32,7 +32,7 @@ För att formalisera bakgrunden till posten så skulle man kunna koka ner proble
 
 Jag skulle vilja ta med följande två påståenden in i avsnitten med kodexempel:
 
-- har man koll på dom här tre punkterna så kommer man höja förvaltningsbarheten i den skrivna kod avservärt
+- har man koll på dom här tre punkterna så kommer man höja förvaltningsbarheten i den skrivna koden avservärt
 - känslan är att det är väldigt lätt att göra avsteg från ovan när man utvecklar serverless
 
 Ett par uppmuntrande ord på vägen och så lite förmaning också:
@@ -40,7 +40,7 @@ Ett par uppmuntrande ord på vägen och så lite förmaning också:
 **Var inte rädd att refaktorera, ändra implementation men *ändra inte funktion*.**
 
 # Exempel
-Jag tänkte visa en Azure Function App skriven i C#-version. Den är implementerad i ett, vad jag tror, ganska typiskt mönster för en serverless funktion och borde vara tillräckligt stor för att påvisa vad lite refaktorering kan göra.
+Jag tänkte visa en Azure Function App skriven i C#. Den är implementerad i ett, vad jag tror, ganska typiskt mönster för en serverless funktion och borde vara tillräckligt stor för att påvisa vad lite refaktorering kan göra.
 
 ## Före, under och efter
 Så här skulle en implementation kunna se, som i sig är liten och hanterbar, men om man låter den leva och växa en tid framöver, alltså få fler funktioner, så kan den bli svår att hantera ganska snart:
