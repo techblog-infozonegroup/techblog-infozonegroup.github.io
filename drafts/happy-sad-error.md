@@ -244,7 +244,7 @@ public class Customers
     }
 }
 ```
-> Ja, vi antar att customer-objektets state-property innehåller en giltig http-status-kod i fallet då det är skilt från 0 (noll).
+> Ja, vi antar att customer-objektets state-property innehåller en giltig http-statuskod i fallet då det är skilt från 0 (noll).
 
 ## Övriga kodkommentarer
 Båda lösningarna, före och efter refaktor, finns att [titta på här](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp). Man kan sammanfatta jobbet med refaktoreringen som gjorts såhär:
@@ -258,4 +258,4 @@ Båda lösningarna, före och efter refaktor, finns att [titta på här](https:/
 # Slutord
 Hoppas en del av ovanstående resonemang kan hjälpa dig och ditt team i det dagliga arbetet med utveckling och förvaltning av kod. Det krävs oftast inte så stora ombyggnationer för att stabilisera existerande kod och funktion, det är egentligen bara frågan om att bryta isär till mindre delar att hantera och på så sätt tydliggöra ingående delars ansvar.
 
-Jag vill även, ännu en gång, poängtera att tankarna beskrivna här i posten inte är knutna till teknik, mönster eller språk. Idén till posten föddes faktiskt i samband med att en förändring skulle göras i en Vue-applikation skriven i javascript, alltså ganska långt ifrån exemplet jag använder här, en Azure Function backend i C#.
+Jag vill ännu en gång poängtera att tankarna beskrivna här i posten inte är knutna till teknik, mönster eller språk. Idén till posten föddes faktiskt i samband med att en förändring skulle göras i en Vue-applikation skriven i javascript, alltså ganska långt ifrån exemplet jag använder här, en Azure Function-backend skriven i C#.
