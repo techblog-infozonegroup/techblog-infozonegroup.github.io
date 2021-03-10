@@ -232,4 +232,6 @@ Det är inte alltid som tupler är lämpliga att använda, det kan bli svårt at
 
 Notera att man inte på något sätt förlora stöd för debugging eller ökar risken för fel i runtime. Man nyttjar fortfarande hårt typade objekt.
 
+Inspirationen till att utforska tuples litegrann uppkom i samband med användning av object destructuring i javascript, en av javascripts absolut snyggaste kodkonstruktioner. Läs mer om det [här](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) och [här](https://techblogg.infozone.se/blog/node-and-javascript-method-signatures/).
+
 Hoppas det här kan inspirera till att massera kod och se hur det blir efteråt! För min del är kodmassage ett av dom klart bästa sätten att lära mig nya saker, nya konstruktioner i språken och försöka förbättra existerande kod i olika implementationer.
