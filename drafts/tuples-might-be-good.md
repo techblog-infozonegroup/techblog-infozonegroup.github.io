@@ -183,6 +183,7 @@ public class CustomerService
 }
 
 // Customers.cs 
+<<<<<<< Updated upstream
 ```
 
 Här ser vi:
@@ -196,6 +197,8 @@ Här ser vi:
 Ovan tuple-hantering i `CustomerService` "smittar" såklart av sig på funktionen i [`Customers`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs) som blir väldigt ren:
 
 ```csharp
+=======
+>>>>>>> Stashed changes
 [FunctionName("GetCustomer")]
 public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "api/customers/{id}")] HttpRequest req, int id, ILogger log)
 {
@@ -209,6 +212,21 @@ public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "
 }
 ```
 
+<<<<<<< Updated upstream
+=======
+Här ser vi, i CustomerService:
+-  två default-värdeshanteringar, överlagrade med minimalt textuellt fingeravtryck. 
+- dom tre intressanta värdena från _httpService.Get används på ett väldigt tydligt sätt: 
+   - kontroll om lyckat http-serviceanrop via `if(success)` 
+   - parsning av body vid konstruktion av en Customer-instans `new Customer(body)`
+   - retur av felkod i form av http-statuskoden `(int)statusCode`
+
+I Customers ser vi då att tuple-hanteringen "smittar" av sig på funktionen [`GetCustomer`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs). Smittan är dock inget som gör skada utan snarare tvärtom. I mina ögon blir den väldigt ren och tydlig.
+
+> För att kunna returnera på det sättet som görs i Customers måste man se till att man har stöd i csprojfilen, genom att lägga till `<LangVersion>9</LangVersion>` (latest fungerar också, i VS 2019) i `Project/PropertyGroup`-taggen.
+
+
+>>>>>>> Stashed changes
 # Sammanfattning
 Det är inte alltid som tupler är lämpliga att använda, det kan bli svårt att läsa kod, speciellt om man inte använder namngivna egenskaper på tuplen. För att det ska bli läsbart i konsumenten av tuplen så är det mer eller mindre ett måste.
 
