@@ -33,7 +33,7 @@ Jag skulle vilja ta med följande två påståenden in i avsnitten med kodexempe
 - har man koll på dom här tre punkterna så kommer man höja förvaltningsbarheten i den skrivna koden avservärt
 - känslan är att det är väldigt lätt att göra avsteg från ovan när man utvecklar serverless
 
-Ett par uppmuntrande ord på vägen och så lite förmaning också:
+Det tillsammans med par uppmuntrande ord på vägen (och en liten förmaning):
 
 **Var inte rädd att refaktorera, ändra implementation men *ändra inte funktion*.**
 
