@@ -145,18 +145,17 @@ public async Task<(Customer customer, int status)> GetCustomerById(int id)
     
     if (success)
     {
-        var customer = new Customer(body);
-        ...
+        return _(new Customer(body));
     }
 }
 ```
 
-Det vi kan se här är att tuple-returen från HttpService direkt kan tilldelas lokala variabler och det blir ganska elegant syntax i `if(success) ...` och `var customer = new Customer(body);`.
+Det vi kan se här är att tuple-returen från HttpService direkt kan tilldelas lokala variabler och det blir ganska elegant syntax i `if(success) ...` och `new Customer(body)`.
 
-> Notera att även CustomerService i usage_of_tuples_between_services branch ovan returnerar en tuple `async Task<(Customer customer, int status)>`, se nedan.
+> Notera att även CustomerService i usage_of_tuples_between_services branch ovan numera returnerar en tuple `async Task<(Customer customer, int status)>`.
 
 ## CustomerService som använder ***tuple***
-Vi hoppar över att titta i detalj på hur [`CustomerService`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/master/AfterRefactor/Services/CustomerService.cs) ser ut i master-branchen, när den hanterar [`ServiceResult`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/master/AfterRefactor/Services/ServiceResult.cs) och går direkt på hur den ser ut vid användande av tuple, tillsammans med [`Customers.cs`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs) som använder servicen:
+Vi hoppar över att titta i detalj på hur [`CustomerService`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/master/AfterRefactor/Services/CustomerService.cs) ser ut i master-branchen, när den hanterar [`ServiceResult`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/master/AfterRefactor/Services/ServiceResult.cs) och går direkt på hur den ser ut vid nyttjande av tupler, tillsammans med [`Customers.cs`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs) som konsumerar servicen:
 
 ```csharp
 // CustomerService.cs
@@ -197,13 +196,13 @@ public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "
 ```
 
 Här ser vi, i `CustomerService`:
--  två default-värdeshanteringar, överlagrade med minimalt textuellt fingeravtryck. 
+-  två default-värdeshanteringar, överlagrade med minimalt textuellt avtryck 
 - dom tre intressanta värdena från _httpService.Get används på ett väldigt tydligt sätt: 
    - kontroll om lyckat http-serviceanrop via `if(success)` 
    - parsning av body vid konstruktion av en Customer-instans `new Customer(body)`
    - retur av felkod i form av http-statuskoden `(int)statusCode`
 
-I `Customers` ser vi då att tuple-hanteringen "smittar" av sig på funktionen [`GetCustomer`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs). Smittan är dock inget som gör skada utan snarare tvärtom. I mina ögon blir den väldigt ren och tydlig.
+I `Customers` ser vi att tuple-hanteringen "smittar" av sig på Azure-funktionen [`GetCustomer`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs). Smittan är dock inget som gör skada utan snarare tvärtom. I mina ögon blir den väldigt ren och tydlig.
 
 > För att kunna returnera på det sättet som görs i Customers måste man se till att man har stöd i csprojfilen, genom att lägga till `<LangVersion>9</LangVersion>` (latest fungerar också, i VS 2019) i `Project/PropertyGroup`-taggen.
 
