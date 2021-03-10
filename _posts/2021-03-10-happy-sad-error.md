@@ -1,5 +1,5 @@
 ---
-title: "Stabilisera genom att ta kontrollen på din happy, sad och error path"
+title: "Stabilisera genom att ta kontrollen över din happy, sad och error path"
 date: 2021-03-10
 author: Fredde Johnsson, systemutvecklare
 tagline: "Kod som är svår att förvalta är lätt att skriva, men det betyder inte att det är svårt att skriva kod som är mycket lättare att förvalta. Om man håller koll på sina 'happy paths', 'sad paths' och sin felhantering så har man kommit en bra bit på väg!"
