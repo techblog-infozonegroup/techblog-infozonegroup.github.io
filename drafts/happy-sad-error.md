@@ -251,7 +251,7 @@ Båda lösningarna, före och efter refaktor, finns att [titta på här](https:/
 - returnera ett **tydligt resultat vid ej lyckad** exekvering/invokering
 - returnera **samma typ** i alla ovan fallen för att förenkla för konsumenterna
 
-=> **En konsument ska inte behöva veta om mer än kontraktet som dess beroende exponerar. Kontraktet bör innehålla en tydlig happy path, en tydlig sad path OCH gömma implementationsdetaljer kring felhantering**.
+=> **En konsument ska inte behöva veta mer än kontraktet som dess beroende exponerar. Kontraktet bör innehålla en tydlig happy path, en tydlig sad path OCH gömma implementationsdetaljer kring felhantering**.
 
 # Slutord
 Hoppas en del av ovanstående resonemang kan hjälpa dig och ditt team i det dagliga arbetet med utveckling och förvaltning av kod. Det krävs oftast inte så stora ombyggnationer för att stabilisera existerande kod och funktion, det är egentligen bara frågan om att bryta isär till mindre delar att hantera och på så sätt tydliggöra ingående delars ansvar.
