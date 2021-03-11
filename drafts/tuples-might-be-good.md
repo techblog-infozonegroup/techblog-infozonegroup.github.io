@@ -1,6 +1,6 @@
 ---
 title: "Tuples före klasser för 'privat bruk'"
-date: 2021-03-11
+date: 2021-03-12
 author: Fredde Johnsson, systemutvecklare
 tagline: "För att skapa tydlighet och stringens mellan olika lager i ett system implementation används förhoppningsvis typape retur-objekt mellan services. På så sätt upprätthålls en bra fasad. Låt oss kolla på hur man skulle kunna använda tupler istället för att uppnå ungefär samma sak"
 header:
