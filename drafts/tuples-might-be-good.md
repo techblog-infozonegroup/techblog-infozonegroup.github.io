@@ -79,7 +79,7 @@ och
 ...
 return new HttpResult(false, null, HttpStatusCode.BadRequest);
 ```
-oavsett om http-anropet lyckades eller inte och det ska vi såklart fortsätta med även i fallet när vi nyttjar tupler istället.
+oavsett om http-anropet lyckas eller inte och det ska vi såklart fortsätta med även i fallet när vi nyttjar tupler istället.
 
 ## HttpService som använder ***tuple***
 Vi tittar nu på hur det skulle kunna se ut om vi använder tupler istället, vilket kommer att påverka konsumenten av `HttpService` också såklart:
@@ -127,6 +127,7 @@ Det som kan vara värt att belysa här är:
 
 Hur slår det här mot konsumenterna av `HttpService`? Låt oss titta på före och efter:
 ```csharp
+///////////////////////////////////////
 // CustomerService.cs in master branch, before tuple refactor
 public async Task<ServiceResult<Customer>> GetCustomerById(int id)
 {
@@ -156,9 +157,10 @@ Det vi kan se här är att tuple-returen från HttpService direkt kan tilldelas 
 > Notera att även CustomerService i usage_of_tuples_between_services branch ovan numera returnerar en tuple `async Task<(Customer customer, int status)>`.
 
 ## CustomerService som använder ***tuple***
-Vi hoppar över att titta i detalj på hur [`CustomerService`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/master/AfterRefactor/Services/CustomerService.cs) ser ut i master-branchen, när den hanterar [`ServiceResult`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/master/AfterRefactor/Services/ServiceResult.cs) och går direkt på hur den ser ut vid nyttjande av tupler, tillsammans med [`Customers.cs`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs) som konsumerar servicen:
+Vi hoppar över att titta i detalj på hur [`CustomerService`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/master/AfterRefactor/Services/CustomerService.cs) ser ut i master-branchen, när den hanterar [`ServiceResult`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/master/AfterRefactor/Services/ServiceResult.cs) och går istället direkt på hur den ser ut vid nyttjande av tupler, tillsammans med [`Customers.cs`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs) som konsumerar servicen:
 
 ```csharp
+///////////////////////////////////////
 // CustomerService.cs
 public class CustomerService
 {
@@ -182,6 +184,7 @@ public class CustomerService
     static (Customer customer, int status) _(Customer customer) => (customer, 0);
 }
 
+///////////////////////////////////////
 // Customers.cs 
 [FunctionName("GetCustomer")]
 public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "api/customers/{id}")] HttpRequest req, int id, ILogger log)
@@ -203,16 +206,16 @@ Här ser vi, i `CustomerService`:
    - parsning av body vid konstruktion av en Customer-instans `new Customer(body)`
    - retur av felkod i form av http-statuskoden `(int)statusCode`
 
-I `Customers` ser vi att tuple-hanteringen "smittar" av sig på Azure-funktionen [`GetCustomer`](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs). Smittan är dock inget som gör skada utan snarare tvärtom. I mina ögon blir den väldigt ren och tydlig.
+I `Customers` ser vi att tuple-hanteringen "smittar" av sig på [`GetCustomer` i Customers.cs](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/blob/usage_of_tuples_between_services/AfterRefactor/Customers.cs). Smittan är dock inget som gör skada utan snarare tvärtom. I mina ögon blir den väldigt ren och tydlig.
 
 > För att kunna returnera på det sättet som görs i Customers måste man se till att man har stöd i csprojfilen, genom att lägga till `<LangVersion>9</LangVersion>` (latest fungerar också, i VS 2019) i `Project/PropertyGroup`-taggen.
 
 
 # Sammanfattning
-Det är inte alltid som tupler är lämpliga att använda, det kan bli svårt att läsa kod, speciellt om man inte använder namngivna egenskaper på tuplen. För att det ska bli läsbart i konsumenten av tuplen så är det mer eller mindre ett måste.
+Det är inte alltid som tupler är lämpliga att använda, det kan bli svårt att läsa kod, speciellt om man inte använder namngivna egenskaper på tuplen. För att det ska bli läsbart i konsumenten av tuplen så är just det mer eller mindre ett måste.
 
-Notera att man inte på något sätt förlora stöd för debugging eller ökar risken för fel i runtime. Man nyttjar fortfarande hårt typade objekt.
+Notera att man inte på något sätt förlorar stöd för debugging eller ökar risken för fel i runtime. Man nyttjar fortfarande hårt typade objekt.
 
 Inspirationen till att utforska tuples litegrann uppkom i samband med användning av object destructuring i javascript, en av javascripts absolut snyggaste kodkonstruktioner. Läs mer om det [här](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) och [här](https://techblogg.infozone.se/blog/node-and-javascript-method-signatures/).
 
-Hoppas det här kan inspirera till att massera kod och se hur det blir efteråt! För min del är kodmassage ett av dom klart bästa sätten att lära mig nya saker, nya konstruktioner i språken och försöka förbättra existerande kod i olika implementationer.
+Hoppas det här kan inspirera till att massera kod och se hur det blir efteråt! För min del är kodmassage ett av dom klart bästa sätten att lära mig nya saker, nya konstruktioner i språken och försöka förbättra existerande kod och implementationer.
