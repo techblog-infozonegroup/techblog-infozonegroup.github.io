@@ -13,7 +13,7 @@ tags:
   - dotnet
   - c#
 ---
-Som grund för den här post tittar vi på AfterRefactor-projektet i  `master`-branchen i Github-repot [här](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/tree/master/AfterRefactor). I branchen `usage_of_tuples_between_services` [här](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/tree/usage_of_tuples_between_services/AfterRefactor) har klasserna ServiceResult och HttpResult ersatts med tupler.
+Som grund för den här posten tittar vi på AfterRefactor-projektet i  `master`-branchen i Github-repot [här](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/tree/master/AfterRefactor). I branchen `usage_of_tuples_between_services` [här](https://github.com/Fjeddo/HappyPathSadPathErrorHandling.CSharp/tree/usage_of_tuples_between_services/AfterRefactor) har klasserna ServiceResult och HttpResult ersatts med tupler.
 
 Låt oss titta på skillnaderna och några små hjälpsamma funktioner.
 
@@ -71,7 +71,7 @@ public class HttpResult
 }
 ```
 
-Vi ser ovan att vi returnerar ALLTID ett HttpResult-objekt i och med 
+Vi ser ovan att vi **alltid** returnerar ett HttpResult-objekt i och med 
 ```csharp
 // on success
 return new HttpResult(success, body, status);
