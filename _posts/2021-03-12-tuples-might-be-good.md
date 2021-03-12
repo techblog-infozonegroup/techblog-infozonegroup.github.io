@@ -1,5 +1,5 @@
 ---
-title: "Tuples före klasser för 'privat bruk'"
+title: "Tuples före klasser kanske är bra?"
 date: 2021-03-12
 author: Fredde Johnsson, systemutvecklare
 tagline: "För att skapa tydlighet och stringens mellan olika lager i ett system används förhoppningsvis typade retur-objekt mellan dessa. På så sätt upprätthålls en bra fasad. Låt oss kolla på hur man skulle kunna använda tupler istället för instanser av klasser för att uppnå samma sak."
