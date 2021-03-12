@@ -55,7 +55,7 @@ public class HttpService
 }
 
 ///////////////////////////////////////
-// from HttpResult.cs
+// HttpResult.cs
 public class HttpResult
 {
     public HttpResult(bool success, JObject body, HttpStatusCode status)
@@ -127,7 +127,7 @@ Det som kan vara värt att belysa här är:
 Hur påverkar det här mot konsumenterna av `HttpService`? Låt oss titta på före och hur det skulle kunna se ut efter:
 ```csharp
 ///////////////////////////////////////
-// CustomerService.cs in master branch, before tuple refactor
+// from CustomerService.cs in 'master' branch, before tuple refactor
 public async Task<ServiceResult<Customer>> GetCustomerById(int id)
 {
     var response = await _httpService.Get($"https://reqres.in/api/users/{id}");
@@ -141,7 +141,7 @@ public async Task<ServiceResult<Customer>> GetCustomerById(int id)
 }
 
 ///////////////////////////////////////
-// CustomerService.cs handling a tuple return value from HttpService
+// from CustomerService.cs handling a tuple return value from HttpService
 public async Task<ServiceResult<Customer>> GetCustomerById(int id)
 {
     var (success, body, statusCode) = await _httpService.Get($"https://reqres.in/api/users/{id}");
@@ -164,7 +164,7 @@ Vi hoppar över att titta på hur [`CustomerService`](https://github.com/Fjeddo/
 
 ```csharp
 ///////////////////////////////////////
-// CustomerService.cs
+// from CustomerService.cs in 'usage_of_tuples_between_services' branch
 public class CustomerService
 {
     // ctor with DI excluded here
@@ -188,7 +188,7 @@ public class CustomerService
 }
 
 ///////////////////////////////////////
-// Customers.cs 
+// from Customers.cs in 'usage_of_tuples_between_services' branch
 [FunctionName("GetCustomer")]
 public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "api/customers/{id}")] HttpRequest req, int id, ILogger log)
 {
