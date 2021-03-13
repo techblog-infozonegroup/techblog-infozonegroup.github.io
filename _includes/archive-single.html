@@ -11,8 +11,8 @@
 {% endif %}
 
 <div class="{{ include.type | default: 'list' }}__item">
-  <article class="archive__item qwerty" itemscope itemtype="https://schema.org/CreativeWork">
-    {% if post.header.teaser %}
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    {% if post.header.teaser and include.type != 'grid' %}
       <div class="archive__item-teaser">
         <img src="{{ post.header.teaser }}" alt="">
       </div>
