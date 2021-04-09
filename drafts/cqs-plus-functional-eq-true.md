@@ -30,3 +30,12 @@ I senaste kunduppdraget har kodandet varit till stor del fokuserat på serverles
 Men! Det finns ett stort MEN här. Det känns trots allt viktigt att hålla stringensen i sin kod, att följa ett mönster som gör koden robust och testbar och i och med det även förvaltningsbar över tid. Just nu är mitt favoritmönster CQS, [Command-Query separation](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation). Det är relativt lättviktigt och jag tycker att det passar bra när man utvecklar Azure Functions. Jag gillar även paradigmen [functional programming](https://en.wikipedia.org/wiki/Functional_programming), en [deklarativ stil](https://en.wikipedia.org/wiki/Declarative_programming) att skriva källkod. Denna stil sägs ofta vara motsatsen till [imperativ programming](https://en.wikipedia.org/wiki/Imperative_programming). CQS klassas som ett imperativt mönster, så hur kan man kombinera CQS med functional då? Låt oss försöka! 
 
 Men först lite basics rörande CQS och functional programming.
+
+# CQS-pattern
+CQS-mönstrets grund består av två grundläggande egenskaper:
+- En **Query** ska **enbart returnera data**, ALDRIG modifiera
+- Ett **Command utför en operation** och FÅR modifiera data
+
+Dom här egenskaperna är lätta att förhålla sig till så länge man bygger system eller tjänster med väldigt enkla domäner och modeller. Att ha funktioner som enbart returnerar data, det vill säga queries, är oftast inte speciellt svåra bygga och hålla stringensen i. Däremot kan det vara svårt att avgränsa en modifierande operation på samma sätt som en läsande. Oftast blir det problem i samband med att kommandona är beroende av data från en eller flera queries eller i "värsta fall" andra kommandon. Vad gör man då? 
+
+
