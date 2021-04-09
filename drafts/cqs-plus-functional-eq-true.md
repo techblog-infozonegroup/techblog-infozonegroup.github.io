@@ -38,4 +38,22 @@ CQS-mönstrets grund består av två grundläggande egenskaper:
 
 Dom här egenskaperna är lätta att förhålla sig till så länge man bygger system eller tjänster med väldigt enkla domäner och modeller. Att ha funktioner som enbart returnerar data, det vill säga queries, är oftast inte speciellt svåra bygga och hålla stringensen i. Däremot kan det vara svårt att avgränsa en modifierande operation på samma sätt som en läsande. Oftast blir det problem i samband med att kommandona är beroende av data från en eller flera queries eller i "värsta fall" andra kommandon. Vad gör man då? 
 
+## Hantera komplicerade commands
+Låt oss på något löst sätt definiera ett komplext kommando som ett kommando där en query körs som en del i kommandoexekveringen. Man kan också se ett komplext kommando som ett kommando där ett annat kommando körs som en del i kommandoexekveringen. Om man tillåter sådana här kommandon, alltså komplexa, så känns det som att CQS skulle kunna tillämpas i mer eller mindre alla tänkbara system. Så länge man inte är beroende av en extrem prestanda så tror jag läget är lugnt. *Med det menar jag INTE att CQS lider av prestandaproblem, då sådana problem oftast inte beror på valt mönster.*
 
+En enkel googling ledde mig till en post på Stack Overflow: https://stackoverflow.com/questions/36578997/is-running-a-query-from-a-command-a-violation-of-command-query-separation. Man ska egentligen inte blanda commands och queries, men lösningen på det skulle kunna vara att definiera olika typer av dessa. Ett svar i SO-tråden listar tre typer av kommandon:
+- Command (top-level)
+- Command Strategy (mid-level)
+- Data Command (direct data access)
+
+Det är den sista typen som oftast återfinns i dom grundläggande exemplen på CQS som finns tillgängliga. Skulle man begränsa sig till denna typ av kommandon så är det svårt att använda CQS i praktiken. Om man tittar på dom två översta så är min tanke att man kan helt bortse från den översta, top-level, och istället titta närmare på 'Command Strategy (mid-level)'. Här tror jag nyckeln ligger, att man på något sätt ser ett komplext kommando som ett recept eller strategi som löser uppgiften. Min idé på lösning är att man definierar en **process**:
+- En process är ett recept eller ett flöde av commands och queries som löser den önskade uppgiften.
+
+Med den definitionen kommer man väldigt långt. Funktionen man bygger exekverar en process. Processen består av commands och queries, flödet av commands och queries specificeras i processen och flödet kontrolleras av affärslogik i processen. Strategin för att lösa uppgiften ligger i processen, varje enskild byggsten i strategin är antingen ett commando eller en query. Processen KAN returnera ett värde.
+
+> Den uppmärksamme kanske redan nu har börjat fundera på komplicerade queries, finns dom? Mitt svar är nej. En komplex query skulle möjligtvis bestå av flera queries vilket då fortfarande inte har "lyft" komplexiteten till nivån av komplicerad query. Skulle en komplicerad query, alltså en process med många queries som exekveras, innehålla en kommandoexekvering så är queryn per definition inte längre en query. Det byter då skepnad och blir ett kommando och i det komplicerade fallet en process, enligt samma definition som ovan.
+ 
+Vi lämnar CQS ett tag och går vidare med att titta på grunderna i funktionell programmering.
+
+# Functional programming
+Test
