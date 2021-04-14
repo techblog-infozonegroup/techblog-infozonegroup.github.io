@@ -79,3 +79,5 @@ Som antyddes ovan så är CQS klassad som ett imperativt mönster medan function
 Man skulle kunna förklara gränsdragningen väldigt kort genom:
 - Varje ingående del i funktionen ska vara separat testbar, med hjälp av enhetstest
 För att göra den här "definitionen" tydligare så kommer jag föra en diskussion kring följande bild:
+
+![func-cqs-process](https://user-images.githubusercontent.com/460203/114757493-3a900080-9d5c-11eb-9833-a2a22d17a417.png)
