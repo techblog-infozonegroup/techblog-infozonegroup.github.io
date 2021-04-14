@@ -33,8 +33,8 @@ Men först lite basics rörande CQS och functional programming.
 
 # CQS-pattern
 CQS-mönstrets grund består av två grundläggande egenskaper:
-- En **Query** ska **enbart returnera data**, ALDRIG modifiera
-- Ett **Command utför en operation** och FÅR modifiera data
+- En **Query** ska **enbart returnera data**, *ALDRIG modifiera*
+- Ett **Command utför en operation** och *FÅR modifiera* data
 
 Dom här egenskaperna är lätta att förhålla sig till så länge man bygger system eller tjänster med väldigt enkla domäner och modeller. Att ha funktioner som enbart returnerar data, det vill säga queries, är oftast inte speciellt svåra bygga och hålla stringensen i. Däremot kan det vara svårt att avgränsa en modifierande operation på samma sätt som en läsande. Oftast blir det problem i samband med att kommandona är beroende av data från en eller flera queries eller i "värsta fall" andra kommandon. Vad gör man då? 
 
@@ -70,3 +70,12 @@ Varför är tre av dom fem punkterna fetstilta? Jo, även om det är en topp-5-l
 Läs den länkade artikeln, den ger längre förklaringar till begreppen och även kodexempel för respektive koncept.
 
 Nu är det dags att försöka få ihop det här med CQS också.
+
+# CQS + functional
+## Bakgrund
+Som antyddes ovan så är CQS klassad som ett imperativt mönster medan functional programming är en deklarativ paradigm. Eftersom dessa står mer eller mindre i motsats till varandra så kan kombinationen verka svår att få ihop. Min syn på kombinationen är att den blir imperativ och **att försöka se på den som en funktionell, deklarativ, modell handlar om att definiera tydliga gränser**. Vad menas med det, vad är en tydlig gräns i ett flöde, process som ska lösa en uppgift?
+
+## Gränsdragning
+Man skulle kunna förklara gränsdragningen väldigt kort genom:
+- Varje ingående del i funktionen ska vara separat testbar, med hjälp av enhetstest
+För att göra den här "definitionen" tydligare så kommer jag föra en diskussion kring följande bild:
