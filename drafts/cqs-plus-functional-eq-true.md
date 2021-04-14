@@ -41,7 +41,7 @@ Dom här egenskaperna är lätta att förhålla sig till så länge man bygger s
 ## Hantera komplicerade commands
 Låt oss på något löst sätt definiera ett komplext kommando som ett kommando där en query körs som en del i kommandoexekveringen. Man kan också se ett komplext kommando som ett kommando där ett annat kommando körs som en del i kommandoexekveringen. Om man tillåter sådana här kommandon, alltså komplexa, så känns det som att CQS skulle kunna tillämpas i mer eller mindre alla tänkbara system. Så länge man inte är beroende av en extrem prestanda så tror jag läget är lugnt. *Med det menar jag INTE att CQS lider av prestandaproblem, då sådana problem oftast inte beror på valt mönster.*
 
-En enkel googling ledde mig till en post på Stack Overflow: https://stackoverflow.com/questions/36578997/is-running-a-query-from-a-command-a-violation-of-command-query-separation. Man ska egentligen inte blanda commands och queries, men lösningen på det skulle kunna vara att definiera olika typer av dessa. Ett svar i SO-tråden listar tre typer av kommandon:
+En enkel googling ledde mig till en post på Stack Overflow: [https://stackoverflow.com/questions/36578997/is-running-a-query-from-a-command-a-violation-of-command-query-separation](https://stackoverflow.com/questions/36578997/is-running-a-query-from-a-command-a-violation-of-command-query-separation). Man ska egentligen inte blanda commands och queries, men lösningen på det skulle kunna vara att definiera olika typer av dessa. Ett svar i SO-tråden listar tre typer av kommandon:
 - Command (top-level)
 - Command Strategy (mid-level)
 - Data Command (direct data access)
