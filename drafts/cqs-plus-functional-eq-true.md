@@ -78,8 +78,12 @@ Som antyddes ovan så är CQS klassad som ett imperativt mönster medan function
 ## Gränsdragning
 Man skulle kunna förklara gränsdragningen väldigt kort genom:
 - Varje ingående del i funktionen ska vara separat testbar, med hjälp av enhetstest
-För att göra den här "definitionen" tydligare så kommer jag föra en diskussion kring följande bild:
 
-![func-cqs-process](https://user-images.githubusercontent.com/460203/114758076-dae62500-9d5c-11eb-9ab9-418d92bc43e1.png)
+För att göra den här "definitionen" tydligare så kommer jag föra en diskussion kring följande bild, där CQS-implementationen med en process, commands och queries lever i en Azure function:
+
+![func-cqs-process](https://user-images.githubusercontent.com/460203/114912924-ddaa4e00-9e20-11eb-8153-8caf6dd7b4f2.png)
+
+Vi börjar med dom enkla grejor, commands och queries.
+
 
 
