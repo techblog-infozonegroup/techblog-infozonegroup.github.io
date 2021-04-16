@@ -85,5 +85,93 @@ För att göra den här "definitionen" tydligare så kommer jag föra en diskuss
 
 Vi börjar med dom enkla grejor, commands och queries.
 
+## Commands och queries
+Commands och queries är dom allra minsta delarna i ett CQS-mönstrat system. Dom är båda per definition väldigt avgränsade och ett av varje skulle kunna se ut enligt:
+```csharp
+/*---------------------------------*/
+/*-----------  COMMAND  -----------*/
+/*---------------------------------*/
+...
+using template_az_function_cs_cqs_pattern.Domain;
+...
 
+namespace template_az_function_cs_cqs_pattern.Commands
+{
+    public interface ICommand<T>
+    {
+        Task<T> Execute(T domainModel);
+    }
 
+    public class UpdateNameCommand : ICommand<User>
+    {
+        private readonly string _name;
+
+        public UpdateNameCommand(string name)
+        {
+            _name = name;
+        }
+
+        public async Task<User> Execute(User domainModel) => domainModel.WithName(_name);
+    }
+}
+
+/*----------------------------------*/
+/*------------  QUERY  -------------*/
+/*----------------------------------*/
+
+namespace template_az_function_cs_cqs_pattern.Queries
+{
+    public interface IQuery<TDomainModel>
+    {
+        Task<(bool success, TDomainModel result, int status)> Execute();
+    }
+    
+    public class GetUserBySsnQuery : IQuery<User>
+    {
+        private readonly string _ssn;
+
+        public GetUserBySsnQuery(string ssn)
+        {
+            _ssn = ssn;
+        }
+        
+        public async Task<(bool success, User result, int status)> Execute()
+        {
+            return (true, new User(_ssn, "Nisse Hult", "Maurer"), 0);
+        }
+    }
+}
+```
+
+Det som är värt att notera här, som kanske skiljer sig lite från "vanlig" CQS, är att ett command faktiskt *returnerar* något, i det här fallet ett domän-objekt i form av en User. User-instansen som returneras är resultatet av dess WithWork-funktion:
+```
+namespace template_az_function_cs_cqs_pattern.Domain
+{
+    public class User
+    {
+        ...
+        public string Work { get; private set; }
+
+        public User(...string work)
+        {
+            ...
+            Work = work;
+        }
+        
+        private User Clone()
+        {
+            return new User(...Work);
+        }
+
+        public User WithWork(string work)
+        {
+            var clone = Clone();
+            clone.Work = work;
+
+            return clone;
+        }
+        ...
+    }
+}
+
+```
