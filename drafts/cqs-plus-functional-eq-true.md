@@ -142,9 +142,11 @@ namespace template_az_function_cs_cqs_pattern.Queries
     }
 }
 ```
+> Notera att GetUserBySsnQuery är influerad av tidigare post här på bloggen, [Tupler före klasser är kanske bra](https://techblogg.infozone.se/blog/tuples-might-be-good/). 
 
-Det som är värt att notera här, som kanske skiljer sig lite från "vanlig" CQS, är att ett command faktiskt *returnerar* något, i det här fallet ett domän-objekt i form av en User. User-instansen som returneras är resultatet av dess WithWork-funktion:
-```
+Kommandots Execute-funktion tar också som inparameter ett User-objekt på vilken det utför den tänkta operationen, nämligen uppdatera Work-egenskapen.
+Det som är värt att notera i kodexemplet ovan, som kanske skiljer sig lite från "vanlig" CQS, är att ett command faktiskt *returnerar* något, i det här fallet ett domän-objekt i form av en User. Det returnerade User-objektet är en kopia av inparametern men med annat värde på Work. User-instansen som returneras är resultatet av dess WithWork-funktion:
+```csharp
 namespace template_az_function_cs_cqs_pattern.Domain
 {
     public class User
@@ -152,7 +154,7 @@ namespace template_az_function_cs_cqs_pattern.Domain
         ...
         public string Work { get; private set; }
 
-        public User(...string work)
+        public User(..., string work)
         {
             ...
             Work = work;
@@ -160,7 +162,7 @@ namespace template_az_function_cs_cqs_pattern.Domain
         
         private User Clone()
         {
-            return new User(...Work);
+            return new User(..., Work);
         }
 
         public User WithWork(string work)
@@ -173,5 +175,7 @@ namespace template_az_function_cs_cqs_pattern.Domain
         ...
     }
 }
-
 ```
+Vi ser ganska enkelt att alla dom här klasserna, kommandot, frågan och domänobjektet är till 100% testbara. Med givet starttillstånd så kommer operationer och frågor ALLTID att ge förväntade resultat och INGA sidoeffekter uppkommer. Du tänker nog nu att det här är ju löjligt, inte kan man bygga ett system på det här sättet, med commands och queries på den här nivån! Det kommer bli otroligt många klasser att hålla reda på, väldigt mycket kod att skriva och väldigt "plottrigt". Jag håller med om all oro, men vågar samtidigt påstå att det kan vändas till en fördel. Låt följande sjunka in en stund:
+
+Ponera att du har "skrivit klart" en funktion i ditt system. Funktionen uppdaterar yrket på en person. Funktionen är täckt med enhetstester och den är driftsatt, fungerar i produktion och alla är nöjda. Nu kommer ett önskemål in att systemet också ska ha stöd för att pensionera en person...
