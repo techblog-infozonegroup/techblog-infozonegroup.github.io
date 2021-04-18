@@ -35,8 +35,8 @@ Men först lite teori rörande CQS-mönstret och functional programming.
 
 # CQS-pattern
 CQS-mönstrets grund består egentligen bara av två typer av objekt och dessa har varsin egenskap:
-- En **Query** ska **enbart returnera data**, *ALDRIG modifiera*; exempel **GetPersonBySsn => en person med givet personnummer**
-- Ett **Command utför en operation** och *FÅR modifiera* data; exempel **UpdatePersonWork => uppdatera en persons yrke**
+- En **Query** ska **enbart returnera data**, *ALDRIG modifiera*; <br>exempel **GetPersonBySsn => en person med givet personnummer**
+- Ett **Command utför en operation** och *FÅR modifiera* data; <br>exempel **UpdatePersonWork => uppdatera en persons yrke**
 
 En schematisk bild av CQS-mönstret skulle då kunna se ut så här:
 
