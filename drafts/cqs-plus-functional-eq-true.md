@@ -58,7 +58,9 @@ Det är den sista typen som oftast återfinns i dom grundläggande exemplen på 
 Med den definitionen kommer man väldigt långt. Funktionen man bygger exekverar en process. Processen består av commands och queries, flödet av commands och queries specificeras i processen och flödet kontrolleras av affärslogik i processen. Strategin för att lösa uppgiften ligger i processen, varje enskild byggsten i strategin är antingen ett commando eller en query. Processen KAN returnera ett värde.
 
 > Den uppmärksamme kanske redan nu har börjat fundera på komplicerade queries, finns dom? Mitt svar är nej. En komplex query skulle möjligtvis bestå av flera queries vilket då fortfarande inte har "lyft" komplexiteten till nivån av komplicerad query. Skulle en komplicerad query, alltså en process med många queries som exekveras, innehålla en kommandoexekvering så är queryn per definition inte längre en query. Det byter då skepnad och blir ett kommando och i det komplicerade fallet en process, enligt samma definition som ovan.
- 
+
+> Ytterligare en observation som den uppmärksamme läsaren kanske har gjort är att ett komplicerat kommando väldigt mycket liknar en orkestrering eller en saga. Det som skiljer ett komplicerat kommando, enligt ovan definition, från t.ex. en saga är att kommandot inte innehåller någon funktion för att göra rollback. En saga löser problemen som man måste hantera distribuerade transaktioner över servicegränser då varje ingående del i en saga också innehåller en så kallad compensating action, dvs en rollback av den aktuella aktionen. Läs mer om orchestrations och sagas här [https://microservices.io/patterns/data/saga.html](https://microservices.io/patterns/data/saga.html).
+> 
 Vi lämnar CQS ett tag och går vidare med att titta på grunderna i funktionell programmering.
 
 # Functional programming
