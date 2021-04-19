@@ -16,13 +16,13 @@ I denna artikel tänker jag ge er, som inte är bekanta med Event Sourcing, en l
 Låt oss titta på grundkonceptet inom Event Sourcing!
 
 # Grundkonceptet
-Grundidén med Event Sourcing är att man lagrar sin data som en serie av händelser (ofta kallad "Events"). Dessa händelser kan inte i efterhand ändras, det är därför immutable. Ni kan tänka er att det är som en logg eller en journal av saker som hänt. Loggar och journaler ändrar man inte på i efterhand, utan man lägger endast till nya information. Det är även sant inom Event Sourcing och det kallas för "Append only". 
+Grundidén med Event Sourcing är att man lagrar sin data som en serie av händelser (ofta kallad "Events"). Dessa händelser kan inte i efterhand ändras, de är därför immutable. Ni kan tänka er att det är som en logg eller en journal av saker som hänt. Loggar och journaler ändrar man inte på i efterhand, utan man lägger endast till nya information. Det är även sant inom Event Sourcing och det kallas för "Append only". 
 
 Om vi slår ihop allt detta till en konkret mening så är Event Sourcing i sin grund "An immutable, append only, stream of events". 
 
 För att få en komplett bild av en patients tillstånd så måste läkaren titta igenom alla händelser i journalen. Samma taktik används i Event Sourcing. För att läsa upp sin applikations tillstånd så tittar vi på alla events i ordning och först när vi når det senaste eventet har vi fått en korrekt bild, vilket ofta är den bild som man ser lagrad i en traditionell databas, t.ex en SQL-databas.
 
-[skiss]
+![eventström](https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/eventstream.png)
 
 Att läsa upp sin applikations tillstånd innebär rent konkret, och kodtekniskt, att varje event appliceras via en eventhanterare. Kommer i denna artikel att visa kodsnuttar från en applikation som hanterar en fruktkorg. Det känns som en fysisk domän som är greppbar och enkel att komma på mer eller mindre vettiga krav för. Här nedan är en så kallad event hanterare för händelsen att ett äpple har lagts till i vår fruktkorg. Bjuder även på hanteraren för päron! I detta fall bryr vi oss om vilket frukt det är och dess vikt.
 
@@ -43,7 +43,7 @@ private void Apply(PearAddedEvent e)
 Det du får på köpet med denna stil är att du får ett bra fokus på vad som ska göras givet att nånting sker. Det blir enklare att hålla nere komplexiteten på affärslogik och tillståndsförändring eftersom du bara behöver fokusera på en förändring. Jag säger inte att eventhanterare inte kan bli komplexa, det jag säger är att de blir fokuserade vilket gör det enklare att hålla nere komplexiteten.
 
 # Projektioner och läsmodeller
-Kodexemplet här ovanför ligger i en klass vid namn "CurrentThings". Denna klass har som uppgift att ge svaret på vilka saker som just nu ligger i din fruktkorg samt innehållets totala vikt. Här spelar det ingen roll vilken typ av äpple som ligger i korgen, vilka färger frukterna har eller om de är färska eller ruttna. Detta kallas ofta för en projicering, eller "projection" på engelska. Är du insatt i DDD är det sannolikt att dina läsmodeller är projektioner.
+Kodexemplet här ovanför ligger i en klass vid namn "CurrentThings". Denna klass har som uppgift att ge svaret på vilka saker som just nu ligger i din fruktkorg samt innehållets totala vikt. Här spelar det ingen roll vilken typ av äpple som ligger i korgen, vilka färger frukterna har eller om de är färska eller ruttna. Detta kallas ofta för en projicering, eller "projection" på engelska. Är du insatt i DDD/CQRS/CQS är det sannolikt att dina läsmodeller är projektioner.
 
 En projicering är en specifik synvinkel på eventströmmen (journalen). Events "spelas upp", i ordning, genom dessa eventhanterare och projiceringens tillstånd tar form och solidifieras när sista eventet har applicerats. 
 
