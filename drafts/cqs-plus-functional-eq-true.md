@@ -4,7 +4,8 @@ date: 2021-04-01
 author: Fredde Johnsson, systemutvecklare
 tagline: "CQS är ett imperativt mönster, functional programming är en deklarativ paradigm, kan man ändå kombinerar dom?"
 header:
-  overlay_image: https://user-images.githubusercontent.com/460203/115292571-73621800-a156-11eb-9ab1-7ea0228fd032.jpg
+  overlay_image: https://user-images.githubusercontent.com/460203/115292819-c3d97580-a156-11eb-972c-d0dad4361b75.jpg
+
 categories:
   - blog
 tags:
