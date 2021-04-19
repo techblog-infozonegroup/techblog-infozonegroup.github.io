@@ -71,4 +71,4 @@ Varför är tre av dom fem punkterna fetstilta? Jo, även om det är en topp-5-l
 
 Läs den länkade artikeln, den ger längre förklaringar till begreppen och även kodexempel för respektive koncept.
 
-Nu är det dags att försöka få ihop det här med CQS också. Det gör vi i port nummer två, som kommer senare. Länk återfinns här när den är publicerad.
+Nu är det dags att försöka få ihop det här med CQS också. Det gör vi i post nummer två, som kommer senare. Länk återfinns här när den är publicerad.
