@@ -4,7 +4,7 @@ date: 2021-04-01
 author: Andreas Hagsten, systemutvecklare
 tagline: "Event sourcing ger dig nya infallsvinklar på din applikations tillstånd."
 header:
-  overlay_image: https://www.infozone.se/wp-content/uploads/2020/03/programmering-i-team.jpg
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/event-sourcing-a-different-view/eventsourcing-header.jpg
 categories:
   - blog
 tags:
