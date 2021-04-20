@@ -165,7 +165,7 @@ Oavsett hur du partitionerar dina strömmar kan du inte alltid skydda dig från 
 # Snapshots
 En snapshot är en ögonblicksbild av ett tillstånd. Säg att du har spelat upp 100 miljoner händelser och har nuvarande tillstånd. Nu kan du skapa en ny ström och dumpa nuvarande tillstånd dit. Nästa gång applikationen behöver läsa upp dessa 100 miljoner events behöver den bara titta i snapshot-strömmen, och med snapshoten som utgångsläge hämta alla nya events som appliceras över snapshotten. Processen kan upprepa sig om eventströmmen växer sig stor igen, då tas en ny snapshot ut som blir den nya utgångspunkten. Se bild nedan.
 
-[TODO: bild]
+![Event sourcing snapshot](https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/es-snapshot.png)
 
 ## Snapshots i andra lagringsmedium
 En snapshot behöver inte finnas i din event store. Den kan finnas som en 3NF-modell i en SQL-databas, ett dokument i MongoDB eller finnas i ElasticSearch. För att nämna några exempel. Poängen är att en snapshot är en nubild av en eventström och den bilden kan se ut och ligga vart som helst.
