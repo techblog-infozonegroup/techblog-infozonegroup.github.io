@@ -20,9 +20,9 @@ Grundidén med Event Sourcing är att man lagrar sin data som en serie av hände
 
 Om vi slår ihop allt detta till en konkret mening så är Event Sourcing i sin grund "An immutable, append only, stream of events". 
 
-För att få en komplett bild av en patients tillstånd så måste läkaren titta igenom alla händelser i journalen. Samma taktik används i Event Sourcing. För att läsa upp sin applikations tillstånd så tittar vi på alla events i ordning och först när vi når det senaste eventet har vi fått en korrekt bild, vilket ofta är den bild som man ser lagrad i en traditionell databas, t.ex en SQL-databas.
-
 ![eventström](https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/eventstream.png)
+
+För att få en komplett bild av en patients tillstånd så måste läkaren titta igenom alla händelser i journalen. Samma taktik används i Event Sourcing. För att läsa upp sin applikations tillstånd så tittar vi på alla events i ordning och först när vi når det senaste eventet har vi fått en korrekt bild, vilket ofta är den bild som man ser lagrad i en traditionell databas, t.ex en SQL-databas. 
 
 Att läsa upp sin applikations tillstånd innebär rent konkret, och kodtekniskt, att varje event appliceras via en eventhanterare. Kommer i denna artikel att visa kodsnuttar från en applikation som hanterar en fruktkorg. Det känns som en fysisk domän som är greppbar och enkel att komma på mer eller mindre vettiga krav för. Här nedan är en så kallad event hanterare för händelsen att ett äpple har lagts till i vår fruktkorg. Bjuder även på hanteraren för päron! I detta fall bryr vi oss om vilket frukt det är och dess vikt.
 
@@ -149,13 +149,32 @@ public class Basket
 ```
 
 ## Ingen data tas bort
-
 Med projiceringar kan du se på din eventström på många olika sätt och svara på många olika frågor. Frågor som inte alls behöver ha varit kända när systemet byggdes. Du kan svara på frågan "vilka äpplen låg i korgen den 3e april 2018 kl 08:30". Om detta inte var ett ursprungligt krav och du lagrade informationen i en SQL-databas hade det blivit svårt att ge svaret på den frågan. Hemligheten ligger i att ingen data tas bort, någonsin. Event Sourcing är en, som nämnt, "append only, immutable stream of events". Det finns inga DELETE-statements. Det finns inga UPDATE-statements. Den senare är faktiskt en implicit DELETE då vi skriver över föregående värden med nya värden, således är det en DELETE på de gamla värdena.
 
 Detta är oerhört kraftfullt!
 
 # Hantering av Event Streams
+I Event sourcing lagras data som en serie av events, så kallade strömmar (streams på engelska). Det är från en eller flera strömmar som du ställer frågor till. Du har full frihet i vilka strömmar du väljer att ha. I teorin kan du lagra alla events i en global ström och ha denna ström som utgångspunkt när du projicerar. Problemet med detta sätt är att strömmen snabbt växer sig lång. Kom ihåg att du läser eventströmmen från början till slut och skulle det ligga 1 miljon events så måste 1 miljon events hanteras i dina projektioner.
+
+Att skapa en ström är en billig operation i de olika eventdatabaserna och därför kan, och bör du, tänka på hur du vill partitionera dina strömmar. En ofta rekommenderad partitionering för dina domänentiteter är en ström per instans/entitet. Exempel på namn för vår Basket-entitet kan vara "basket-1", "basket-2" eller "basket-42". Numret är som ni förstår entitetens ID. Dessa strömmar kan med fördel alltså skapas dynamiskt vid behov. Fördelen med detta är att stömmarna blir små, i förhållande till en "one for all" global ström, och därför mycket mer effektiv att hämta events från.
+
+Strömmar kan också nyttjas till att lagra events till en eller flera läsmodeller. Man kan tänka sig att man har en renodlad ström av events för äpplen. Det handlar ofta om kategoriseringar av events - något som t.ex EventStoreDB kan bygga upp åt dig automatiskt.
+
+Oavsett hur du partitionerar dina strömmar kan du inte alltid skydda dig från långa eventströmmar. Hur hanterar vi ett aggregat som har 1 miljon events? Eller 100 miljoner? Enkelt uttryckt kan vi nyttja en ny eventström för att lagra något man kallar för "snapshots".
 
 # Snapshots
+En snapshot är en ögonblicksbild av ett tillstånd. Säg att du har spelat upp 100 miljoner händelser och har nuvarande tillstånd. Nu kan du skapa en ny ström och dumpa nuvarande tillstånd dit. Nästa gång applikationen behöver läsa upp dessa 100 miljoner events behöver den bara titta i snapshot-strömmen, och med snapshoten som utgångsläge hämta alla nya events som appliceras över snapshotten. Processen kan upprepa sig om eventströmmen växer sig stor igen, då tas en ny snapshot ut som blir den nya utgångspunkten. Se bild nedan.
+
+[TODO: bild]
+
+## Snapshots i andra lagringsmedium
+En snapshot behöver inte finnas i din event store. Den kan finnas som en 3NF-modell i en SQL-databas, ett dokument i MongoDB eller finnas i ElasticSearch. För att nämna några exempel. Poängen är att en snapshot är en nubild av en eventström och den bilden kan se ut och ligga vart som helst.
 
 # Sammanfattning
+En av de stora fördelarna med Event Sourcing är möjligheten att ge svar på vilken fråga som helst. Om verksamheten efter 5 år kommer med frågan hur det såg ut vid en viss tidpunkt, hur många äpplen som någonsin funnits i korgen, hur många päron som ruttnat i korgen, etc. Så kan vi svara på det. Det är inte alla som kan. Givetvis måste eventsen innehålla data för att kunna ge svaren. Applikationen kommer inte kunna svara på meningen med livet bara för att det är Event Sourcing.
+
+Givetvis finns det nackdelar också. Eller en annan sida av myntet. Event sourcing skiljer sig ganska mycket från den typiska applikationen. Event sourcing gör sig också väl i system som anammar mönster/designs som CQRS och DDD. Det är en tröskel att ta sig över, ofta en relativt hög tröskel. Det medför givetvis en risk för projektet. 
+
+Uppsidan är däremot stor. Har du läst hit och blivit nyfiken så kan jag rekommendera att se olika talks som t.ex. [denna med Greg Young](https://www.youtube.com/watch?v=LDW0QWie21s).
+
+Med det tackar jag för mig.
