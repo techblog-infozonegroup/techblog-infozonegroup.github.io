@@ -1,10 +1,11 @@
 ---
 title: "Event Sourcing - Ett annat synsätt"
-date: 2021-04-01
+date: 2021-04-21
 author: Andreas Hagsten, systemutvecklare
 tagline: "Event sourcing ger dig nya infallsvinklar på din applikations tillstånd."
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/event-sourcing-a-different-view/eventsourcing-header.jpg
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/event-sourcing-a-different-view/eventsourcing-teaser.jpg
 categories:
   - blog
 tags:
@@ -61,7 +62,7 @@ private void Apply(IDomainEvent e)
 ```
 
 ## Domänaggregat
-I Domän Driven Design pratar man ofta om Aggregatrötter [TODO: extern länk]. Dessa är också projiceringar av events! I detta fall med en frukkorg är korgen en aggregatrot. Vi kallar den för Basket. En korg kan endast skapas från en eventström (eller den tomma strömmen) via en fabriksmetod "Replay". Av namnet att döma spelar vi upp alla events som funktionen anropas med. Replay delegerar vidare till respektive Apply-funktion som applicerar eventet och dess data på aggregatet.
+I Domän Driven Design pratar man ofta om [Aggregatrötter](https://martinfowler.com/bliki/DDD_Aggregate.html). Dessa är också projiceringar av events! I detta fall med en frukkorg är korgen en aggregatrot. Vi kallar den för Basket. En korg kan endast skapas från en eventström (eller den tomma strömmen) via en fabriksmetod "Replay". Av namnet att döma spelar vi upp alla events som funktionen anropas med. Replay delegerar vidare till respektive Apply-funktion som applicerar eventet och dess data på aggregatet.
 
 Den uppmärksamme ser att vi har två publika metoder, AddFruit och GrabAThing. Dessa metoder innehåller domänlogik. Än mer intressant är att dessa metoder skapar events och kör dessa genom respektive Apply metod; samma tillvägagångssätt som i Replay-metoden. Samma sätt att göra tillståndsförändringar alltså. Detta är viktigt. Om någon annan metod än Apply gör tillståndsförändringar kommer dessa gå förlorade när du läser upp aggregatet nästa gång.
 
