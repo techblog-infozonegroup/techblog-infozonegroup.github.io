@@ -19,7 +19,7 @@ Låt oss titta på grundkonceptet inom Event Sourcing!
 # Grundkonceptet
 Grundidén med Event Sourcing är att man lagrar data som en serie av händelser (ofta kallad "Events"). Dessa händelser kan inte i efterhand ändras, de är därför immutable. Ni kan tänka er att det är som en logg eller en journal av saker som hänt. Loggar och journaler ändrar man inte på i efterhand, utan man lägger endast till ny information. Det är även sant inom Event Sourcing och det kallas för "append only". 
 
-Om vi slår ihop allt detta till en konkret mening så är Event Sourcing i sin grund "*An immutable, append only, stream of events*". 
+Om vi slår ihop allt detta till en konkret mening så är Event Sourcing i sin grund "**An immutable, append only, stream of events**". 
 
 ![eventström](https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/eventstream.png)
 
