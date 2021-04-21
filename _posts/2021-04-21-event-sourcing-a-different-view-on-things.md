@@ -48,7 +48,7 @@ Kodexemplet här ovanför ligger i en klass vid namn "CurrentThings". Denna klas
 
 En projicering är en specifik synvinkel på eventströmmen (journalen). Events "spelas upp", i ordning, genom dessa eventhanterare och projiceringens tillstånd tar form och solidifieras när sista eventet har applicerats. 
 
-Nedan följer en annan användning av eventströmmen. Om du vill veta om en speficik frukt är ätbar så kan du skapa en projicering som lyssnar på fruktevents och i händelse av att frukten har ruttnat så är den inte ätbar, i alla andra fall är den det. Detta är såklart ett förenklat exempel, men du förstår säkert konceptet?
+Nedan följer en annan användning av eventströmmen. Om du vill veta om en specifik frukt är ätbar så kan du skapa en projicering som lyssnar på fruktevents och i händelse av att frukten har ruttnat så är den inte ätbar, i alla andra fall är den det. Detta är såklart ett förenklat exempel, men du förstår säkert konceptet?
 
 ```csharp
 private void Apply(IDomainEvent e)
