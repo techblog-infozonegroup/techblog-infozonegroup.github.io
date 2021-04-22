@@ -14,12 +14,12 @@ tags:
   - functional-programming
 ---
 # Bakgrund
-I senaste kunduppdraget har kodandet varit till stor del fokuserat på serverless, e.g. Azure Functions, både node/javascript och C#. Av någon anledning är det lätt att bara kasta ihop sin kod, deploya och testa och sen är man nöjd med lösningen så länge den fungerar. Det behövs oftast inte så mycket kod för att lösa respektive problem, vilket är en av dom viktigaste styrkorna med Azure Functions och serverless. 
+I senaste kunduppdraget har kodandet varit till stor del fokuserat på serverless, Azure Functions, både node/javascript och C#. Av någon anledning är det lätt att bara kasta ihop sin kod, deploya och testa och sen är man nöjd med lösningen så länge den fungerar. Det behövs oftast inte så mycket kod för att lösa respektive problem, vilket är en av dom viktigaste styrkorna med Azure Functions och serverless. 
 
-Men! Det finns ett stort MEN här, iallafall i min kodvardag: 
+Men! Det finns ett stort MEN här: 
 - Det är viktigt att hålla stringensen i sin kod, att följa ett mönster som gör koden robust och testbar och i och med det även förvaltningsbar över tid. 
 
-Just nu är mitt favoritmönster CQS, [Command-Query separation](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation). Det är relativt lättviktigt och jag tycker att det passar bra när man utvecklar Azure Functions. Jag gillar även paradigmen [functional programming](https://en.wikipedia.org/wiki/Functional_programming), en [deklarativ stil](https://en.wikipedia.org/wiki/Declarative_programming) att skriva källkod. Denna stil sägs ofta vara motsatsen till [imperativ programming](https://en.wikipedia.org/wiki/Imperative_programming). CQS klassas som ett imperativt mönster, så hur kan man kombinera CQS med functional då? 
+Just nu är mitt favoritmönster CQS, [Command-Query separation](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation). Det är relativt lättviktigt och jag tycker att det passar bra när man utvecklar Azure Functions. Jag gillar även paradigmen [functional programming](https://en.wikipedia.org/wiki/Functional_programming), en [deklarativ stil](https://en.wikipedia.org/wiki/Declarative_programming) att skriva källkod. Denna stil sägs ofta vara motsatsen till [imperativ programming](https://en.wikipedia.org/wiki/Imperative_programming). CQS klassas som imperativ så frågan är om man trots allt kombinera den med deklarativ funktionell programmering? 
 
 I den här första posten av två kommer jag fokusera på ett något slags teoretiskt resonemang kring CQS och funktionell programmering och vad dess olika styrkor är. Om man kunde kombinera dessa så kanske man får något väldigt robust och bra. Låt oss försöka! 
 
