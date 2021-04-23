@@ -32,6 +32,8 @@ En schematisk bild av CQS-mönstret skulle då kunna se ut så här:
 
 ![cqs-overview](https://user-images.githubusercontent.com/460203/115136703-dbfba880-a021-11eb-9ed4-e29a0ebacfcb.png)
 
+I bilden syns tydligt **separationen** mellan **commands och queries**. En command är en egen liten isolerad enhet och så länge man inte ändrar implementationen i den så ska den aldrig kunna ändra beteende. Detsamma gäller för en query, den är egen isolerad liten enhet. Om man ändrar ett command eller en query så ska man känna sig trygg att inget runt omkring den påverkas. I daglig tal kan man säga att ett command lever i helt egna pipa och en query likaså. Det är en av dom klart största styrkorna i mönstret.
+
 Dom här egenskaperna är lätta att förhålla sig till så länge man bygger system eller tjänster med väldigt enkla domäner och modeller. Att ha funktioner som enbart returnerar data, det vill säga queries, är oftast inte speciellt svåra bygga och hålla stringensen i. Däremot kan det vara svårt att avgränsa en modifierande operation på samma sätt som en läsande. Det blir ofta problem i samband med att kommandona är beroende av data från en eller flera queries eller i "värsta fall" har man ett beroende till andra kommandon. Vad gör man då? 
 
 ## Hantera komplicerade commands
