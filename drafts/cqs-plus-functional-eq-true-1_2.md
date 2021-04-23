@@ -60,7 +60,7 @@ Strategin för att lösa uppgiften ligger i processen, varje enskild byggsten i 
 Vi lämnar CQS och går vidare med att titta på grunderna i funktionell programmering.
 
 # Functional programming
-Om introt till CQS var kort så kommer här en ännu kortare intro om funktionell programmering. Jag har tidigare skrivit en post om [funktionell programmering i C#](http://blog.headlight.se/funktionell-programmering-med-csharp/), där fokus ligger på en topp-5-lista med egenskaper som funktionell programmering innebär. Här kommer dom, om man inte känner för att läsa den länkade posten:
+Om introt till CQS var kort så kommer här ett ännu kortare intro om funktionell programmering. Jag har tidigare skrivit en post om [funktionell programmering i C#](http://blog.headlight.se/funktionell-programmering-med-csharp/), där fokus ligger på en topp-5-lista med egenskaper som funktionell programmering innebär. Här kommer dom, om man inte känner för att läsa den länkade posten:
 - **Pure functions**, e.g. en funktions resultat är enbart beroende av sina in-parametrar
 - Rekursion före iteration
 - **Referental transparency**, e.g. ett anrop till en funktion ska kunna ersättas av sitt returvärde utan att resultatet eller beteende i programmet förändras
@@ -71,6 +71,6 @@ Varför är tre av dom fem punkterna fetstilta? Jo, även om det är en topp-5-l
 - **Immutable types**
 - **Funktioner ska INTE ha några sidoeffekter**
 
-Läs den länkade artikeln, den ger längre förklaringar till begreppen och även kodexempel för respektive koncept.
+Läs den länkade artikeln, den ger längre förklaringar till begreppen och även kodexempel för respektive koncept. En fork av Github-repot för artikeln finns här [https://github.com/Fjeddo/FunctionalProgrammingWithCSharp](https://github.com/Fjeddo/FunctionalProgrammingWithCSharp).
 
 Nu är det dags att försöka få ihop det här med CQS också. Det gör vi i post nummer två, som kommer senare. Länk återfinns här när den är publicerad.
