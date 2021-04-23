@@ -19,9 +19,9 @@ I senaste kunduppdraget har kodandet varit till stor del fokuserat på serverles
 Men! Det finns ett stort MEN här: 
 - Det är viktigt att hålla stringensen i sin kod, att följa ett mönster som gör koden robust och testbar och i och med det även förvaltningsbar över tid. 
 
-Just nu är mitt favoritmönster CQS, [Command-Query separation](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation). Det är relativt lättviktigt och jag tycker att det passar bra när man utvecklar Azure Functions. Jag gillar även paradigmen [functional programming](https://en.wikipedia.org/wiki/Functional_programming), en [deklarativ stil](https://en.wikipedia.org/wiki/Declarative_programming) att skriva källkod. Denna stil sägs ofta vara motsatsen till [imperativ programming](https://en.wikipedia.org/wiki/Imperative_programming). CQS klassas som imperativ så frågan är om man trots allt kombinera den med deklarativ funktionell programmering? 
+Just nu är mitt favoritmönster CQS, [Command-Query separation](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation). Det är relativt lättviktigt och jag tycker att det passar bra när man utvecklar Azure Functions. Jag gillar även paradigmen [functional programming](https://en.wikipedia.org/wiki/Functional_programming), en [deklarativ stil](https://en.wikipedia.org/wiki/Declarative_programming) att skriva källkod. Denna stil sägs ofta vara motsatsen till [imperativ programming](https://en.wikipedia.org/wiki/Imperative_programming). CQS klassas som imperativ så frågan är om man trots allt kan kombinera den med deklarativ funktionell programmering? 
 
-I den här första posten av två kommer jag fokusera på ett något slags teoretiskt resonemang kring CQS och funktionell programmering och vad dess olika styrkor är. I post nummer två gör vi ett försök att kombinera stilarna och vi tittar på en massa kod.
+I den här första posten av två kommer jag fokusera på ett teoretiskt resonemang kring CQS och funktionell programmering och vad dess olika styrkor är. I post nummer två gör jag ett försök att kombinera stilarna och vi tittar på en massa kod.
 
 # CQS-pattern
 CQS-mönstrets grund består egentligen bara av två typer av objekt och dessa har varsin egenskap:
