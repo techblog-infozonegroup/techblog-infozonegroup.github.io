@@ -49,7 +49,7 @@ Det är den sista typen som oftast återfinns i dom grundläggande exemplen på 
 Min idé på lösning är att man definierar en **process**:
 - En process är ett recept eller ett flöde av commands och queries som löser den önskade uppgiften.
 
-Med den definitionen kommer man väldigt långt. Funktionen man bygger exekverar alltså en process. Processen består av commands och queries och flödet av commands och queries specificeras i processen. Flödet genom processen styras av affärslogik, villkor och kontroller. QWERTY 
+Med den definitionen kommer man väldigt långt. Funktionen man bygger exekverar alltså en process. Processen består av commands och queries och flödet av commands och queries specificeras i processen. Flödet genom processen styras av affärslogik, villkor och kontroller. 
  
 Strategin för att lösa uppgiften ligger i processen, varje enskild byggsten i strategin är antingen ett command eller en query. Processen KAN returnera ett värde.
 
