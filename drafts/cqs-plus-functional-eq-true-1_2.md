@@ -1,6 +1,6 @@
 ---
 title: "CQS + functional programming = sant (del 1/2)"
-date: 2021-04-01
+date: 2021-04-23
 author: Fredde Johnsson, systemutvecklare
 tagline: "CQS är ett imperativt mönster, functional programming är en deklarativ paradigm, kan man ändå kombinera dom?"
 header:
