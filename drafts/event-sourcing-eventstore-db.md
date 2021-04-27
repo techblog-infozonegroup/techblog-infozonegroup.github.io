@@ -13,6 +13,8 @@ tags:
   - event sourcing
 ---
 
+Jag har tidigare [skrivit om Event Sourcing](https://techblogg.infozone.se/blog/event-sourcing-a-different-view-on-things/) och nu dyker jag in i EvensStoreDB, databasen byggd för Event Sourcing. Häng med!
+
 - Inledning om vad ESDB är
 - Installation (docker image)
 - gRPC, TCP, http
