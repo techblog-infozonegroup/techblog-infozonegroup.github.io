@@ -14,4 +14,14 @@ tags:
   - functional programming
   - funktionell programmering
 ---
-1234567
+
+Beskriv:
+- Process/UpdateUserProcess
+- Query/GetUserBySsnQuery
+- Comman/UpdateNameCommand
+- QueryExecuter
+- CommandHandler
+- IoC/DI
+
+# Repetition från första delen
+Processen är ett komplext kommando som definierar flödet i ett operation som systemet ska u
