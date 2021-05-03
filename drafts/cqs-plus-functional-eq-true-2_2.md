@@ -18,7 +18,7 @@ tags:
 Beskriv:
 - Process/UpdateUserProcess
 - Query/GetUserBySsnQuery
-- Comman/UpdateNameCommand
+- Command/UpdateNameCommand
 - QueryExecuter
 - CommandHandler
 - IoC/DI
