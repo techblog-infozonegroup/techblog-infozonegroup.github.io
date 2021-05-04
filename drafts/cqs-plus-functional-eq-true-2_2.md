@@ -166,6 +166,7 @@ public class UpdateUserProcess : IProcess<UpdateUserRequest, User>
 ```
 Värt att notera här är:
 - Alla beroenden som processen har injiceras i konstruktorn. IoC-konfigurationen återfinns i [Startup.cs](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Startup.cs). 
+- UserStorage-servicen injiceras också, och passas vidare ner till dom klasser som behöver tillgång till den.
 - Här finns en basal felhantering. Man skulle kunna tänka sig att underliggande komponenter, commands och queries, kastar specifika undantag och respektive sådant skulle hanteras här i processen för att loggas och returnera något bra utåt. Det är viktigt att hålla en bra struktur vad gäller felhantering för att underlätta framtida felsökning och underhåll. Läs mer om happy, sad och error-paths [här](https://techblogg.infozone.se/blog/happy-sad-error/).
 - Här finns affärslogik för att t.ex. hantera om den eftersökta användare inte finns.
 
