@@ -99,3 +99,73 @@ public class CommandHandler : ICommandHandler
 ```
 
 Vi ser att dom returnerar tupler på det sättet som beskrivs i [den här posten](https://techblogg.infozone.se/blog/tuples-might-be-good/). Såsom dom är implementerade här loggar dom typen av query respektive command som ska hanteras och returnerar resultatet. Här kan man tänka sig att lägga felhantering också men i exemplet för den här posten ligger den i processen, som vi kommer att se nedan.
+
+# Process
+Processen är den klass som kontrollerar flödet i en funktion, den innehåller affärslogiken och definierar vilka frågor och kommandon som ska utföras. I exemplet för den här posten implementerar posten en process för att uppdatera namn och arbete för en användare. Domänen består av User-objekt som identifieras med hjälp av personnummer, ssn. UpdateUserProcess implementerar IProcess och dessa ser ut enligt:
+
+```csharp
+public interface IProcess<TIn, TOut>
+{
+    Task<(bool success, TOut model, int status)> Run(TIn request);
+}
+```
+
+```csharp
+public class UpdateUserProcess : IProcess<UpdateUserRequest, User>
+{
+    private readonly IQueryExecuter _queryExecuter;
+    private readonly ICommandHandler _commandHandler;
+    private readonly IUserStorage _userStorage;
+    private readonly ILogger _log;
+
+    public UpdateUserProcess(IQueryExecuter queryExecuter, ICommandHandler commandHandler, IUserStorage userStorage, ILogger<UpdateUserProcess> log)
+    {
+        _queryExecuter = queryExecuter;
+        _commandHandler = commandHandler;
+        _userStorage = userStorage;
+
+        _log = log;
+    }
+
+    public async Task<(bool success, User model, int status)> Run(UpdateUserRequest request)
+    {
+        _log.LogInformation($"Running process {GetType().Name}");
+
+        try
+        {
+            var getUserQuery = new GetUserBySsnQuery(request.Ssn, _userStorage);
+
+            var (success, updatedUser, status) = await _queryExecuter.Execute(getUserQuery);
+            if (!success)
+            {
+                _log.LogInformation($"Failed getting user {request.Ssn}");
+
+                return (false, default, status);
+            }
+
+            var updateNameCommand = new UpdateNameCommand(request.Name);
+            updatedUser = await _commandHandler.Handle(updateNameCommand, updatedUser);
+
+            var updateWorkCommand = new UpdateWorkCommand(request.Work);
+            updatedUser = await _commandHandler.Handle(updateWorkCommand, updatedUser);
+
+            return (true, updatedUser, 0);
+        }
+        catch (Exception exception)
+        {
+            _log.LogError(exception, $"Failed process {GetType().Name}");
+
+            return (false, default, 555);
+        }
+        finally
+        {
+            _log.LogInformation($"Ran process {GetType().Name}");
+        }
+    }
+}
+```
+Värt att notera här är:
+- Alla beroenden som processen har injiceras i konstruktorn. IoC-konfigurationen återfinns i [Startup.cs](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Startup.cs). 
+- Här finns en basal felhantering. Man skulle kunna tänka sig att underliggande komponenter, commands och queries, kastar specifika undantag och respektive sådant skulle hanteras här i processen för att loggas och returnera något bra utåt. Det är viktigt att hålla en bra struktur vad gäller felhantering för att underlätta framtida felsökning och underhåll. Läs mer om happy, sad och error-paths [här](https://techblogg.infozone.se/blog/happy-sad-error/).
+- Här finns affärslogik för att t.ex. hantera om den eftersökta användare inte finns.
+
