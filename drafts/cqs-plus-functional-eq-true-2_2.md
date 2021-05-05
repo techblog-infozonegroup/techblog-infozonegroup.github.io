@@ -170,7 +170,7 @@ Värt att notera här är:
 - Här finns en basal felhantering. Man skulle kunna tänka sig att underliggande komponenter, commands och queries, kastar specifika undantag och respektive sådant skulle hanteras här i processen för att loggas och returnera något bra utåt. Det är viktigt att hålla en bra struktur vad gäller felhantering för att underlätta framtida felsökning och underhåll. Läs mer om happy, sad och error-paths [här](https://techblogg.infozone.se/blog/happy-sad-error/).
 - Här finns affärslogik för att t.ex. hantera om den eftersökta användare inte finns.
 
-## En functionell process?
+## En funktionell process?
 Hur kan man se till att få fram den funktionella paradigmen i processen ovan? Det som primärt ställer till det för oss är processens alla beroenden vilket gör det svårt att uppfylla dom viktigaste egenskaperna i funktionell programmering. Vi inser snabbt att vi får tänka lite utanför ramarna och försöka se till att uppnå en nivå som är tillräckligt bra.
 
 Låt oss begränsa strävan mot en funktionell process genom att ta kontroll över omgivningen. Det som direkt borde dyka upp i tankarna då är *enhetstester*. Om vi bygger enhetstester för processen så MÅSTE vi ta kontroll över dess beroenden. Kan vi då få den att passa in i den funktionella paradigmen? Svaret är enligt mig ett rungande JA.
