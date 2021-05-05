@@ -185,4 +185,4 @@ Lyckades vi "göra processen funktionell"? Svaret är nja. Vi lyckas om vi ser t
 
  
 # Query
-En fråga, att läsa eller hämta data i någon källa, måste vara en av dom absolut
+En fråga, att läsa eller hämta data i någon källa, ska absolut vara funktionell. Det är enkelt att uppfylla alla egenskaper som den fuktionella paradigmen blabla...
