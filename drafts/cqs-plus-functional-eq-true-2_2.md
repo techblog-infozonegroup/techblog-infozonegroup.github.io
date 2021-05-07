@@ -185,4 +185,68 @@ Lyckades vi "göra processen funktionell"? Svaret är nja. Vi lyckas om vi ser t
 
  
 # Query
-En fråga, att läsa eller hämta data i någon källa, ska absolut vara funktionell. Det är enkelt att uppfylla alla egenskaper som den fuktionella paradigmen blabla...
+En fråga, att läsa eller hämta data i någon källa, ska absolut vara funktionell. Det är enkelt att uppfylla många av dom egenskaper som den fuktionella paradigmen lutar sig emot. Implementationen av queryn i exempelsystemet finns att titta på [här](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Queries/GetUserBySsnQuery.cs). Den implementerar [IQuery](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Queries/IQuery.cs) för att underlätta testning och injicering av beorenden i resten av implementationen.
+
+> Om man ska vara petig så kan man såklart diskutera vad en queries inparametrar består av. I det här fallet är frågan självklart beroende av en extern datakälla, men om dess tillstånd är känt vid exekvering så får man ändå det entydiga förutsägbara beteende hos frågan som man strävar efter.
+ 
+Vi ser att frågan med dess execute uppfyller:
+- Pure function
+- Referential transparency
+- No side effects
+
+Alla dessa egenskaper syns enklast i [enhetstesterna](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/Tests/GetUserBySsnQueryTests.cs) för frågan.
+
+Vi lämnar frågan i och med detta.
+
+# Command
+Ett kommando, en uppmaning eller önskan att utföra en operation på någon enhet, entitet, känt tillstånd, är lite svårare att "få funktionell". I dom flesta exemplen på CQS-implementationer returnerar inte ett kommando något vilket gör det svårt att uppfylla t.ex. *Referential transparancy* i ett kommando. 
+
+I det här exemplet returnerar däremot frågan det domänobjekt som är resultatet av operationen. Det här valet gjorde jag i samband med implementationen av ett kommando som persisterar ett domänobjekt i något datalager. Resultatet av anropet till datalagret var det id som entiteten fick och det var en enkel och felsäker "utökning" av ett commando att låta den då returnera domänobjektet tillsammans med detta id.
+
+Om vi tittar på kommandort [UpdateWorkCommand](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Commands/UpdateWorkCommand.cs) så ser vi att det kommandot inte alls opererar på något externt datalager utan har bara som uppgift att uppdatera namnet på domänobjektet OCH returnera ett nytt user-objekt med det nya namnet:
+
+```csharp
+public class UpdateWorkCommand : ICommand<User>
+{
+    private readonly string _work;
+
+    public UpdateWorkCommand(string work) => _work = work;
+
+    public async Task<User> Execute(User domainModel) => domainModel.WithWork(_work);
+}
+```
+Här syns också spår på hur domänomodellen User antagligen är immutable. Låt oss kolla efter:
+
+```csharp
+public class User
+{
+    public string Ssn { get; }
+    public string Name { get; private set; }
+    public string Work { get; private set; }
+
+    public User(string ssn, string name, string work)
+    {
+        Ssn = ssn;
+        Name = name;
+        Work = work;
+    }
+    
+    private User Clone() => new(Ssn, Name, Work);
+
+    public User WithWork(string work)
+    {
+        var clone = Clone();
+        clone.Work = work;
+
+        return clone;
+    }
+
+    public User WithName(string name)
+    {
+        var clone = Clone();
+        clone.Name = name;
+
+        return clone;
+    }
+}
+```
