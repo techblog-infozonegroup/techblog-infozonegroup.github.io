@@ -37,14 +37,12 @@ En bild över det vi ska bygga placerar in alla byggklossar på sina respektive 
 
 ![func-cqs-process](https://user-images.githubusercontent.com/460203/116928893-f490d300-ac5d-11eb-86a8-0f84910a30ae.png)
 
-All källkod finns här [https://github.com/Fjeddo/Azure-function-CQS-pattern](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag presentera dom ovan påanonserade spelarna:
-- QueryExecuter - en komponent som sköter all exekvering av frågor
-- CommandHandler - en komponent som hanterar alla kommandon som ska utföras
-
-Att centralisera exekvering av frågor och hantering av kommandon öppnar upp möjligheter att "dekorera" anropen med loggning och felhantering.
+All källkod finns här [https://github.com/Fjeddo/Azure-function-CQS-pattern](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag presentera dom ovan påannonserade spelarna QueryExecuter och CommandHandler.
 
 ## QueryExecuter och CommandHandler
-Vi börjar kodgenomgången med dom två nyinförda komponenterna för att exekvera queries och hantera commands. Dessa, tillsammans med sina respektive interface, ser ut enligt:
+Vi börjar kodgenomgången med dom två nyinförda komponenterna för att exekvera queries och hantera commands. Att centralisera detta ger oss möjligheter att "dekorera" anropen med loggning och felhantering. 
+
+QueryExecuter och CommandHandler, tillsammans med sina respektive interface, ser ut enligt följande:
 
 ```csharp
 public interface IQueryExecuter
@@ -96,12 +94,15 @@ public class CommandHandler : ICommandHandler
 }
 ```
 
-Vi ser att dom returnerar tupler på det sättet som beskrivs i [den här posten](https://techblogg.infozone.se/blog/tuples-might-be-good/). Såsom dom är implementerade här loggar dom typen av query respektive command som ska hanteras och returnerar resultatet. Här kan man tänka sig att lägga felhantering också men i exemplet för den här posten ligger den i processen, som vi kommer att se nedan.
+Vi ser att queryn returnerar en tuple, på det sättet som beskrivs i [den här posten](https://techblogg.infozone.se/blog/tuples-might-be-good/). 
+Implementationerna loggar typen av query respektive command som ska hanteras, frågan exekveras/kommandot hanteras och respektive resultat returneras. Här kan man tänka sig att lägga felhantering också men i exemplet för den här posten ligger den hanteringen i processen, som vi kommer att se nedan.
 
 > Den här lösnigen liknar Decorator Pattern. Mer om detta mönster finns här [https://www.dofactory.com/net/decorator-design-pattern](https://www.dofactory.com/net/decorator-design-pattern).
  
 # Process
-Processen är den klass som kontrollerar flödet i en funktion, den innehåller affärslogiken och definierar vilka frågor och kommandon som ska utföras. I exemplet för den här posten implementerar posten en process för att uppdatera namn och arbete för en användare. Domänen består av User-objekt som identifieras med hjälp av personnummer, ssn. UpdateUserProcess implementerar IProcess och dessa ser ut enligt:
+Processen är den klass som kontrollerar flödet i en funktion, den innehåller affärslogiken och definierar vilka frågor och kommandon som ska utföras. I exemplet för den här posten implementeras en process för att uppdatera namn och arbete för en användare. Domänen består av User-objekt som identifieras med hjälp av personnummer, ssn. 
+
+UpdateUserProcess implementerar IProcess och dessa ser ut enligt:
 
 ```csharp
 public interface IProcess<TIn, TOut>
@@ -165,10 +166,10 @@ public class UpdateUserProcess : IProcess<UpdateUserRequest, User>
 }
 ```
 Värt att notera här är:
-- Alla beroenden som processen har injiceras i konstruktorn. IoC-konfigurationen återfinns i [Startup.cs](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Startup.cs). 
-- UserStorage-servicen injiceras också, och passas vidare ner till dom klasser som behöver tillgång till den.
-- Här finns en basal felhantering. Man skulle kunna tänka sig att underliggande komponenter, commands och queries, kastar specifika undantag och respektive sådant skulle hanteras här i processen för att loggas och returnera något bra utåt. Det är viktigt att hålla en bra struktur vad gäller felhantering för att underlätta framtida felsökning och underhåll. Läs mer om happy, sad och error-paths [här](https://techblogg.infozone.se/blog/happy-sad-error/).
-- Här finns affärslogik för att t.ex. hantera om den eftersökta användare inte finns.
+- Här finns hela **funktionens affärslogik för att sköta uppdateringen av användare**. Affärslogiken hanterar både lyckade och misslyckade uppdateringar, t.ex. då den eftersökta användare inte finns.
+- Alla **beroenden som processen har injiceras** i konstruktorn. IoC-konfigurationen återfinns i [Startup.cs](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Startup.cs). 
+- UserStorage injiceras också, och passas vidare ner till dom klasser som behöver ha tillgång till den.
+- Här finns en basal **felhantering**. Man skulle kunna tänka sig att underliggande komponenter, commands och queries, kastar specifika undantag och varje sådant skulle hanteras här, loggas och man skulle sedan returnera något bra uppåt. Det är viktigt att hålla en bra struktur vad gäller felhantering för att underlätta framtida felsökning och underhåll. Läs mer om **happy-, sad- och error-paths [här](https://techblogg.infozone.se/blog/happy-sad-error/)**.
 
 ## En funktionell process?
 Hur kan man se till att få fram den funktionella paradigmen i processen ovan? Det som primärt ställer till det för oss är processens alla beroenden vilket gör det svårt att uppfylla dom viktigaste egenskaperna i funktionell programmering. Vi inser snabbt att vi får tänka lite utanför ramarna och försöka se till att uppnå en nivå som är tillräckligt bra.
@@ -179,9 +180,9 @@ Låt oss titta på två olika enhetstester för processen:
 - Happy flow -> query exekveras, commands exekveras, resultatet är positivt
 - Sad flow -> query hittar inget, commands exekveras INTE, resultatet är negativt och innehåller en status
 
-Lyckades vi "göra processen funktionell"? Svaret är nja. Vi lyckas om vi ser till att göra den testbar, om vi tar kontroll på dess beroenden och på så sätt får kan få den helt förutsägbar och låter den enbart bli beroende av dess inparametrar. I det här fallet är processen beroende av en request-instans som innehåller ett "filter" i form av ett personnummer och vad man vill uppdatera namn och arbete till. På det här sättet kan vi alltså se enhetstesternas användning av processen, Act-delen i testerna, som funktionella och vi uppfyller dom flesta egenskaperna för den funktionella paradigmen. 
+Lyckades vi "göra processen funktionell"? Svaret är nja. Vi lyckas om vi ser till att göra den testbar, om vi tar kontroll över dess beroenden och på så sätt får kan få den helt förutsägbar och låter den enbart bli beroende av dess inparametrar. I det här fallet är processen beroende av en request-instans som innehåller ett "filter" i form av ett personnummer och vad man vill uppdatera namn och arbete till. På det här sättet kan vi alltså se enhetstesternas användning av processen, Act-delen i testerna, som funktionella i just den här kontexten. Vi kan då säga att processen uppfyller dom flesta egenskaperna för den funktionella paradigmen. 
 
-> Den observante kanske tycker det här är en massa nonsens. Vaddå funktionell process? Den är ju inte funktionell! Man kan ju göra det mesta i enhetstester! Ja, visst kan man det, men i min värld så handlar funktionell programmering om att ha kontroll på inparametrar, bygga kod som ger ett förutsägbart resultat och att kunna exekvera koden flera gånger och VARJE gång ska koden fungera och ge det resultatet tillbaka som jag förväntar mig. Vi lämnar kodens egentliga omgivning och exekverar den i en känd och kontrollerad omgivning och först då kan vi uppnå robusthet och förutsägbarhet. Det är då vi återkommer till den funktionella paradigmen.
+> En del kanske tycker det här är en massa nonsens. Vaddå funktionell process? Den är ju inte funktionell! Man kan ju göra det mesta i enhetstester! Ja, visst kan man det, men i min värld så handlar funktionell programmering om att ha kontroll på inparametrar, bygga kod som ger ett förutsägbart resultat och att kunna exekvera koden flera gånger och VARJE gång ska koden fungera och ge det resultatet tillbaka som jag förväntar mig. Vi lämnar kodens egentliga omgivning och exekverar den i en känd och kontrollerad omgivning och först då kan vi uppnå robusthet och förutsägbarhet. Det är på det sättet vi närmar oss den funktionella paradigmen, även för den komplexa processen.
 
  
 # Query
