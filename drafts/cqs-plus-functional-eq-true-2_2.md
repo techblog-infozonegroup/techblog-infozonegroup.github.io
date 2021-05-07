@@ -15,37 +15,35 @@ tags:
   - funktionell programmering
 ---
 
-Beskriv:
-- Process/UpdateUserProcess
-- Query/GetUserBySsnQuery
-- Command/UpdateNameCommand
-- QueryExecuter
-- CommandHandler
-- IoC/DI
-
 # Kort recap från del 1
-Innan vi tittar på kod så gör vi en kort återblick på vad vi gick igenom i [första delen](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-1_2/):
+Innan vi tittar på kod gör vi en kort återblick på vad vi gick igenom i [första delen](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-1_2/):
 
-- CQS - Command Query Separation, skillda "pipor" från commands (operationer) och queries (frågor)
-- En definition av komplext kommando, en process, ger oss verktygen att bygga dom flesta systemen
+- CQS - Command Query Separation, skilda "pipor" för commands (operationer) och queries (frågor)
+- En definition av komplext kommando, en process, ger oss möjligheten att bygga dom flesta systemen
 - Tänkt funktionellt, functional programming är mindre felbenägen och robust
 
-Det funktionella kommer bli tydligare i och med att vi introducerar enhetstester och på det sättet driver fram koden eller automatiserar regressionstestningen av systemets olika delar.
+Det funktionella kommer att bli tydligare i och med att vi introducerar enhetstester och på det sättet påvisar dom funktionella egenskaperna.
+
+# Intro
+I den här posten kollar vi på några delar av koden till ett exempelsystem som "hanterar" användare. Vi kommer inte att titta på all kod utan några utvalda delar såsom:
+- Process / UpdateUserProcess - en process enligt definition i del 1
+- QueryExecuter och CommandExecuter - två nya komponenter, beskrivna nedan
+- Query / GetUserBySsnQuery - en fråga (C**Q**S)
+- Command / UpdateWorkCommand - ett kommando (**C**QS)
+- Immutable domain model / User - ett domänobjekt, oföränderligt
 
 # Översikt
-En bild över det vi ska bygga placerar in alla byggklossar på sina respektive platser i lösningen. Vi realiserar lösningen genom att implementera den som en Azure function byggd enligt CQS + functional programming:
+En bild över det vi ska bygga placerar in alla byggklossar på sina respektive platser i lösningen. Vi låter lösningen bo i en Azure function:
 
 ![func-cqs-process](https://user-images.githubusercontent.com/460203/116928893-f490d300-ac5d-11eb-86a8-0f84910a30ae.png)
 
-All källkod finns här [https://github.com/Fjeddo/Azure-function-CQS-pattern](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag introducera ytterligare två spelare:
+All källkod finns här [https://github.com/Fjeddo/Azure-function-CQS-pattern](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag presentera dom ovan påanonserade spelarna:
 - QueryExecuter - en komponent som sköter all exekvering av frågor
 - CommandHandler - en komponent som hanterar alla kommandon som ska utföras
 
 Att centralisera exekvering av frågor och hantering av kommandon öppnar upp möjligheter att "dekorera" anropen med loggning och felhantering.
 
-> Den här lösnigen liknar Decorator Pattern. Mer om detta mönster finns här [https://www.dofactory.com/net/decorator-design-pattern](https://www.dofactory.com/net/decorator-design-pattern).
-
-# QueryExecuter och CommandHandler
+## QueryExecuter och CommandHandler
 Vi börjar kodgenomgången med dom två nyinförda komponenterna för att exekvera queries och hantera commands. Dessa, tillsammans med sina respektive interface, ser ut enligt:
 
 ```csharp
@@ -100,6 +98,8 @@ public class CommandHandler : ICommandHandler
 
 Vi ser att dom returnerar tupler på det sättet som beskrivs i [den här posten](https://techblogg.infozone.se/blog/tuples-might-be-good/). Såsom dom är implementerade här loggar dom typen av query respektive command som ska hanteras och returnerar resultatet. Här kan man tänka sig att lägga felhantering också men i exemplet för den här posten ligger den i processen, som vi kommer att se nedan.
 
+> Den här lösnigen liknar Decorator Pattern. Mer om detta mönster finns här [https://www.dofactory.com/net/decorator-design-pattern](https://www.dofactory.com/net/decorator-design-pattern).
+ 
 # Process
 Processen är den klass som kontrollerar flödet i en funktion, den innehåller affärslogiken och definierar vilka frågor och kommandon som ska utföras. I exemplet för den här posten implementerar posten en process för att uppdatera namn och arbete för en användare. Domänen består av User-objekt som identifieras med hjälp av personnummer, ssn. UpdateUserProcess implementerar IProcess och dessa ser ut enligt:
 
@@ -185,4 +185,82 @@ Lyckades vi "göra processen funktionell"? Svaret är nja. Vi lyckas om vi ser t
 
  
 # Query
-En fråga, att läsa eller hämta data i någon källa, ska absolut vara funktionell. Det är enkelt att uppfylla alla egenskaper som den fuktionella paradigmen blabla...
+En fråga, att läsa eller hämta data i någon källa, ska absolut vara funktionell. Det är enkelt att uppfylla många av dom egenskaper som den fuktionella paradigmen lutar sig emot. Implementationen av queryn i exempelsystemet finns att titta på [här](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Queries/GetUserBySsnQuery.cs). Den implementerar [IQuery](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Queries/IQuery.cs) för att underlätta testning och injicering av beorenden i resten av implementationen.
+
+> Om man ska vara petig så kan man såklart diskutera vad en queries inparametrar består av. I det här fallet är frågan självklart beroende av en extern datakälla, men om dess tillstånd är känt vid exekvering så får man ändå det entydiga förutsägbara beteende hos frågan som man strävar efter.
+ 
+Vi ser att frågan med dess execute uppfyller:
+- Pure function
+- Referential transparency
+- No side effects
+
+Alla dessa egenskaper syns enklast i [enhetstesterna](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/Tests/GetUserBySsnQueryTests.cs) för frågan.
+
+Vi lämnar frågan i och med detta.
+
+# Command
+Ett kommando, en uppmaning eller önskan att utföra en operation på någon enhet, entitet, känt tillstånd, är lite svårare att "få funktionell". I dom flesta exemplen på CQS-implementationer returnerar inte ett kommando något vilket gör det svårt att uppfylla t.ex. *Referential transparancy* i ett kommando. 
+
+I det här exemplet returnerar däremot frågan det domänobjekt som är resultatet av operationen. Det här valet gjorde jag i samband med implementationen av ett kommando som persisterar ett domänobjekt i något datalager. Resultatet av anropet till datalagret var det id som entiteten fick och det var en enkel och felsäker "utökning" av ett commando att låta den då returnera domänobjektet tillsammans med detta id.
+
+Om vi tittar på kommandot [UpdateWorkCommand](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Commands/UpdateWorkCommand.cs) så ser vi att det kommandot inte alls opererar på något externt datalager utan har bara som uppgift att uppdatera namnet på domänobjektet OCH returnera ett nytt user-objekt med det nya namnet:
+
+```csharp
+public class UpdateWorkCommand : ICommand<User>
+{
+    private readonly string _work;
+
+    public UpdateWorkCommand(string work) => _work = work;
+
+    public async Task<User> Execute(User domainModel) => domainModel.WithWork(_work);
+}
+```
+
+Här syns också spår på hur domänomodellen User eventuellt är immutable. Låt oss kolla efter.
+
+# Immutable domain model
+
+Att ha immutable objects att jobba med i sin domän underlätta å det grövsta när det gäller att undvika fallgropar som genererar buggar och oväntade beteenden. Läs om immutable objects [här](https://en.wikipedia.org/wiki/Immutable_object) och även så kallade ValueObjects [här](https://en.wikipedia.org/wiki/Value_object). I anslutning till dessa två begrepp kan det vara intressant att läsa om [Builder pattern](https://en.wikipedia.org/wiki/Builder_pattern).
+
+I domänen för exempelsystemet finns en typ, en User:
+
+```csharp
+public class User
+{
+    public string Ssn { get; }
+    public string Name { get; private set; }
+    public string Work { get; private set; }
+
+    public User(string ssn, string name, string work)
+    {
+        Ssn = ssn;
+        Name = name;
+        Work = work;
+    }
+    
+    private User Clone() => new(Ssn, Name, Work);
+
+    public User WithWork(string work)
+    {
+        var clone = Clone();
+        clone.Work = work;
+
+        return clone;
+    }
+
+    public User WithName(string name)
+    {
+        var clone = Clone();
+        clone.Name = name;
+
+        return clone;
+    }
+}
+```
+
+Med en domänmodell implementerad enligt ovan så kan inte kommandot UpdateWorkCommand ha några oönskade sidoeffekter på sina inparametrar. Såklart kan operationen resultera i större "konsekvenser" såsom persistering till något datalager, genererande av ett eller flera anrop till externa tjänster som får ett förändrat tillstånd. Det inses med lätthet att dom flesta kommandona i ett system inte är idempotenta, det vill säga att dom ger samma resultat ALLA gånger dom anropas med SAMMA inparametrar.
+
+# Wrap-up
+Jag hoppas att dom här posterna gav något, om inte annat provocerade fram lite lust att utmana tanken på att kombinera CQS och funktionell programmering och om det verkligen finns något skäl att göra det. Titta gärna igenom enhetstesterna för dom olika delarna i systemet, process, query och command. Det som borde framkomma där är att faktiskt ALLA delar i ett system kan göras testbara. Att ha med sig det när man skriver kod vill jag påstå ger en mycket bättre stringens i designen och underlättar både felsökning och felavhjälpning.
+
+All kod finns [här](https://github.com/Fjeddo/Azure-function-CQS-pattern) tillsammans med enhetstester.
