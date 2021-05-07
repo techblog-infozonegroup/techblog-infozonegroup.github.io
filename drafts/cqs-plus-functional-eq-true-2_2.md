@@ -15,14 +15,6 @@ tags:
   - funktionell programmering
 ---
 
-# Intro
-I den här posten kollar vi på några delar av koden ett exempelsystem som "hanterar" användare. Vi kommer inte att titta på all kod utan några utvalda delar såsom:
-- Process / UpdateUserProcess - en process enligt definition i del 1
-- QueryExecuter och CommandExecuter - två nya komponenter, beskrivna nedan
-- Query / GetUserBySsnQuery - en fråga (C**Q**S)
-- Command / UpdateWorkCommand - ett kommando (**C**QS)
-- Immutable domain model / User - ett domänobjekt, oföränderligt
-
 # Kort recap från del 1
 Innan vi tittar på kod så gör vi en kort återblick på vad vi gick igenom i [första delen](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-1_2/):
 
@@ -31,6 +23,14 @@ Innan vi tittar på kod så gör vi en kort återblick på vad vi gick igenom i 
 - Tänkt funktionellt, functional programming är mindre felbenägen och robust
 
 Det funktionella kommer bli tydligare i och med att vi introducerar enhetstester och på det sättet driver fram koden eller automatiserar regressionstestningen av systemets olika delar.
+
+# Intro
+I den här posten kollar vi på några delar av koden ett exempelsystem som "hanterar" användare. Vi kommer inte att titta på all kod utan några utvalda delar såsom:
+- Process / UpdateUserProcess - en process enligt definition i del 1
+- QueryExecuter och CommandExecuter - två nya komponenter, beskrivna nedan
+- Query / GetUserBySsnQuery - en fråga (C**Q**S)
+- Command / UpdateWorkCommand - ett kommando (**C**QS)
+- Immutable domain model / User - ett domänobjekt, oföränderligt
 
 # Översikt
 En bild över det vi ska bygga placerar in alla byggklossar på sina respektive platser i lösningen. Vi realiserar lösningen genom att implementera den som en Azure function byggd enligt CQS + functional programming:
