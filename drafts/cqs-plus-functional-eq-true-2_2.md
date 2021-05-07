@@ -203,7 +203,7 @@ Ett kommando, en uppmaning eller önskan att utföra en operation på någon enh
 
 I det här exemplet returnerar däremot frågan det domänobjekt som är resultatet av operationen. Det här valet gjorde jag i samband med implementationen av ett kommando som persisterar ett domänobjekt i något datalager. Resultatet av anropet till datalagret var det id som entiteten fick och det var en enkel och felsäker "utökning" av ett commando att låta den då returnera domänobjektet tillsammans med detta id.
 
-Om vi tittar på kommandort [UpdateWorkCommand](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Commands/UpdateWorkCommand.cs) så ser vi att det kommandot inte alls opererar på något externt datalager utan har bara som uppgift att uppdatera namnet på domänobjektet OCH returnera ett nytt user-objekt med det nya namnet:
+Om vi tittar på kommandot [UpdateWorkCommand](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Commands/UpdateWorkCommand.cs) så ser vi att det kommandot inte alls opererar på något externt datalager utan har bara som uppgift att uppdatera namnet på domänobjektet OCH returnera ett nytt user-objekt med det nya namnet:
 
 ```csharp
 public class UpdateWorkCommand : ICommand<User>
@@ -215,7 +215,8 @@ public class UpdateWorkCommand : ICommand<User>
     public async Task<User> Execute(User domainModel) => domainModel.WithWork(_work);
 }
 ```
-Här syns också spår på hur domänomodellen User antagligen är immutable. Låt oss kolla efter:
+
+Här syns också spår på hur domänomodellen User eventuellt är immutable. Låt oss kolla efter:
 
 ```csharp
 public class User
@@ -250,3 +251,10 @@ public class User
     }
 }
 ```
+
+Med en domänmodell implementerad enligt ovan så kan inte kommandot UpdateWorkCommand ha några oönskade sidoeffekter på sina inparametrar. Såklart kan operationen resultera i större "konsekvenser" såsom persistering till något datalager, genererande av ett eller flera anrop till externa tjänster som får ett förändrat tillstånd. Det inses med lätthet att dom flesta kommandona i ett system inte är idempotenta, det vill säga att dom ger samma resultat ALLA gånger dom anropas med SAMMA inparametrar.
+
+# Wrap-up
+Jag hoppas att dom här posterna gav något, om inte annat provocerade fram lite lust att utmana tanken på att kombinera CQS och funktionell programmering och om det verkligen finns något skäl att göra det. Titta gärna igenom enhetstesterna för dom olika delarna i systemet, process, query och command. Det som borde framkomma där är att faktiskt ALLA delar i ett system kan göras testbara. Att ha med sig det när man skriver kod vill jag påstå ger en mycket bättre stringens i designen och underlättar både felsökning och felavhjälpning.
+
+All kod finns [här](https://github.com/Fjeddo/Azure-function-CQS-pattern) tillsammans med enhetstester.
