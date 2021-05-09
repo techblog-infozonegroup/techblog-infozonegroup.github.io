@@ -97,7 +97,7 @@ public class CommandHandler : ICommandHandler
 Vi ser att queryn returnerar en tuple, på det sättet som beskrivs i [den här posten](https://techblogg.infozone.se/blog/tuples-might-be-good/). 
 Implementationerna loggar typen av query och command som hanteras, frågan exekveras/kommandot hanteras och respektive resultat returneras. Här kan man tänka sig att lägga felhantering också, men i exemplet för den här posten ligger den hanteringen i processen. Vi kommer till det senare.
 
-> Den här lösnigen liknar Decorator Pattern. Mer om detta mönster finns här [https://www.dofactory.com/net/decorator-design-pattern](https://www.dofactory.com/net/decorator-design-pattern).
+> Den här lösnigen liknar Decorator Pattern. Mer om det mönstret finns här [https://www.dofactory.com/net/decorator-design-pattern](https://www.dofactory.com/net/decorator-design-pattern).
  
 # Process
 Processen är den klass som kontrollerar flödet i en funktion, den innehåller affärslogiken och definierar vilka frågor och kommandon som ska utföras. I exemplet för den här posten implementeras en process för att uppdatera namn och arbete för en användare. Domänen består av User-objekt som identifieras med hjälp av personnummer, ssn. 
