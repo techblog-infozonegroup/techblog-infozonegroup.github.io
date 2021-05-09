@@ -267,7 +267,7 @@ Det domänobjekt som kommandot returnar är alltså INTE det som födde kommando
 
 # Immutable domain model
 
-Att ha immutable objects att jobba med i sin domän underlätta å det grövsta när det gäller att undvika fallgropar som genererar buggar och oväntade beteenden. Läs om immutable objects [här](https://en.wikipedia.org/wiki/Immutable_object) och även så kallade ValueObjects [här](https://en.wikipedia.org/wiki/Value_object). I anslutning till dessa två begrepp kan det vara intressant att läsa om [Builder pattern](https://en.wikipedia.org/wiki/Builder_pattern).
+Att ha immutable objects att jobba med i sin domän förenklar å det grövsta att undvika fallgropar som genererar buggar och oväntade beteenden. Läs om immutable objects [här](https://en.wikipedia.org/wiki/Immutable_object) och även så kallade ValueObjects [här](https://en.wikipedia.org/wiki/Value_object). I anslutning till dessa två begrepp kan det även vara intressant att läsa om [Builder pattern](https://en.wikipedia.org/wiki/Builder_pattern).
 
 I domänen för exempelsystemet finns en typ, en User:
 
@@ -305,7 +305,7 @@ public class User
 }
 ```
 
-Med en domänmodell implementerad enligt ovan så kan inte kommandot UpdateWorkCommand ha några oönskade sidoeffekter på sina inparametrar. Såklart kan operationen resultera i större "konsekvenser" såsom persistering till något datalager, genererande av ett eller flera anrop till externa tjänster som får ett förändrat tillstånd. Det inses med lätthet att dom flesta kommandona i ett system inte är idempotenta, det vill säga att dom ger samma resultat ALLA gånger dom anropas med SAMMA inparametrar.
+Med en domänmodell implementerad enligt ovan så kan inte kommandot UpdateWorkCommand ha några oönskade sidoeffekter på sina inparametrar. Såklart kan operationen resultera i större "konsekvenser" såsom persistering till något datalager, genererande av ett eller flera anrop till externa tjänster som får ett förändrat tillstånd. Det inses med lätthet att dom flesta kommandona i ett system inte är [idempotenta](https://en.wikipedia.org/wiki/Idempotence), det vill säga att dom ger samma resultat ALLA gånger dom anropas med SAMMA inparametrar.
 
 Domänmodellen ovan är fullt testbar:
 
