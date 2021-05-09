@@ -340,7 +340,7 @@ public class UserTests
 }
 ```
 
-I dom här två testerna påvisas ett User-objekt immutability. Alla egenskaper är readonly och modifiering returnera en ny instans, en kopia men med modifierad egenskap. Instanserna är INTE samma, vilket verifieras i och med `clone.Should().NotBe(sut);` i dom båda testfallen.
+I dom här två testerna påvisas ett User-objekts immutability. Alla egenskapers set-metoder är gömda från exponering utåt och modifiering görs genom speciella funktioner. Varje förändring av en egenskap returnerar en ny instans, en kopia men med modifierad egenskap. Instanserna är INTE samma, vilket verifieras i och med `clone.Should().NotBe(sut);` i dom båda testfallen.
 
 # Wrap-up
 Jag hoppas att dom här posterna gav något, om inte annat provocerade fram lite lust att utmana tanken på att kombinera CQS och funktionell programmering och om det verkligen finns något skäl att göra det. Titta gärna igenom enhetstesterna för dom olika delarna i systemet, process, query och command. Det som borde framkomma där är att faktiskt ALLA delar i ett system kan göras testbara. Att ha med sig det när man skriver kod vill jag påstå ger en mycket bättre stringens i designen och underlättar både felsökning och felavhjälpning.
