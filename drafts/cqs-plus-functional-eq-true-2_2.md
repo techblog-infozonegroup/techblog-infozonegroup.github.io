@@ -165,11 +165,11 @@ public class UpdateUserProcess : IProcess<UpdateUserRequest, User>
     }
 }
 ```
-Värt att notera här är:
+Värt att notera i processen är att:
 - Här finns hela **funktionens affärslogik för att sköta uppdateringen av användare**. Affärslogiken hanterar både lyckade och misslyckade uppdateringar, t.ex. då den eftersökta användare inte finns.
 - Alla **beroenden som processen har injiceras** i konstruktorn. IoC-konfigurationen återfinns i [Startup.cs](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Startup.cs). 
 - UserStorage injiceras också, och passas vidare ner till dom klasser som behöver ha tillgång till den.
-- Här finns en basal **felhantering**. Man skulle kunna tänka sig att underliggande komponenter, commands och queries, kastar specifika undantag och varje sådant skulle hanteras här, loggas och man skulle sedan returnera något bra uppåt. Det är viktigt att hålla en bra struktur vad gäller felhantering för att underlätta framtida felsökning och underhåll. Läs mer om **happy-, sad- och error-paths [här](https://techblogg.infozone.se/blog/happy-sad-error/)**.
+- Här finns en basal **felhantering**. Man skulle kunna tänka sig att underliggande komponenter, commands och queries, kastar specifika undantag och varje sådant skulle kunna hanteras här, loggas och och översättas för att returnera något bra uppåt. Det är viktigt att hålla stringens och en bra struktur på felhantering för att underlätta framtida felsökning och underhåll. Läs mer om **happy-, sad- och error-paths [här](https://techblogg.infozone.se/blog/happy-sad-error/)**.
 
 ## En funktionell process?
 Hur kan man se till att få fram den funktionella paradigmen i processen ovan? Det som primärt ställer till det för oss är processens alla beroenden vilket gör det svårt att uppfylla dom viktigaste egenskaperna i funktionell programmering. Vi inser snabbt att vi får tänka lite utanför ramarna och försöka se till att uppnå en nivå som är tillräckligt bra.
