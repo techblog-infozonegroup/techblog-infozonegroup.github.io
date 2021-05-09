@@ -261,6 +261,41 @@ public class User
 
 Med en domänmodell implementerad enligt ovan så kan inte kommandot UpdateWorkCommand ha några oönskade sidoeffekter på sina inparametrar. Såklart kan operationen resultera i större "konsekvenser" såsom persistering till något datalager, genererande av ett eller flera anrop till externa tjänster som får ett förändrat tillstånd. Det inses med lätthet att dom flesta kommandona i ett system inte är idempotenta, det vill säga att dom ger samma resultat ALLA gånger dom anropas med SAMMA inparametrar.
 
+Domänmodellen ovan är fullt testbar:
+
+```csharp
+public class UserTests
+{
+    [Fact]
+    public void WithWork_should_clone_not_modify()
+    {
+        var sut = new User("1234567890", "Karo Hero", "Meisterhirte");
+
+        var clone = sut.WithWork("alter Meisterhirte");
+
+        clone.Should().NotBe(sut);
+        clone.Should().NotBeEquivalentTo(sut);
+        clone.Work.Should().Be("alter Meisterhirte");
+        sut.Work.Should().Be("Meisterhirte");
+    }
+
+    [Fact]
+    public void WithName_should_clone_not_modify()
+    {
+        var sut = new User("1234567890", "Karo Hero", "Meisterhirte");
+
+        var clone = sut.WithName("alter Karo Hero");
+
+        clone.Should().NotBe(sut);
+        clone.Should().NotBeEquivalentTo(sut);
+        clone.Name.Should().Be("alter Karo Hero");
+        sut.Name.Should().Be("Karo Hero");
+    }
+}
+```
+
+I dom här två testerna påvisas ett User-objekt immutability. Alla egenskaper är readonly och modifiering returnera en ny instans, en kopia men med modifierad egenskap. Instanserna är INTE samma, vilket verifieras i och med `clone.Should().NotBe(sut);` i dom båda testfallen.
+
 # Wrap-up
 Jag hoppas att dom här posterna gav något, om inte annat provocerade fram lite lust att utmana tanken på att kombinera CQS och funktionell programmering och om det verkligen finns något skäl att göra det. Titta gärna igenom enhetstesterna för dom olika delarna i systemet, process, query och command. Det som borde framkomma där är att faktiskt ALLA delar i ett system kan göras testbara. Att ha med sig det när man skriver kod vill jag påstå ger en mycket bättre stringens i designen och underlättar både felsökning och felavhjälpning.
 
