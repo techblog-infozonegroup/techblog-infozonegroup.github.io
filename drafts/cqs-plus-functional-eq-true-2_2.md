@@ -250,7 +250,7 @@ Ett kommando, en uppmaning eller önskan att utföra en operation på någon enh
 
 I det här exemplet returnerar däremot frågan det domänobjekt som är resultatet av operationen. Det här valet gjorde jag i samband med implementationen av ett kommando som persisterar ett domänobjekt i ett externt datalager. Resultatet av anropet till datalagret var det id som entiteten fick och det var en enkel och felsäker "utökning" av ett command att låta det returnera domänobjektet tillsammans med detta id.
 
-Om vi tittar på kommandot [UpdateWorkCommand](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Commands/UpdateWorkCommand.cs) så ser vi att det kommandot inte alls opererar på något externt datalager utan har bara som uppgift att uppdatera namnet på domänobjektet. Detta görs dock genom **returnera ett nytt user-objekt med det nya namnet**:
+Om vi tittar på kommandot [UpdateWorkCommand](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Commands/UpdateWorkCommand.cs) så ser vi att det kommandot inte alls opererar på något externt datalager utan har bara som uppgift att uppdatera namnet på domänobjektet. Detta görs dock genom **returnera ett nytt user-objekt med det nya namnet**, eftersom domänmodellen User är immutable:
 
 ```csharp
 public class UpdateWorkCommand : ICommand<User>
@@ -263,7 +263,7 @@ public class UpdateWorkCommand : ICommand<User>
 }
 ```
 
-Här syns också spår på hur domänomodellen User eventuellt är immutable. Låt oss kolla efter.
+Det domänobjekt som kommandot exekverar är alltså INTE en uppdaterad variant av det som födde kommandot, utan är en kopia med modifierat yrke. Immutable domain model beskrivs nedan.
 
 # Immutable domain model
 
