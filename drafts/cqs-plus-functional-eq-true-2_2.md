@@ -263,7 +263,7 @@ public class UpdateWorkCommand : ICommand<User>
 }
 ```
 
-Det domänobjekt som kommandot exekverar är alltså INTE en uppdaterad variant av det som födde kommandot, utan är en kopia med modifierat yrke. Immutable domain model beskrivs nedan.
+Det domänobjekt som kommandot returnar är alltså INTE det som födde kommandot, utan är en kopia med modifierat yrke. Immutable domain model beskrivs nedan.
 
 # Immutable domain model
 
