@@ -196,7 +196,7 @@ public class UpdateUserProcessTests
             new NullLogger<UpdateUserProcess>());
     }
 
-    // Happy path -> query returnera ett User-objekt och kommandona exekveras
+    // Happy flow -> query returnera ett User-objekt och kommandona exekveras
     [Fact]
     public async Task When_everything_is_fine_expected_queries_and_commands_should_be_invoked()
     {
