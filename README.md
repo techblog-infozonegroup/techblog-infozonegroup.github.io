@@ -5,7 +5,7 @@ Skapa post/inlägg (markdown stöds för rubriker, punklistor, tabeller, syntax-
 title: "En rubrik till posten"
 date: 2020-10-19
 author: Nils Hult, systemutvecklare
-tagline: "Den här bloggposten är en grym och den här texten kommer att stå inuti bilden header.overlay_image. Bilden refererad i teaser kommer att synas i listningen på startsidan och bör se bra ut i bredd 160px och ungefär samma höjd."
+tagline: "Den här bloggposten är grym och den här texten kommer att stå inuti bilden header.overlay_image. Bilden refererad i teaser kommer att synas i listningen på startsidan och bör se bra ut i bredd 160px och ungefär samma höjd."
 header:
   overlay_image: https://www.infozone.se/wp-content/uploads/2020/10/close-up-of-hands-contemporary-website-developer-man-typing-and-code-picture-id1167467556.jpg
   teaser: https://www.infozone.se/wp-content/uploads/2017/12/iz_emlem10-150x150.png
