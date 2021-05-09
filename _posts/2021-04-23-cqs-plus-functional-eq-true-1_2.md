@@ -64,7 +64,7 @@ Vi lämnar CQS och går vidare med att titta på grunderna i funktionell program
 Om introt till CQS var kort så kommer här ett ännu kortare intro om funktionell programmering. Jag har tidigare skrivit en post om [funktionell programmering i C#](http://blog.headlight.se/funktionell-programmering-med-csharp/), där fokus ligger på en topp-5-lista med egenskaper som funktionell programmering innebär. Här kommer dom, om man inte känner för att läsa den länkade posten:
 - **Pure functions**, e.g. en funktions resultat är enbart beroende av sina in-parametrar
 - Rekursion före iteration
-- **Referental transparency**, e.g. ett anrop till en funktion ska kunna ersättas av sitt returvärde utan att resultatet eller beteende i programmet förändras
+- **Referential transparency**, e.g. ett anrop till en funktion ska kunna ersättas av sitt returvärde utan att resultatet eller beteende i programmet förändras
 - First-class functions/higher-order functions
 - **Immutable types**, e.g. en instans av en typ är oföränderlig, dvs det är inte möjligt att förändra dess egenskaper när den en gång är skapad
 
