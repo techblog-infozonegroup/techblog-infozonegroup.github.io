@@ -177,8 +177,54 @@ Hur kan man se till att få fram den funktionella paradigmen i processen ovan? D
 Låt oss begränsa strävan mot en funktionell process genom att ta kontroll över omgivningen. Det som direkt borde dyka upp i tankarna då är *enhetstester*. Om vi bygger enhetstester för processen så MÅSTE vi ta kontroll över dess beroenden. Kan vi då få den att passa in i den funktionella paradigmen? Svaret är enligt mig ett rungande JA.
 
 Låt oss titta på två olika enhetstester för processen:
-- Happy flow -> query exekveras, commands exekveras, resultatet är positivt
-- Sad flow -> query hittar inget, commands exekveras INTE, resultatet är negativt och innehåller en status
+```csharp
+public class UpdateUserProcessTests
+{
+    private UpdateUserProcess _sut;
+    private IQueryExecuter _queryExecuter;
+    private ICommandHandler _commandHandler;
+
+    public UpdateUserProcessTests()
+    {
+        _queryExecuter = Substitute.For<IQueryExecuter>();
+        _commandHandler = Substitute.For<ICommandHandler>();
+        
+        _sut = new UpdateUserProcess(
+            _queryExecuter,
+            _commandHandler,
+            Substitute.For<IUserStorage>(),
+            new NullLogger<UpdateUserProcess>());
+    }
+
+    // Happy path -> query returnera ett User-objekt och kommandona exekveras
+    [Fact]
+    public async Task When_everything_is_fine_expected_queries_and_commands_should_be_invoked()
+    {
+        _queryExecuter.Execute(Arg.Any<GetUserBySsnQuery>()).Returns(Task.FromResult((true, new User("1234567890", "Nils", "Gold smith"), 0)));
+        
+        await _sut.Run(new UpdateUserRequest {Name = "Nisse", Ssn = "1234567890", Work = "Gold digger"});
+
+        await _queryExecuter.Received().Execute(Arg.Any<GetUserBySsnQuery>());
+        await _commandHandler.Received().Handle(Arg.Any<UpdateNameCommand>(), Arg.Any<User>());
+        await _commandHandler.Received().Handle(Arg.Any<UpdateWorkCommand>(), Arg.Any<User>());
+    }
+
+    // Sad flow -> query hittar inget, commands exekveras INTE, resultatet är negativt och innehåller en status
+    [Fact]
+    public async Task When_user_is_not_found_the_commands_should_not_be_invoked()
+    {
+        _queryExecuter.Execute(Arg.Any<GetUserBySsnQuery>()).Returns(Task.FromResult((false, default(User), 987)));
+
+        var result = await _sut.Run(new UpdateUserRequest { Name = "Nisse", Ssn = "1234567890", Work = "Gold digger" });
+
+        result.Should().Be((false, null, 987));
+
+        await _queryExecuter.Received().Execute(Arg.Any<GetUserBySsnQuery>());
+        await _commandHandler.DidNotReceive().Handle(Arg.Any<UpdateNameCommand>(), Arg.Any<User>());
+        await _commandHandler.DidNotReceive().Handle(Arg.Any<UpdateWorkCommand>(), Arg.Any<User>());
+    }
+}
+```
 
 Lyckades vi "göra processen funktionell"? Svaret är nja. Vi lyckas om vi ser till att göra den testbar, om vi tar kontroll över dess beroenden och på så sätt får kan få den helt förutsägbar och låter den enbart bli beroende av dess inparametrar. I det här fallet är processen beroende av en request-instans som innehåller ett "filter" i form av ett personnummer och vad man vill uppdatera namn och arbete till. På det här sättet kan vi alltså se enhetstesternas användning av processen, Act-delen i testerna, som funktionella i just den här kontexten. Vi kan då säga att processen uppfyller dom flesta egenskaperna för den funktionella paradigmen. 
 
