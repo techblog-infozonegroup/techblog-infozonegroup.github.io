@@ -95,7 +95,7 @@ public class CommandHandler : ICommandHandler
 ```
 
 Vi ser att queryn returnerar en tuple, på det sättet som beskrivs i [den här posten](https://techblogg.infozone.se/blog/tuples-might-be-good/). 
-Implementationerna loggar typen av query respektive command som ska hanteras, frågan exekveras/kommandot hanteras och respektive resultat returneras. Här kan man tänka sig att lägga felhantering också men i exemplet för den här posten ligger den hanteringen i processen, som vi kommer att se nedan.
+Implementationerna loggar typen av query och command som hanteras, frågan exekveras/kommandot hanteras och respektive resultat returneras. Här kan man tänka sig att lägga felhantering också, men i exemplet för den här posten ligger den hanteringen i processen. Vi kommer till det senare.
 
 > Den här lösnigen liknar Decorator Pattern. Mer om detta mönster finns här [https://www.dofactory.com/net/decorator-design-pattern](https://www.dofactory.com/net/decorator-design-pattern).
  
