@@ -345,7 +345,7 @@ I dom här två testerna påvisas ett User-objekts immutability. Alla egenskaper
 # Wrap-up
 Under skrivandet av den här delen insåg jag snabbt att det är svårt att på ett riktigt tydligt sätt sätta fingret på vad som kan göras funktionellt i CQS-mönstret. Den observante läsaren kanske direkt insåg att enhetstesterna skulle vara det enklaste sättet att påvisa hur man kan sammanföra dom två olika typerna av paradigmer. Allt kokade egentligen ner till att man bör skriva kod som är fullständigt testbar, enhetstester är extremt viktigt för att bygga robust kod. Om man tänker efter en gång till på sådant som gör felsökning svår, vad som får funktioner att inte fungera etc, så är det när dom beter sig på ett icke förutsägbart sätt: 
 
-- **Funktionell programmering handlar om** att skaffa sig **förutsägbar kod**.
+- **Funktionell programmering handlar om** att skriva **kod med ett förutsägbart beteende**.
 - **CQS handlar om** att **separera ansvar** och inte försätta sig i svårbemästrade beroenden. När en funktion i ett system "färdig", det vill säga implementerad, testad och produktionssatt, så ska **en ny funktion inte kunna förstöra dom färdiga funktionerna**.
 
 Jag hoppas att dom här posterna gav något, om inte annat provocerade fram lite lust att utmana tanken på att kombinera CQS och funktionell programmering och om det verkligen finns något skäl att göra det. Titta gärna igenom enhetstesterna för dom olika delarna i systemet, process, query och command. Det som borde framkomma där är att faktiskt ALLA delar i ett system kan göras testbara. Att ha med sig det när man skriver kod vill jag påstå ger en mycket bättre stringens i designen och underlättar både felsökning och felavhjälpning.
