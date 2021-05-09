@@ -19,13 +19,13 @@ tags:
 Innan vi tittar på kod gör vi en kort återblick på vad vi gick igenom i [första delen](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-1_2/):
 
 - CQS - Command Query Separation, skilda "pipor" för commands (operationer) och queries (frågor)
-- En definition av komplext kommando, en process, ger oss möjligheten att bygga dom flesta systemen
-- Tänkt funktionellt, functional programming är mindre felbenägen och robust
+- Process - ett komplext kommando, ger oss möjligheten att realisera dom flesta systemen
+- Funktionell programmering - en paradigm som är mindre felbenägen och robustare utan oväntade sidoeffekter
 
 Det funktionella kommer att bli tydligare i och med att vi introducerar enhetstester och på det sättet påvisar dom funktionella egenskaperna.
 
 # Intro
-I den här posten kollar vi på några delar av koden till ett exempelsystem som "hanterar" användare. Vi kommer inte att titta på all kod utan några utvalda delar såsom:
+I den här posten tittar vi på några delar av koden till ett exempelsystem som "hanterar" användare. Vi kommer inte att titta på all kod utan några utvalda delar såsom:
 - Process / UpdateUserProcess - en process enligt definition i del 1
 - QueryExecuter och CommandExecuter - två nya komponenter, beskrivna nedan
 - Query / GetUserBySsnQuery - en fråga (C**Q**S)
@@ -33,16 +33,16 @@ I den här posten kollar vi på några delar av koden till ett exempelsystem som
 - Immutable domain model / User - ett domänobjekt, oföränderligt
 
 # Översikt
-En bild över det vi ska bygga placerar in alla byggklossar på sina respektive platser i lösningen. Vi låter lösningen bo i en Azure function:
+Nedan bild visar det vi ska bygga och placerar in alla byggklossar på sina respektive platser i lösningen. Vi låter implementationen bo i en Azure Function:
 
 ![func-cqs-process](https://user-images.githubusercontent.com/460203/116928893-f490d300-ac5d-11eb-86a8-0f84910a30ae.png)
 
-All källkod finns här [https://github.com/Fjeddo/Azure-function-CQS-pattern](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag presentera dom ovan påannonserade spelarna QueryExecuter och CommandHandler.
+All källkod finns här [https://github.com/Fjeddo/Azure-function-CQS-pattern](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag presentera dom ovan påannonserade spelarna **QueryExecuter och CommandHandler**.
 
 ## QueryExecuter och CommandHandler
 Vi börjar kodgenomgången med dom två nyinförda komponenterna för att exekvera queries och hantera commands. Att centralisera detta ger oss möjligheter att "dekorera" anropen med loggning och felhantering. 
 
-QueryExecuter och CommandHandler, tillsammans med sina respektive interface, ser ut enligt följande:
+QueryExecuter och CommandHandler tillsammans med sitt respektive interface ser ut enligt följande:
 
 ```csharp
 public interface IQueryExecuter
