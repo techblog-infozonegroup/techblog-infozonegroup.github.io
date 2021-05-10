@@ -26,18 +26,18 @@ Det funktionella kommer att bli tydligare i och med att vi introducerar enhetste
 
 # Intro
 I den här posten tittar vi på några delar av koden till ett exempelsystem som "hanterar" användare. Vi kommer inte att titta på all kod utan några utvalda delar såsom:
-- Process / UpdateUserProcess - en process enligt definition i del 1
-- QueryExecuter och CommandExecuter - två nya komponenter, beskrivna nedan
-- Query / GetUserBySsnQuery - en fråga (C**Q**S)
-- Command / UpdateWorkCommand - ett kommando (**C**QS)
-- Immutable domain model / User - ett domänobjekt, oföränderligt
+- [Process / UpdateUserProcess](#process) - en process enligt definition i del 1
+- [QueryExecuter och CommandExecuter](#queryexecuter-och-commandhandler) - två nya komponenter, beskrivna nedan
+- [Query / GetUserBySsnQuery](#query) - en fråga (C**Q**S)
+- [Command / UpdateWorkCommand](#command) - ett kommando (**C**QS)
+- [Immutable domain model / User](#immutable-domain-model) - ett domänobjekt, oföränderligt
 
 # Översikt
-Nedan bild visar det vi ska bygga och placerar in alla byggklossar på sina respektive platser i lösningen. Vi låter implementationen bo i en Azure Function:
+Nedan bild visar visar exempelsystemet och placerar in alla byggklossar på sina respektive platser i lösningen. Vi låter implementationen bo i en Azure Function:
 
 ![func-cqs-process](https://user-images.githubusercontent.com/460203/116928893-f490d300-ac5d-11eb-86a8-0f84910a30ae.png)
 
-All källkod finns här [https://github.com/Fjeddo/Azure-function-CQS-pattern](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag presentera dom ovan påannonserade spelarna **QueryExecuter och CommandHandler**.
+All källkod finns [här](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag presentera dom ovan påannonserade spelarna **QueryExecuter och CommandHandler**.
 
 ## QueryExecuter och CommandHandler
 Vi börjar kodgenomgången med dom två nyinförda komponenterna för att exekvera queries och hantera commands. Att centralisera detta ger oss möjligheter att "dekorera" anropen med loggning och felhantering. 
