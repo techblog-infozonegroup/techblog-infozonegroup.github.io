@@ -152,21 +152,34 @@ public async Task<IReadOnlyCollection<ResolvedEvent>> GetEventStream(string enti
 > ResolvedEvent innehåller eventets metadata samt eventet i sin serialiserade form och måste därför deserialiseras.
 
 ## Stream directions
-Du kan läsa en ström framlänges eller baklänges med hjälp av *Direction*. Framlänges är nog den enklaste och vanligaste formen och används typiskt när du vill läsa upp ditt objekt i kronologisk ordning, från det äldsta till det yngsta. Baklänges ofta när man vill hitta det senaste eventet av något slag, t.ex. den senaste snapshoten. 
+Du kan läsa en ström framlänges eller baklänges med hjälp av *Direction*. Framlänges är nog den enklaste och vanligaste formen och används typiskt när du vill läsa upp ditt objekt i kronologisk ordning, från det äldsta till det yngsta. Baklänges används ofta när man vill hitta det senaste eventet av något slag, t.ex. den senaste snapshoten. 
 
 ### Ett par exempel
 - Läsning från första till sista eventet görs via *Direction.Forwards* i kombination med *StreamPosition.Start*. 
 - Hitta det senaste eventet av något slag görs via *Direction.Backwars* i kombination med *StreamPosition.End*
 - Läsa från en given position framåt görs via *StreamPosition.FromStreamRevision(...)* i kombination med *Direction.Forwards*.
 
-## Filter
+# Prenumerera på strömmar
+Ett annat sätt att läsa från strömmar är att prenumerera på dem. Med prenumerationer kan du få reda på ett event så fort det har persisterats i databasen. Det fungerar som en pub sub. Detta är en kraftfull funktion med många användningsområden som t.ex. att lägga meddelanden på köer i integrationssyfte, skicka e-post som en reaktion på att något hänt, loggning och mycket mer.  
 
-## Systemströmmar
+I koden nedan visar jag på hur man, till konsollen, kan logga ut alla events som lagras. Vi anger att vi vill börja lyssna på slutet av strömmen, dvs bara nya events. Det finns också en eventhanterare som loggar ut info kring eventet och slutligen ett filter. I detta exemplet nyttjar vi ett regular expression "Event", det betyder att eventhanteraren bara mottar events som innehåller "Event". Andra möjligheter vi har är *ExcludeSystemEvents* samt *Prefix*.
 
-- Läsa events från strömmar
-    - Systemströmmar
-        - $all
-    - Filter
-    - Audit logs exempel
-- Läsa events från inbyggda projektioner (kategorier, etc)
-- Prenumerera på strömmar
+```csharp
+public static async Task ConsoleLogAllEvents()
+{
+    await _client.SubscribeToAllAsync(Position.End, async (subscription, evnt, cancellationToken) =>
+    {
+        Console.WriteLine($"{Environment.NewLine}{evnt.Event.EventType} appended{Environment.NewLine}");
+
+        await Task.CompletedTask;
+    }, filterOptions: new SubscriptionFilterOptions(EventTypeFilter.RegularExpression("Event")));
+}
+```
+
+## Läsmodeller och catch up subscriptions
+Jag har redan nämnt ett par användningsområden men vill här belysa ett till. Med hjälp av subscriptions kan vi skapa läsmodeller. Det fina med subscriptions är att du kan ange en position att lyssna från. *Position.End* ger dig live-events, dvs nya events. *Position.Start* ger dig alla events från början *innan* du börjar få live-events. Detta kallas ofta för **catch up subscriptions**. Nu har du möjligheten att projicera dina events till en eller flera läsmodeller samt hålla modellerna uppdaterade i realtid när nya events skrivs. Oerhört kraftfullt!
+
+# Sammanfattning
+Jag hoppas ni fått en bra grundläggande bild om Event Store och framförallt vad man kan göra i dess .NET-klient. Koden som är inklippt kommer från mitt [labbrepo](https://github.com/Hagsten/EventStoreDBPlayground). Notera *labbrepo*. Event Store är kraftfullt och kommer med många bra funktioner. Det som slog mig när jag började hacka är hur lite kod som behövs för att få upp en, om än naiv, implementation mot databasen. Det som sparas är domänevents, det behövs ingen mappning till ett datalager och heller ingen relationsmappning. Känslan är att man kan fokusera på domänen och dess regelverk och inte så mycket databasen.
+
+Tack för mig!
