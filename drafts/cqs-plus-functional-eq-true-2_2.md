@@ -280,7 +280,7 @@ Vi lämnar frågan och går vidare med kommandon.
 # Command
 Ett kommando, en uppmaning eller önskan att utföra en operation på någon enhet, entitet, känt tillstånd, är lite svårare att "få funktionell". I dom flesta exemplen på CQS-implementationer returnerar inte ett kommando något vilket gör det svårt att uppfylla t.ex. *Referential transparancy* i ett kommando. 
 
-I det här exemplet returnerar däremot frågan det domänobjekt som är resultatet av operationen. Det här valet gjorde jag i samband med implementationen av ett kommando som persisterar ett domänobjekt i ett externt datalager. Resultatet av anropet till datalagret var det id som entiteten fick och det var en enkel och felsäker "utökning" av ett command att låta det returnera domänobjektet tillsammans med detta id.
+I det här exemplet returnerar däremot frågan det domänobjekt som är resultatet av operationen. Det här valet gjorde jag i samband med implementationen av ett kommando som persisterar ett domänobjekt i ett externt datalager. Resultatet av anropet till datalagret var det id som entiteten fick och det var en enkel och felsäker "utökning" av ett command att låta returnera detta id.
 
 Om vi tittar på kommandot [UpdateWorkCommand](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Commands/UpdateWorkCommand.cs) så ser vi att det kommandot inte alls opererar på något externt datalager utan har bara som uppgift att uppdatera namnet på domänobjektet. Detta görs dock genom **returnera ett nytt User-objekt med det nya namnet**, eftersom domänmodellen User är immutable:
 
@@ -299,7 +299,7 @@ Det domänobjekt som kommandot returnar är alltså INTE det som födde kommando
 
 # Immutable domain model
 
-Att ha immutable objects att jobba med i sin domän förenklar å det grövsta att undvika fallgropar som genererar buggar och oväntade beteenden. Läs om immutable objects [här](https://en.wikipedia.org/wiki/Immutable_object) och även så kallade ValueObjects [här](https://en.wikipedia.org/wiki/Value_object). I anslutning till dessa två begrepp kan det även vara intressant att läsa om [Builder pattern](https://en.wikipedia.org/wiki/Builder_pattern).
+Att ha immutable objects att jobba med i sin domän förenklar å det grövsta att undvika fallgropar som genererar buggar och oväntade beteenden. Läs om immutable objects [här](https://en.wikipedia.org/wiki/Immutable_object) och även så kallade ValueObjects [här](https://en.wikipedia.org/wiki/Value_object). I anslutning till dessa två begrepp kan det även vara intressant att läsa om [Builder pattern](https://en.wikipedia.org/wiki/Builder_pattern), som är speciellt användbart i samband med enhetstestning och kod som med fördel skrivs enligt en mer [fluent syntax](https://en.wikipedia.org/wiki/Fluent_interface) för att främja läsbarhet även för dom som inte är fullfjädrade programmerare.
 
 I domänen för exempelsystemet finns en typ, en User:
 
