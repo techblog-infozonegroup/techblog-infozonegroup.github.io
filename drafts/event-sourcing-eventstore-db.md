@@ -11,12 +11,13 @@ categories:
 tags:
   - systemutveckling
   - event sourcing
+  - event store db
 ---
 
 Jag har tidigare [skrivit om Event Sourcing](https://techblogg.infozone.se/blog/event-sourcing-a-different-view-on-things/) och nu dyker jag in i EvensStoreDB, databasen byggd för Event Sourcing. Häng med!
 
 # Kort om EventStoreDB
-EventStore DB är en databas byggd för Event Sourcing. Den lagrar din data i form av strömmar som ej går att förändra i efterhand, så kallade "Immutable streams". EventStore kommer med många kraftfulla funktioner "out of the box". Prenumerering på strömmar är ett exempel som gör det möjligt att reagera i realtid på förändringar i databasen. En form av PubSub helt enkelt. En annan bra funktion som jag vill belysa är inbyggda projektioner. Dessa är oftast kategoriseringar av dina egna strömmar och events, bra om man till exempel vill läsa upp alla events av en viss typ. Jag går in djupare på detta [#TBD](här).
+EventStore DB är en databas byggd för Event Sourcing. Den lagrar din data i form av strömmar som ej går att förändra i efterhand, så kallade "Immutable streams". EventStore kommer med många kraftfulla funktioner "out of the box". Prenumerering på strömmar är ett exempel som gör det möjligt att reagera i realtid på förändringar i databasen. En form av PubSub helt enkelt. En annan bra funktion som jag vill belysa är inbyggda projektioner. Dessa är oftast kategoriseringar av dina egna strömmar och events, bra om man till exempel vill läsa upp alla events av en viss typ. Jag går in djupare på detta [i bloggposten om Event Sourcing.](https://techblogg.infozone.se/blog/event-sourcing-a-different-view-on-things/#projektioner-och-l%C3%A4smodeller).
 
 > Denna artikel beskriver endast grunderna i Event Store. Nyttjandet kommer på sina ställen vara naivt och uppsättningen enkel. 
 
