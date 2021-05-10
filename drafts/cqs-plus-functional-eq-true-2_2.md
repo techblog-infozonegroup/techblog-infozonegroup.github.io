@@ -268,14 +268,14 @@ public class GetUserBySsnQuery : IQuery<User>
 
 > Om man ska vara petig så kan man såklart diskutera vad en queries inparametrar består av. I det här fallet är frågan självklart beroende av en extern datakälla, men om dess tillstånd är känt vid exekvering så får man ändå det entydiga förutsägbara beteendet hos frågan som man strävar efter.
  
-Vi ser att frågan med dess execute uppfyller:
+Om vi tittar på enhetstesterna för frågan [här](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/Tests/GetUserBySsnQueryTests.cs), ser vi att den uppfyller:
 - Pure function
 - Referential transparency
 - No side effects
 
-Alla dessa egenskaper syns enklast i [enhetstesterna](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/Tests/GetUserBySsnQueryTests.cs) för frågan. Jämför med exemplen för funktionell programmering i C# [här](https://github.com/Fjeddo/FunctionalProgrammingWithCSharp).
+Jämför gärna med exemplen här [FunctionalProgrammingWithCSharp](https://github.com/Fjeddo/FunctionalProgrammingWithCSharp).
 
-Vi lämnar frågan i och med detta.
+Vi lämnar frågan och går vidare med kommandon.
 
 # Command
 Ett kommando, en uppmaning eller önskan att utföra en operation på någon enhet, entitet, känt tillstånd, är lite svårare att "få funktionell". I dom flesta exemplen på CQS-implementationer returnerar inte ett kommando något vilket gör det svårt att uppfylla t.ex. *Referential transparancy* i ett kommando. 
