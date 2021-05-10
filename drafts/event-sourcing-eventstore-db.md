@@ -121,17 +121,52 @@ public async Task Add(string entity, string entityId, IReadOnlyCollection<IDomai
         });
 }
 ```
+> IDomainEvent implementeras av typer som kan serialiseras. Helt vanliga databärande klasser alltså.
 
 > StreamState.Any säger att strömmen inte behöver finnas. Om den inte finns kommer den skapas. Möjliga värden är Any, NoStream och StreamExists.
 
 # Läsa events
+Vi börjar med kod denna gång. I sin enklaste form behöver vi veta namnet på strömmen, den får vi genom att slå ihop typ av entitet och dess ID, vilket är en implementationsdetalj i exemplet.
 
+För att läsa en ström från början anropar vi *ReadStreamAsync* framlänges från start. Vi gör också en kontroll på att strömmen finns och om den inte finns returnerar vi den tomma listan.
+
+```csharp
+public async Task<IReadOnlyCollection<ResolvedEvent>> GetEventStream(string entity, string entityId)
+{
+    var state = _client.ReadStreamAsync(
+        Direction.Forwards,
+        $"{entity}-{entityId}",
+        StreamPosition.Start);
+
+    var readState = await state.ReadState;
+
+    if (readState == ReadState.StreamNotFound)
+    {
+        return new List<ResolvedEvent>();
+    }
+
+    return await state.ToListAsync();
+}
+```
+
+> ResolvedEvent innehåller eventets metadata samt eventet i sin serialiserade form och måste därför deserialiseras.
+
+## Stream directions
+Du kan läsa en ström framlänges eller baklänges med hjälp av *Direction*. Framlänges är nog den enklaste och vanligaste formen och används typiskt när du vill läsa upp ditt objekt i kronologisk ordning, från det äldsta till det yngsta. Baklänges ofta när man vill hitta det senaste eventet av något slag, t.ex. den senaste snapshoten. 
+
+### Ett par exempel
+- Läsning från första till sista eventet görs via *Direction.Forwards* i kombination med *StreamPosition.Start*. 
+- Hitta det senaste eventet av något slag görs via *Direction.Backwars* i kombination med *StreamPosition.End*
+- Läsa från en given position framåt görs via *StreamPosition.FromStreamRevision(...)* i kombination med *Direction.Forwards*.
+
+## Filter
+
+## Systemströmmar
 
 - Läsa events från strömmar
     - Systemströmmar
         - $all
     - Filter
-    - Stream directions och dess use cases
     - Audit logs exempel
 - Läsa events från inbyggda projektioner (kategorier, etc)
 - Prenumerera på strömmar
