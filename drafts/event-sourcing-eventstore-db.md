@@ -100,11 +100,33 @@ skapar Eventstore en ny ström med namn $ce-User som innehåller alla events fö
 
 För att summera så är rekommendationen att namnge sina events med bindestreck för att få med kategorisering. Nån form av standard skulle kunna vara formatet "Vad-Vilken" (User-1).
 
+## Lagra events med .NET-klienten
+Här nedanför följer en funktion som ansvarar för att lagra events. Den får in typ entitet (t.ex. user), entitetens ID samt en kollektion av domänevents som skall lagras. 
+
+Från domäneventen skapas en array av typen EventData, detta är en EventStore typ. Vi nyttjar sedan klienten skapad i [avsnittet om att koppla upp sig](#koppla-upp-mot-sin-eventstore-instans). Notera att event lagras som en byte-array och det är upp till oss att serialisera på valfritt sätt.
+
+```csharp
+public async Task Add(string entity, string entityId, IReadOnlyCollection<IDomainEvent> events)
+{
+    var eventData = events
+        .Select(e => new EventData(Uuid.NewUuid(), e.GetType().Name, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(e))))
+        .ToArray();
+
+    await _client.AppendToStreamAsync(
+        $"{entity}-{entityId}",
+        StreamState.Any,
+        eventData, configureOperationOptions: (o) =>
+        {
+            // Konfigurera timeouts med mera.
+        });
+}
+```
+
+> StreamState.Any säger att strömmen inte behöver finnas. Om den inte finns kommer den skapas. Möjliga värden är Any, NoStream och StreamExists.
+
 # Läsa events
 
-- Lagra events i strömmar
-    - Namngivning av strömmar --> kategorier
-    - Strömmar är billiga!
+
 - Läsa events från strömmar
     - Systemströmmar
         - $all
