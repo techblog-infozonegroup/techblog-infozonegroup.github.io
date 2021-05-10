@@ -37,10 +37,10 @@ Nedan bild visar visar exempelsystemet och placerar in alla byggklossar på sina
 
 ![func-cqs-process](https://user-images.githubusercontent.com/460203/116928893-f490d300-ac5d-11eb-86a8-0f84910a30ae.png)
 
-All källkod finns [här](https://github.com/Fjeddo/Azure-function-CQS-pattern). Innan vi sätter igång vill jag presentera dom ovan påannonserade spelarna **QueryExecuter och CommandHandler**.
+All källkod finns [här](https://github.com/Fjeddo/Azure-function-CQS-pattern). Vi börjar kodgenomgången med dom ovan påannonserade spelarna **QueryExecuter och CommandHandler**.
 
-## QueryExecuter och CommandHandler
-Vi börjar kodgenomgången med dom två nyinförda komponenterna för att exekvera queries och hantera commands. Att centralisera detta ger oss möjligheter att "dekorera" anropen med loggning och felhantering. 
+# QueryExecuter och CommandHandler
+För att förenkla bland annat felhantering och loggning, framförallt audit-loggning, så inför vi två nya komponenterna. Deras enda uppgift är att exekvera queries och hantera commands men ger oss också möjligheter att "dekorera" anropen till frågorna och kommandona. 
 
 QueryExecuter och CommandHandler tillsammans med sitt respektive interface ser ut enligt följande:
 
@@ -49,7 +49,9 @@ public interface IQueryExecuter
 {
     Task<(bool success, TDomainModel result, int status)> Execute<TDomainModel>(IQuery<TDomainModel> query);
 }
+```
 
+```csharp
 public class QueryExecuter : IQueryExecuter
 {
     private readonly ILogger<IQueryExecuter> _log;
@@ -74,7 +76,9 @@ public interface ICommandHandler
 {
     Task<TDomainModel> Handle<TDomainModel>(ICommand<TDomainModel> command, TDomainModel state);
 }
+```
 
+```csharp
 public class CommandHandler : ICommandHandler
 {
     private readonly ILogger<ICommandHandler> _log;
@@ -95,7 +99,7 @@ public class CommandHandler : ICommandHandler
 ```
 
 Vi ser att queryn returnerar en tuple, på det sättet som beskrivs i [den här posten](https://techblogg.infozone.se/blog/tuples-might-be-good/). 
-Implementationerna loggar typen av query och command som hanteras, frågan exekveras/kommandot hanteras och respektive resultat returneras. Här kan man tänka sig att lägga felhantering också, men i exemplet för den här posten ligger den hanteringen i processen. Vi kommer till det senare.
+Implementationerna loggar typen av query och command som hanteras, frågan exekveras/kommandot hanteras och respektive resultat returneras. Som nämdes ovan så kan man tänka sig att lägga till felhantering också, men i exemplet för den här posten ligger den hanteringen i processen. Vi kommer till det senare.
 
 > Den här lösnigen liknar Decorator Pattern. Mer om det mönstret finns här [https://www.dofactory.com/net/decorator-design-pattern](https://www.dofactory.com/net/decorator-design-pattern).
  
@@ -174,7 +178,7 @@ Värt att notera i processen är att:
 ## En funktionell process?
 Hur kan man se till att få fram den funktionella paradigmen i processen ovan? Det som primärt ställer till det för oss är processens alla beroenden vilket gör det svårt att uppfylla dom viktigaste egenskaperna i funktionell programmering. Vi inser snabbt att vi får tänka lite utanför ramarna och försöka se till att uppnå en nivå som är tillräckligt bra.
 
-Låt oss begränsa strävan mot en funktionell process genom att ta kontroll över omgivningen. Det som direkt borde dyka upp i tankarna då är *enhetstester*. Om vi bygger enhetstester för processen så MÅSTE vi ta kontroll över dess beroenden. Kan vi då få den att passa in i den funktionella paradigmen? Svaret är enligt mig 'JA'.
+Låt oss förenkla strävan mot en funktionell process genom att ta kontroll över omgivningen. Det som direkt borde dyka upp i tankarna då är *enhetstester*. Om vi bygger enhetstester för processen så MÅSTE vi ta kontroll över dess beroenden. Kan vi då få den att passa in i den funktionella paradigmen? Svaret är enligt mig 'JA'. Vi testar!
 
 Låt oss titta på två olika enhetstester för processen:
 ```csharp
@@ -226,13 +230,41 @@ public class UpdateUserProcessTests
 }
 ```
 
-Lyckades vi "göra processen funktionell"? Svaret är nja. Vi lyckas om vi ser till att göra den testbar, om vi tar kontroll över dess beroenden och på så sätt får den helt förutsägbar och låter den enbart vara beroende av dess inparametrar. I det här fallet är processen beroende av en request-instans som innehåller ett "filter" i form av ett personnummer och vad man vill uppdatera namn och arbete till. På det här sättet kan vi alltså se enhetstesternas användning av processen, Act-delen i testerna, som funktionella i just den här kontexten. Vi kan då säga att processen uppfyller dom flesta egenskaperna för den funktionella paradigmen. 
+Lyckades vi "göra processen funktionell"? Svaret är nja. Vi lyckas om vi ser till att göra den testbar, om vi tar kontroll över dess beroenden och på så sätt får den helt förutsägbar och låter den enbart vara beroende av sina inparametrar. I det här fallet är processen beroende av en request-instans som innehåller ett "filter" i form av ett personnummer och vad man vill uppdatera namn och arbete till. På det här sättet kan vi alltså genom enhetstesternas användning av processen, Act-delen i testerna, påvisa processen funktionell i just den här kontexten. Vi kan då säga att processen uppfyller dom flesta egenskaperna för den funktionella paradigmen. 
 
-> En del kanske tycker det här är en massa nonsens. Vaddå funktionell process? Den är ju inte funktionell! Man kan ju göra det mesta i enhetstester! Ja, visst kan man det, men i min värld så handlar funktionell programmering om att ha kontroll på inparametrar, bygga kod som ger ett förutsägbart resultat och att kunna exekvera koden flera gånger och VARJE gång ska koden fungera och ge det resultatet tillbaka som jag förväntar mig. Vi lämnar kodens egentliga omgivning och exekverar den i en känd och kontrollerad omgivning och först då kan vi uppnå robusthet och förutsägbarhet. Det är på det sättet vi närmar oss den funktionella paradigmen, även för den komplexa processen.
+> En del kanske tycker det här är en massa nonsens. Vaddå funktionell process? Den är ju inte funktionell! Man kan ju göra det mesta i enhetstester! Ja, visst kan man det, men i min värld så handlar funktionell programmering om att ha kontroll på inparametrar, bygga kod som ger ett förutsägbart resultat och att kunna exekvera koden flera gånger och VARJE gång ska koden fungera och ge det resultatet tillbaka som jag förväntar mig. Vi lämnar kodens egentliga omgivning och exekverar den i en känd och kontrollerad omgivning och först då kan vi uppnå robusthet och förutsägbarhet. Det är på det sättet vi närmar oss den funktionella paradigmen, även för den komplexa processen. 
 
+Låt oss sammanfatta den här ganska förenklade bilden av en funktionell process med:
+- **Om vi inte ser till att ta kontroll över vår egen kod och dess förutsägbarhet, då kan vi inte bygga robusta system.**
  
 # Query
-En fråga, att läsa eller hämta data i någon källa, ska absolut vara funktionell. Det är enkelt att uppfylla många av dom egenskaper som den fuktionella paradigmen lutar sig emot. Implementationen av queryn i exempelsystemet finns att titta på [här](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Queries/GetUserBySsnQuery.cs). Den implementerar [IQuery](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/az-function-cs-cqs-pattern/Queries/IQuery.cs) för att underlätta testning och injicering av beorenden i resten av implementationen.
+En fråga, dvs att läsa eller hämta data i någon källa, ska absolut vara funktionell. Det är enkelt att uppfylla många av dom egenskaper som den fuktionella paradigmen lutar sig emot. Queryn implementerar interfacet IQuery och frågans beroende injiceras i konstruktorn:
+
+```csharp
+public interface IQuery<TDomainModel>
+{
+    Task<(bool success, TDomainModel result, int status)> Execute();
+}
+```
+```csharp
+public class GetUserBySsnQuery : IQuery<User>
+{
+    private readonly string _ssn;
+    private readonly IUserStorage _userStorage;
+
+    public GetUserBySsnQuery(string ssn, IUserStorage userStorage)
+    {
+        _ssn = ssn;
+        _userStorage = userStorage;
+    }
+
+    public async Task<(bool success, User result, int status)> Execute()
+    {
+        var (success, user) = await _userStorage.GetUserBySsn(_ssn);
+        return success ? (true, user, 0) : (false, default, -1);
+    }
+}
+```
 
 > Om man ska vara petig så kan man såklart diskutera vad en queries inparametrar består av. I det här fallet är frågan självklart beroende av en extern datakälla, men om dess tillstånd är känt vid exekvering så får man ändå det entydiga förutsägbara beteendet hos frågan som man strävar efter.
  
@@ -241,7 +273,7 @@ Vi ser att frågan med dess execute uppfyller:
 - Referential transparency
 - No side effects
 
-Alla dessa egenskaper syns enklast i [enhetstesterna](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/Tests/GetUserBySsnQueryTests.cs) för frågan.
+Alla dessa egenskaper syns enklast i [enhetstesterna](https://github.com/Fjeddo/Azure-function-CQS-pattern/blob/master/Tests/GetUserBySsnQueryTests.cs) för frågan. Jämför med exemplen för funktionell programmering i C# [här](https://github.com/Fjeddo/FunctionalProgrammingWithCSharp).
 
 Vi lämnar frågan i och med detta.
 
