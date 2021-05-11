@@ -5,7 +5,7 @@ author: Andreas Hagsten, systemutvecklare
 tagline: "EventStoreDB - en databas gjord för Event sourcing. Vi kollar på dess gRPC .NET klient."
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/event-store-db/esdb-header.jpg
-  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/event-sourcing-a-different-view/eventsourcing-teaser.jpg
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/event-store-db/eventstore-logo.png
 categories:
   - blog
 tags:
@@ -70,7 +70,7 @@ Det finns olika .NET-klienter som kan prata med databasen. Det som särskiljer k
 ## Koppla upp mot sin EventStore-instans
 När instansen är startad, via "docker-compose up", blir en dashboard tillgänglig på http://localhost:2113/. Här kan du se en mängd metrics men också, kanske mer intressant för oss, våra framtida streams. Se det som SQL Server Management Studio om du kommer från en SQL-bakgrund.
 
-[Bild på ES-dashboard]
+![EventStore dashboard](https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/event-store-db/es-dashboard.png)
 
 Instansen är igång! Nästa steg är att koppla upp oss mot den via .NET-klienten. Det vi behöver är en instans av EventStoreClient och en connectionstring. Koden nedan visar en mycket enkel connection string där vi endast konfigurerar klienten att inte nyttja tls. Det finns mängder av andra inställningar att grotta ned sig i [på EventStores webbsida](https://developers.eventstore.com/clients/dotnet/5.0/connecting/connecting-to-a-server.html#eventstoreconnection).
 
