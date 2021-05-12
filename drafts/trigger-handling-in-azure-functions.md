@@ -70,7 +70,7 @@ public class Person
 }
 ```
 
-Om inkommande http post request-objekt är ett json-objekt enligt nedan, så kommer `name`- och `age`-propertyna ha dom förväntade värdena.
+Om inkommande http post request-objekt är ett json-objekt enligt nedan, så kommer `name`- och `age`-propertyna ha dom förväntade värdena:
 ```json
 {
     "Name": "Kalle",
