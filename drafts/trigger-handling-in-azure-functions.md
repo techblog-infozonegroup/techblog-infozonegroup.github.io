@@ -28,17 +28,20 @@ Den här featuren är nästan lite hemlig. Många av er kommer säkert från en 
 När man skapar en Azure Function med en http-trigger i Visual Studio så ser funktionen som mallen ger ut enligt:
 
 ```csharp
-[FunctionName(nameof(ModelBindingFunction))]
-public static async Task<IActionResult> Run(
-    [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] Person personReq,
-    ILogger log)
+public static class Function1
 {
-    log.LogInformation("C# HTTP trigger function processed a request.");
+    [FunctionName("Function1")]
+    public static async Task<IActionResult> Run(
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+        ILogger log)
+    {
+        log.LogInformation("C# HTTP trigger function processed a request.");
+        
+        string name = req.Query["name"];
 
-    var name = personReq.Name;
-    var age = personReq.Age;
-
-    return new OkObjectResult(new {name, age});
+        string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+        ...
+    }
 }
 ```
 
@@ -47,16 +50,19 @@ Det inkommande request-objektet är av typen HttpRequest och man börjar direkt 
 Om vi skulle haft en funktion som bara tillåter http post så kan man direkt binda inkommande `HttpRequest req` till ett objekt. I exemplet nedan sköter ramverket deserialiseringen till ett Person-objekt åt dig:
 
 ```csharp
-[FunctionName("Function1")]
-public static async Task<IActionResult> Run(
-    [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] Person personReq,
-    ILogger log)
+public static class ModelBindingFunction
 {
-    log.LogInformation("C# HTTP trigger function processed a request.");
+    [FunctionName(nameof(ModelBindingFunction))]
+    public static async Task<IActionResult> Run(
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] Person personReq,
+        ILogger log)
+    {
+        log.LogInformation("C# HTTP trigger function processed a request.");
 
-    var name = personReq.Name;
-    var age = personReq.Age;
-    ...
+        var name = personReq.Name;
+        var age = personReq.Age;
+        ...
+    }
 }
 ```
 ```csharp
