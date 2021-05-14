@@ -81,5 +81,5 @@ Om inkommande http post request-objekt är ett json-objekt enligt nedan, så kom
 }
 ```
 
-# Request-validering mha FunctionInvocationFilter (preview)
+# Request-interception mha FunctionInvocationFilter (preview)
 qwerty
