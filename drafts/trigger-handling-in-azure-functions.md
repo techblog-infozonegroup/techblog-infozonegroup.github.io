@@ -28,20 +28,17 @@ Den här featuren är nästan lite hemlig. Många av er kommer säkert från en 
 När man skapar en Azure Function med en http-trigger i Visual Studio så ser funktionen som mallen ger ut enligt:
 
 ```csharp
-public static class Function1
+[FunctionName(nameof(ModelBindingFunction))]
+public static async Task<IActionResult> Run(
+    [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] Person personReq,
+    ILogger log)
 {
-    [FunctionName("Function1")]
-    public static async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-        ILogger log)
-    {
-        log.LogInformation("C# HTTP trigger function processed a request.");
-        
-        string name = req.Query["name"];
+    log.LogInformation("C# HTTP trigger function processed a request.");
 
-        string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        ...
-    }
+    var name = personReq.Name;
+    var age = personReq.Age;
+
+    return new OkObjectResult(new {name, age});
 }
 ```
 
