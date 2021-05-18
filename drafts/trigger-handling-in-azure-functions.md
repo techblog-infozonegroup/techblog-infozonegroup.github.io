@@ -17,6 +17,7 @@ tags:
   - länk till repo
   - länk till Az func triggers
   - länk till Az func output binding
+- DI
 - model binding
 - functioninvocationfilter
 - request-object -> något annat, lämna inkommande gränssnitt bakom dig
