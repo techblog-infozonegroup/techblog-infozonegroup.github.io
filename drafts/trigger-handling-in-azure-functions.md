@@ -150,7 +150,7 @@ Om inkommande http post request-objekt är ett json-objekt enligt nedan, så kom
 }
 ```
 
-# Request-interception mha FunctionInvocationFilter (preview)
+# Request-interception mha FunctionInvocationFilter och IFunctionExceptionFilter (preview)
 Tyvärr finns det inte något enkelt tillrättalagt sätt att bygga en request-response-pipeline i Azure functions, likt den OWIN-pipeline som finns i ASP.NET (MVC). Det finns däremot möjlighet att implementera ett interface för att fånga inkommande aktiveringar och även fånga svaret på väg ut ur funktionen:
 ```csharp
 public interface IFunctionInvocationFilter : IFunctionFilter
@@ -177,5 +177,5 @@ Exempel på implementationer av dessa två interface finns här [RequestIntercep
 
 > Notera att det kommer att genereras kompileringsvarningar om man implementerar dom här interfacen. De är markerade som `[Obsolete("Filters is in preview and there may be breaking changes in this area.")]` och är alltså i preview. Tyvärr har dom varit det ganska länge.
 
-> Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod som dekorerar själva funktionen som ska köras med förbearbetning, exekvering, efterbearbetning och eventuell exception-hantering. Exempel på detta finns här []().
+> Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod som dekorerar själva funktionen som ska köras med förbearbetning, exekvering, efterbearbetning och eventuell exception-hantering. Exempel på detta finns här [AnotherInterceptingFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/AnotherInterceptingFunction.cs) där före-, efter- och felbearbetningen ligger i en basklass här [InterceptingBaseFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/InterceptingBaseFunction.cs).
 
