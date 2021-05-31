@@ -184,3 +184,10 @@ Exempel på implementationer av dessa två interface finns här [RequestIntercep
 
 > Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod som dekorerar själva funktionen som ska köras med förbearbetning, exekvering, efterbearbetning och eventuell exception-hantering. Exempel på detta finns här [AnotherInterceptingFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/AnotherInterceptingFunction.cs) där före-, efter- och felbearbetningen ligger i en basklass här [InterceptingBaseFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/InterceptingBaseFunction.cs).
 
+# Lämna rörmokeriet och kom in i domänen så fort du kan
+qwertyui124tyu
+
+# Håll koll på vad funktionerna returnerar
+qwertyuio23r
+
+Läs om retur-stringens här [Tupler före klasser kanske är bra?](https://techblogg.infozone.se/blog/tuples-might-be-good/) och här [Stabilisera genom att ta kontrollen över din happy, sad och error path](https://techblogg.infozone.se/blog/happy-sad-error/).
