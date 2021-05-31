@@ -24,9 +24,11 @@ tags:
 - returnera 'rätt'
 
 # Dependency injection (DI)
-I andra bloggposter [här](http://blog.headlight.se/ioc-di-ramverk-eller-inte/) och [här](http://blog.headlight.se/mer-om-ioc-och-di/) så har jag ventilerat min tveksamhet till att i alla lägen konfigurera och använda DI. Att injicera beroenden, framförallt genom [Constructor injection](https://en.wikipedia.org/wiki/Dependency_injection#Constructor_injection), kräver egentligen inget ramverk. Sedan ganska långt tillbaka har .NET Core inbyggt stöd för DI och IoC-konfiguration, vilket har gjort användningen väldigt mycket enklare. Jag tycker att .NET Core's implementation känns mycket mer lättviktig gämfört med andra ramverk. Trots sin lättviktighet så är den tillräcklig.
+I andra bloggposter [här](http://blog.headlight.se/ioc-di-ramverk-eller-inte/) och [här](http://blog.headlight.se/mer-om-ioc-och-di/) har jag ventilerat min tveksamhet till att i alla lägen konfigurera och använda ett DI-ramverk. Att injicera beroenden, framförallt genom [Constructor injection](https://en.wikipedia.org/wiki/Dependency_injection#Constructor_injection), kräver egentligen inget ramverk. Sedan ganska långt tillbaka har dock .NET Core inbyggt stöd för IoC-konfiguration, vilket har gjort användningen väldigt mycket enklare. Jag tycker att .NET Core's implementation känns mycket mer lättviktig jämfört med andra ramverk och trots sin lättviktighet så är den absolut tillräcklig.
 
-Precis som man är van vid från ASP.NET Core's IoC-konfiguration så bygger allt på att man skapar en uppstartsklass, ofta kallad Startup, som ärver från den abstracta klassen [FunctionsStartup](https://github.com/Azure/azure-functions-dotnet-extensions/blob/main/src/Extensions/DependencyInjection/FunctionsStartup.cs) och triggas med hjälp av attributet `[assembly: FunctionsStartup(typeof(Startup))]`. Denna klassen innehåller en abstrakt metod, `void Configure(IFunctionsHostBuilder builder)`, och en metod som man kan överrida vid behov, `void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)`. Den förstnämda är den som ska implementera IoC-konfigurationen:
+Det som jag har noterat i och med ökad erfarenhet av serverless-tekniker, framför allt Azure Functions, är att man skulle bli väldigt begränsad om man inte hade möjlighet att konfigurera funktioners beroenden med hjälp av ett ramverk. Om en Azure Function App ska innehålla flera funktioner, kanske vill man implementera något som liknar ett web api med flera olika typer av datakällor eller externa tjänster att konsumera, så anser jag att man MÅSTE ha ett sätt att konfigurera beroenden på ett bra sätt. Detta ökar förvaltningsbarheten massor och det underlättar mycket för när man vill hålla stringensen i kodbasen. 
+
+Precis som man är van vid från ASP.NET Core's IoC-konfiguration så bygger allt på att man skapar en uppstartsklass, ofta kallad Startup. I Azure Functions låter man klassen ärva från den abstrakta klassen [FunctionsStartup](https://github.com/Azure/azure-functions-dotnet-extensions/blob/main/src/Extensions/DependencyInjection/FunctionsStartup.cs) och den aktiveras vid uppstart med hjälp av attributet `[assembly: FunctionsStartup(typeof(Startup))]`. Basklassen innehåller en abstrakt metod, `void Configure(IFunctionsHostBuilder builder)`, och en metod som man kan överrida vid behov, `void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)`. Den förstnämda är den som ska innehålla IoC-konfigurationen:
 
 ```csharp
 [assembly: FunctionsStartup(typeof(Startup))]
@@ -91,6 +93,7 @@ public static class DomainIoCConfiguration
     }
 }
 ```
+> Exemplen ovan finns i utförligare form här [DependencyInjectionFunction](https://github.com/Fjeddo/az-func-five-tips/tree/master/DependencyInjection).
 
 # Model binding
 Den här featuren är nästan lite hemlig. Många av er kommer säkert från en ASP.NET MVC-bakgrund och är vana vid att kunna binda inkommande request direkt till ett [POCO](https://en.wikipedia.org/wiki/Plain_old_CLR_object).
@@ -142,13 +145,15 @@ public class Person
 }
 ```
 
-Om inkommande http post request-objekt är ett json-objekt enligt nedan, så kommer `name`- och `age`-propertyna ha dom förväntade värdena:
+Om inkommande http post request-objekt är ett json-objekt enligt nedan, så kommer `name`- och `age`-egenskaperna ha dom förväntade värdena:
 ```json
 {
     "Name": "Kalle",
     "Age": 10
 }
 ```
+
+> Exemplen ovan finns i utförligare format här [ModelBindingFunction](https://github.com/Fjeddo/az-func-five-tips/tree/master/ModelBinding).
 
 # Request-interception mha FunctionInvocationFilter och IFunctionExceptionFilter (preview)
 Tyvärr finns det inte något enkelt tillrättalagt sätt att bygga en request-response-pipeline i Azure functions, likt den OWIN-pipeline som finns i ASP.NET (MVC). Det finns däremot möjlighet att implementera ett interface för att fånga inkommande aktiveringar och även fånga svaret på väg ut ur funktionen:
