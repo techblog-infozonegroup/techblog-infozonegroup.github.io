@@ -4,7 +4,7 @@ date: 2021-05-01
 author: Fredde, systemutvecklare
 tagline: "Serverless och Azure Functions bjuder in till att direkt börja knacka kod, vilket såklart är bra. Det är trots allt bra att ta det lite lugnt och tänka igenom hur man kan skapa en bra grund för att få en stringent och stabil kodbas."
 header:
-  overlay_image: ![pexels-anastasia-zhenina-4231808](https://user-images.githubusercontent.com/460203/120365047-446ec280-c30e-11eb-8121-60e2dca36e56.jpg)
+  overlay_image: https://user-images.githubusercontent.com/460203/120365047-446ec280-c30e-11eb-8121-60e2dca36e56.jpg
 categories:
   - blog
 tags:
