@@ -23,6 +23,15 @@ tags:
 - request-object -> något annat, lämna inkommande gränssnitt bakom dig
 - returnera 'rätt'
 
+I den här artikeln tänkte jag lyfta fram fem viktiga områden att ta med sig in i arbetet när man ska etablera en robust kodbas för sina Azure Functions. Till varje avsnitt finns ett exempel-projekt för att man ska kunna plocka hem och navigera koden i lugn och ro i sin egen utvecklingsmiljö.
+
+Vi kommer att titta på:
+- [Dependency injection (DI)](#Dependency-injection-DI)
+- [Model binding](#Model-bindning)
+- [Request interception (preview + basklass)](#request-interception-mha-functioninvocationfilter-och-ifunctionexceptionfilter-preview)
+- [Request/trigger interface -> domain](#Request-trigger-interface-domain)
+- [Returvärdesstringens](#Returvärdesstringens)
+
 # Dependency injection (DI)
 I andra bloggposter [här](http://blog.headlight.se/ioc-di-ramverk-eller-inte/) och [här](http://blog.headlight.se/mer-om-ioc-och-di/) har jag ventilerat min tveksamhet till att i alla lägen konfigurera och använda ett DI-ramverk. Att injicera beroenden, framförallt genom [Constructor injection](https://en.wikipedia.org/wiki/Dependency_injection#Constructor_injection), kräver egentligen inget ramverk. Sedan ganska långt tillbaka har dock .NET Core inbyggt stöd för IoC-konfiguration, vilket har gjort användningen väldigt mycket enklare. Jag tycker att .NET Core's implementation känns mycket mer lättviktig jämfört med andra ramverk och trots sin lättviktighet så är den absolut tillräcklig.
 
@@ -184,7 +193,7 @@ Exempel på implementationer av dessa två interface finns här [RequestIntercep
 
 > Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod som dekorerar själva funktionen som ska köras med förbearbetning, exekvering, efterbearbetning och eventuell exception-hantering. Exempel på detta finns här [AnotherInterceptingFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/AnotherInterceptingFunction.cs) där före-, efter- och felbearbetningen ligger i en basklass här [InterceptingBaseFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/InterceptingBaseFunction.cs).
 
-# Lämna rörmokeriet och kom in i domänen så fort du kan
+# Request/trigger interface -> domain
 På samma sätt som när man utvecklar webbapplikationer i ASP.NET MVC eller med hjälp av andra ramverk så är det viktigt att inte låta beroenden i yttre gränssnitt följa med in i domänen. Det handlar egentligen om att lämna tekniken som aktiverar funktionen så fort som möjligt, konvertera nödvändiga indata till kända modeller i domänen och börja jobba där. 
 
 För Azure Functions är det bra att försöka följa samma strategi, oavsett vilken typ av trigger som aktiverar funktionen. Exemplet nedan är ett exempel på en process, i en CQS-implementation, där vi nyttjar model binding och inkommande request används direkt för att skapa en process:
@@ -232,7 +241,7 @@ public class UpdateUserWorkProcess : IProcess<User>
 ```
 > Läs mer om Azure Functions och CQS här [CQS + functional programming = sant, del 1](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-1_2/) och [del 2](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-2_2/).
 
-# Håll koll på vad funktionerna returnerar
+# Returvärdesstringens
 En extremt viktig detalj för att göra funktioner möjliga att använda är att dess konsumenter vet hur dom beter sig och varför dom i vissa fall inte returnerar det som man kan förvänta sig. Ett tråkigt men ack så effektivt sätt att få detta att fungera dokumentera varje funktions yttre gränssnitt. Med det menar jag att göra det tydligt vad en funktion vill ha för indata och vad den kan ge för svar och då handlar det både om lyckade och misslyckade anrop, det vill säga alla potentiella felkoder i retur.
 
 Läs mer om retur-stringens här [Tupler före klasser kanske är bra?](https://techblogg.infozone.se/blog/tuples-might-be-good/) och här [Stabilisera genom att ta kontrollen över din happy, sad och error path](https://techblogg.infozone.se/blog/happy-sad-error/).
