@@ -185,7 +185,42 @@ Exempel på implementationer av dessa två interface finns här [RequestIntercep
 > Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod som dekorerar själva funktionen som ska köras med förbearbetning, exekvering, efterbearbetning och eventuell exception-hantering. Exempel på detta finns här [AnotherInterceptingFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/AnotherInterceptingFunction.cs) där före-, efter- och felbearbetningen ligger i en basklass här [InterceptingBaseFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/InterceptingBaseFunction.cs).
 
 # Lämna rörmokeriet och kom in i domänen så fort du kan
-qwertyui124tyu
+På samma sätt som när man utvecklar webbapplikationer i ASP.NET MVC eller med hjälp av andra ramverk så är det viktigt att inte låta beroenden i yttre gränssnitt följa med in i domänen. Det handlar egentligen om att lämna tekniken som aktiverar funktionen så fort som möjligt, konvertera nödvändiga indata till kända modeller i domänen och börja jobba där. För Azure Functions är det bra att försöka följa samma strategi, oavsett vilken typ av trigger som aktiverar funktionen. Exemplet nedan är ett exempel på en process, i en CQS-implementation:
+```csharp
+public static class RequestToDomainFunction
+{
+    [FunctionName(nameof(RequestToDomainFunction))]
+    public static async Task<IActionResult> Run(
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] UpdateUserWorkRequest updateUserWorkRequest, 
+        ILogger log)
+    {
+        // "Leave the incoming request behind" as soon as possible, get into the domain instead
+        var process = new UpdateUserWorkProcess(updateUserWorkRequest.Ssn, updateUserWorkRequest.Work);
+        var (success, model, status) = process.Run();
+
+        if (!success)
+        {
+            // Do some mapping of status to proper http status
+            var httpStatus = status == -1 ? StatusCodes.Status404NotFound : StatusCodes.Status500InternalServerError;
+
+            return new StatusCodeResult(httpStatus);
+        }
+
+        return new OkObjectResult(model);
+    }
+}
+
+public class UpdateUserWorkRequest
+{
+    public string Ssn { get; set; }
+    public string Work { get; set; }
+}
+
+public interface IProcess<T>
+{
+    (bool success, T model, int status) Run();
+}
+```
 
 # Håll koll på vad funktionerna returnerar
 En extremt viktig detalj för att göra funktioner möjliga att använda är att dess konsumenter vet hur dom beter sig och varför dom i vissa fall inte returnerar det som man kan förvänta sig. Ett tråkigt men ack så effektivt sätt att få detta att fungera dokumentera varje funktions yttre gränssnitt. Med det menar jag att göra det tydligt vad en funktion vill ha för indata och vad den kan ge för svar och då handlar det både om lyckade och misslyckade anrop, det vill säga alla potentiella felkoder i retur.
