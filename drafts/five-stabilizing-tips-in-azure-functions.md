@@ -2,7 +2,7 @@
 title: "Fem tips för en robust kodbas i Azure Function"
 date: 2021-05-01
 author: Fredde, systemutvecklare
-tagline: "Serverless och Azure Functions bjuder in till att direkt börja knacka kod, vilket såklart är bra. Det är trots allt bra att ta det lite lugnt och tänka igenom hur man kan skapa en bra grund för att få en stringent och stabil kodbas. Här följer min topp-5-lista med kodförbättrande grunder. Vissa av dom är hårt knutna till Http-triggade Azure Functions, en del är applicerbara även i andra tillämpningar."
+tagline: "Serverless och Azure Functions bjuder in till att direkt börja knacka kod, vilket såklart är bra. Det är trots allt bra att ta det lite lugnt och tänka igenom hur man kan skapa en bra grund för att få en stringent och stabil kodbas."
 header:
   overlay_image: https://www.infozone.se/wp-content/uploads/2020/03/programmering-i-team.jpg
 categories:
@@ -12,7 +12,7 @@ tags:
   - azure-functions
   - serverless
 ---
-I den här artikeln tänkte jag lyfta fram fem viktiga områden att ta med sig in i arbetet när man ska etablera en robust kodbas för sina Azure Functions. Till varje avsnitt finns ett exempel-projekt för att man ska kunna plocka hem och navigera koden i lugn och ro i sin egen utvecklingsmiljö.
+I den här artikeln tänkte jag gå igenom min topp-5-lista med kodförbättrande grunder och/eller åtgärder. Vissa av dom är hårt knutna till Http-triggade Azure Functions, en del är applicerbara i andra tillämpningar. Till varje avsnitt finns ett exempel-projekt för att man ska kunna plocka hem och navigera koden i lugn och ro i sin egen utvecklingsmiljö. Koden för alla exempel finns här [https://github.com/Fjeddo/az-func-five-tips](https://github.com/Fjeddo/az-func-five-tips).
 
 Vi kommer att titta på:
 - [Dependency injection (DI)](#dependency-injection-di)
