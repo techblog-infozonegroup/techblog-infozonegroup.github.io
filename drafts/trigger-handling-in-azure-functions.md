@@ -26,11 +26,11 @@ tags:
 I den här artikeln tänkte jag lyfta fram fem viktiga områden att ta med sig in i arbetet när man ska etablera en robust kodbas för sina Azure Functions. Till varje avsnitt finns ett exempel-projekt för att man ska kunna plocka hem och navigera koden i lugn och ro i sin egen utvecklingsmiljö.
 
 Vi kommer att titta på:
-- [Dependency injection (DI)](#Dependency-injection-DI)
-- [Model binding](#Model-bindning)
+- [Dependency injection (DI)](#dependency-injection-di)
+- [Model binding](#model-binding)
 - [Request interception (preview + basklass)](#request-interception-mha-functioninvocationfilter-och-ifunctionexceptionfilter-preview)
-- [Request/trigger interface -> domain](#Request-trigger-interface-domain)
-- [Stringent retur-hantering](#Stringent-retur-hantering)
+- [Request/trigger interface -> domain](#request-trigger-interface--domain)
+- [Stringent retur-hantering](#stringent-retur-hantering)
 
 # Dependency injection (DI)
 I andra bloggposter [här](http://blog.headlight.se/ioc-di-ramverk-eller-inte/) och [här](http://blog.headlight.se/mer-om-ioc-och-di/) har jag ventilerat min tveksamhet till att i alla lägen konfigurera och använda ett DI-ramverk. Att injicera beroenden, framförallt genom [Constructor injection](https://en.wikipedia.org/wiki/Dependency_injection#Constructor_injection), kräver egentligen inget ramverk. Sedan ganska långt tillbaka har dock .NET Core inbyggt stöd för IoC-konfiguration, vilket har gjort användningen väldigt mycket enklare. Jag tycker att .NET Core's implementation känns mycket mer lättviktig jämfört med andra ramverk och trots sin lättviktighet så är den absolut tillräcklig.
