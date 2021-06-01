@@ -12,6 +12,7 @@ tags:
   - azure-functions
   - serverless
 ---
+# Intro
 I den här artikeln tänkte jag gå igenom min topp-5-lista med kodförbättrande grunder och/eller åtgärder. Vissa av dom är hårt knutna till Http-triggade Azure Functions, en del är applicerbara i andra tillämpningar. Till varje avsnitt finns ett exempel-projekt för att man ska kunna plocka hem och navigera koden i lugn och ro i sin egen utvecklingsmiljö. Koden för alla exempel finns här [https://github.com/Fjeddo/az-func-five-tips](https://github.com/Fjeddo/az-func-five-tips).
 
 Vi kommer att titta på:
@@ -260,3 +261,8 @@ public static class TuplePatternMatchingFunction
 }
 ```
 > Källkoden i exemplet ovan kommer från [https://github.com/Fjeddo/az-func-five-tips/tree/master/TuplesPatternMatchingFunction](https://github.com/Fjeddo/az-func-five-tips/tree/master/TuplesPatternMatchingFunction).
+
+# Avslutande ord
+Jag hoppas att det här har gett dig som läsare något att ta med dig vid etablering av kodbaser, framför allt för Azure Functions. Att hålla sig till ett mindre antal enkla grunder kommer direkt ha positiva effekter på hur enkel koden blir att förvalta och dessutom blir det enkelt att komma ihåg hur tankarna gick vid det initiala rörmokeriet. Varför inte skriva en kort readme-fil som ligger tillsammans med källkoden, där principerna och besluten beskrivs?
+
+Tveka inte att kommentera och dela med dig av dina tankar kring hur man etablerar en stabil kodbas, speciellt i dom fallen när man är ute på ett helt nytt orört grönt fält.
