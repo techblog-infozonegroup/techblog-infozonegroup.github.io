@@ -18,7 +18,7 @@ Vi kommer att titta på:
 - [Dependency injection (DI)](#dependency-injection-di)
 - [Model binding](#model-binding)
 - [Request interception (preview + basklass)](#request-interception-mha-functioninvocationfilter-och-ifunctionexceptionfilter-preview)
-- [Request/trigger interface -> domain](#requesttrigger-interface--domain)
+- [Request/trigger interface => domain](#requesttrigger-interface--domain)
 - [Stringent retur-hantering](#stringent-retur-hantering)
 
 # Dependency injection (DI)
