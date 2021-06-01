@@ -188,6 +188,6 @@ Exempel på implementationer av dessa två interface finns här [RequestIntercep
 qwertyui124tyu
 
 # Håll koll på vad funktionerna returnerar
-qwertyuio23r
+En extremt viktig detalj för att göra funktioner möjliga att använda är att dess konsumenter vet hur dom beter sig och varför dom i vissa fall inte returnerar det som man kan förvänta sig. Ett tråkigt men ack så effektivt sätt att få detta att fungera dokumentera varje funktions yttre gränssnitt. Med det menar jag att göra det tydligt vad en funktion vill ha för indata och vad den kan ge för svar och då handlar det både om lyckade och misslyckade anrop, det vill säga alla potentiella felkoder i retur.
 
-Läs om retur-stringens här [Tupler före klasser kanske är bra?](https://techblogg.infozone.se/blog/tuples-might-be-good/) och här [Stabilisera genom att ta kontrollen över din happy, sad och error path](https://techblogg.infozone.se/blog/happy-sad-error/).
+Läs mer om retur-stringens här [Tupler före klasser kanske är bra?](https://techblogg.infozone.se/blog/tuples-might-be-good/) och här [Stabilisera genom att ta kontrollen över din happy, sad och error path](https://techblogg.infozone.se/blog/happy-sad-error/).
