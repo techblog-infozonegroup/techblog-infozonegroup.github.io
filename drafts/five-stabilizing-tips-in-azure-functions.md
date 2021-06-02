@@ -180,9 +180,9 @@ public interface IFunctionExceptionFilter : IFunctionFilter
     CancellationToken cancellationToken);
 }
 ```
-Exempel på implementationer av dessa två interface finns här [RequestInterceptionFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/RequestInterceptionFunction.cs).
+*Notera att det kommer att genereras kompileringsvarningar om man implementerar dom här interfacen. De är markerade som `[Obsolete("Filters is in preview and there may be breaking changes in this area.")]` och är alltså i preview. Tyvärr har dom varit det ganska länge.*
 
-> Notera att det kommer att genereras kompileringsvarningar om man implementerar dom här interfacen. De är markerade som `[Obsolete("Filters is in preview and there may be breaking changes in this area.")]` och är alltså i preview. Tyvärr har dom varit det ganska länge.
+> Exempel på implementationer av dessa två interface finns här [RequestInterceptionFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/RequestInterceptionFunction.cs).
 
 ## Basklass och dekorering
 Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod som dekorerar själva funktionen som ska köras med förbearbetning, exekvering, efterbearbetning och eventuell exception-hantering:
