@@ -244,7 +244,7 @@ public abstract class InterceptingBaseFunction
 ```
 I exemplet ovan omsluts funktionskoden i `AnotherInterceptingFunction` av en `Execute`-funktion som ligger i basklassen `InterceptingBaseFunction`. I basklassen kontrolleras så att inkommande HTTP-anrop har med sig en cookie. Om så inte är fallet returneras direkt `400 Bad Request` och funktionskoden körs aldrig. Funktionen i basklassen hanterar även ohanterade fel, som loggas och kastas vidare i den här lösningen.
 
-> Koden för exemplet på detta finns här [AnotherInterceptingFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/AnotherInterceptingFunction.cs) tillsammans med basklassen här [InterceptingBaseFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/InterceptingBaseFunction.cs).
+> Koden för exemplet på detta finns här [AnotherInterceptingFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/AnotherInterceptingFunction.cs), tillsammans med basklassen här [InterceptingBaseFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/InterceptingBaseFunction.cs).
 
 # Request/trigger interface => domain
 På samma sätt som när man utvecklar webbapplikationer i ASP.NET MVC eller med hjälp av andra ramverk så är det viktigt att inte låta beroenden i yttre gränssnitt följa med in i domänen. Det handlar egentligen om att lämna tekniken som aktiverar funktionen så fort som möjligt, konvertera nödvändiga indata till kända modeller i domänen och börja jobba där. 
