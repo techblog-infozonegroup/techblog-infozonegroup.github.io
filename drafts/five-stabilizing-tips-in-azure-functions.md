@@ -325,7 +325,7 @@ public static class TuplePatternMatchingFunction
     }
 }
 ```
-> Källkoden i exemplet ovan kommer från [https://github.com/Fjeddo/az-func-five-tips/tree/master/TuplesPatternMatchingFunction](https://github.com/Fjeddo/az-func-five-tips/tree/master/TuplesPatternMatchingFunction).
+> Källkoden i exemplet ovan kommer från [TuplesPatternMatchingFunction](https://github.com/Fjeddo/az-func-five-tips/tree/master/TuplesPatternMatchingFunction).
 
 # Avslutande ord
 Jag hoppas att det här har gett dig som läsare något att ta med dig vid etablering av kodbaser, framför allt för Azure Functions. Att hålla sig till ett mindre antal enkla grunder kommer direkt ha positiva effekter på hur enkel koden blir att förvalta och dessutom blir det enkelt att komma ihåg hur tankarna gick vid det initiala rörmokeriet. Varför inte skriva kort i en README.MD-fil som ligger tillsammans med källkoden, där principerna och besluten beskrivs?
