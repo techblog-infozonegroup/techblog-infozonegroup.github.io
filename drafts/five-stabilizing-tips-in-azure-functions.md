@@ -1,8 +1,8 @@
 ---
-title: "Fem tips för en robust kodbas i Azure Function"
+title: "Fem tips för en robust kodbas i Azure Functions"
 date: 2021-05-01
 author: Fredde, systemutvecklare
-tagline: "Serverless och Azure Functions bjuder in till att direkt börja knacka kod, vilket såklart är bra. Det är trots allt bra att ta det lite lugnt och tänka igenom hur man kan skapa en bra grund för att få en stringent och stabil kodbas."
+tagline: "Serverless, såsom Azure Functions, bjuder in till att direkt börja knacka kod, vilket såklart är bra, men det är trots allt bra att ta det lite lugnt och tänka igenom hur man kan skapa en bra grund för att få en stringent och stabil kodbas."
 header:
   overlay_image: https://user-images.githubusercontent.com/460203/120365047-446ec280-c30e-11eb-8121-60e2dca36e56.jpg
 categories:
@@ -154,7 +154,10 @@ Om inkommande http post request-objekt är ett json-objekt enligt nedan, så kom
 
 > Exemplen ovan finns i utförligare format här [ModelBindingFunction](https://github.com/Fjeddo/az-func-five-tips/tree/master/ModelBinding).
 
-# Request-interception mha FunctionInvocationFilter och IFunctionExceptionFilter (preview)
+# Request-interception
+Många gånger skriver man mer eller mindre identisk kod på flera ställen i sin lösning. Det kan handla om kod för att logga inkommande anrop eller aktiveringar, det kan handla om att implementera mätpunkter för prestanda eller annan övervakning, det kan handla om felhantering. Det skulle då vara skönt att skriva den koden på ett och samma ställe och återanvända den i alla sina funktioner.
+
+## FunctionInvocationFilter och IFunctionExceptionFilter (preview)
 Tyvärr finns det inte något enkelt tillrättalagt sätt att bygga en request-response-pipeline i Azure functions, likt den OWIN-pipeline som finns i ASP.NET (MVC). Det finns däremot möjlighet att implementera ett interface för att fånga inkommande aktiveringar och även fånga svaret på väg ut ur funktionen:
 ```csharp
 public interface IFunctionInvocationFilter : IFunctionFilter
@@ -181,7 +184,64 @@ Exempel på implementationer av dessa två interface finns här [RequestIntercep
 
 > Notera att det kommer att genereras kompileringsvarningar om man implementerar dom här interfacen. De är markerade som `[Obsolete("Filters is in preview and there may be breaking changes in this area.")]` och är alltså i preview. Tyvärr har dom varit det ganska länge.
 
-> Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod som dekorerar själva funktionen som ska köras med förbearbetning, exekvering, efterbearbetning och eventuell exception-hantering. Exempel på detta finns här [AnotherInterceptingFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/AnotherInterceptingFunction.cs) där före-, efter- och felbearbetningen ligger i en basklass här [InterceptingBaseFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/InterceptingBaseFunction.cs).
+## Basklass och dekorering
+Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod som dekorerar själva funktionen som ska köras med förbearbetning, exekvering, efterbearbetning och eventuell exception-hantering:
+```csharp
+public class AnotherInterceptingFunction : InterceptingBaseFunction
+{
+    public AnotherInterceptingFunction(IHttpContextAccessor httpContextAccessor, ILogger<InterceptingBaseFunction> log) : base(httpContextAccessor, log)
+    { }
+
+    [FunctionName("AnotherInterceptingFunction")]
+    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
+    {
+        return await Execute(async () =>
+        {
+            log.LogInformation("C# HTTP trigger function processed a request.");
+
+            return new OkObjectResult(new {success = true, data = DateTimeOffset.UtcNow});
+        });
+    }
+}
+
+public abstract class InterceptingBaseFunction
+{
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ILogger<InterceptingBaseFunction> _log;
+
+    protected InterceptingBaseFunction(IHttpContextAccessor httpContextAccessor, ILogger<InterceptingBaseFunction> log)
+    {
+        _httpContextAccessor = httpContextAccessor;
+        _log = log;
+    }
+
+    protected async Task<IActionResult> Execute(Func<Task<IActionResult>> func)
+    {
+        try
+        {
+            var requestCookie = _httpContextAccessor.HttpContext.Request.Cookies["required-cookie"];
+            if (requestCookie == null)
+            {
+                return new BadRequestResult();
+            }
+
+            var result = await func();
+
+            _log.LogInformation("This is after the function executed");
+
+            return result;
+        }
+        catch (Exception e)
+        {
+            _log.LogError("Exception caught", e);
+            throw;
+        }
+    }
+}
+```
+I exemplet ovan omsluts funktionskoden i `AnotherInterceptingFunction` av en `Execute`-funktion som ligger i basklassen `InterceptingBaseFunction`. I basklassen kontrolleras så att inkommande HTTP-anrop har med sig en cookie. Om så inte är fallet returneras direkt `400 Bad Request` och funktionskoden körs aldrig. Funktionen i basklassen hanterar även ohanterade fel, som loggas och kastas vidare i den här lösningen.
+
+> Koden för exemplet på detta finns här [AnotherInterceptingFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/AnotherInterceptingFunction.cs) tillsammans med basklassen här [InterceptingBaseFunction](https://github.com/Fjeddo/az-func-five-tips/blob/master/RequestInterception/InterceptingBaseFunction.cs).
 
 # Request/trigger interface => domain
 På samma sätt som när man utvecklar webbapplikationer i ASP.NET MVC eller med hjälp av andra ramverk så är det viktigt att inte låta beroenden i yttre gränssnitt följa med in i domänen. Det handlar egentligen om att lämna tekniken som aktiverar funktionen så fort som möjligt, konvertera nödvändiga indata till kända modeller i domänen och börja jobba där. 
@@ -263,6 +323,6 @@ public static class TuplePatternMatchingFunction
 > Källkoden i exemplet ovan kommer från [https://github.com/Fjeddo/az-func-five-tips/tree/master/TuplesPatternMatchingFunction](https://github.com/Fjeddo/az-func-five-tips/tree/master/TuplesPatternMatchingFunction).
 
 # Avslutande ord
-Jag hoppas att det här har gett dig som läsare något att ta med dig vid etablering av kodbaser, framför allt för Azure Functions. Att hålla sig till ett mindre antal enkla grunder kommer direkt ha positiva effekter på hur enkel koden blir att förvalta och dessutom blir det enkelt att komma ihåg hur tankarna gick vid det initiala rörmokeriet. Varför inte skriva en kort readme-fil som ligger tillsammans med källkoden, där principerna och besluten beskrivs?
+Jag hoppas att det här har gett dig som läsare något att ta med dig vid etablering av kodbaser, framför allt för Azure Functions. Att hålla sig till ett mindre antal enkla grunder kommer direkt ha positiva effekter på hur enkel koden blir att förvalta och dessutom blir det enkelt att komma ihåg hur tankarna gick vid det initiala rörmokeriet. Varför inte skriva kort i en README.MD-fil som ligger tillsammans med källkoden, där principerna och besluten beskrivs?
 
 Tveka inte att kommentera och dela med dig av dina tankar kring hur man etablerar en stabil kodbas, speciellt i dom fallen när man är ute på ett helt nytt orört grönt fält.
