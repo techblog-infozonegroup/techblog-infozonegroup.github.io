@@ -27,7 +27,9 @@ I andra bloggposter [här](http://blog.headlight.se/ioc-di-ramverk-eller-inte/) 
 
 Det som jag har noterat i och med ökad erfarenhet av serverless-tekniker, framför allt Azure Functions, är att man skulle bli väldigt begränsad om man inte hade möjlighet att konfigurera funktioners beroenden med hjälp av ett ramverk. Om en Azure Function App ska innehålla flera funktioner, kanske vill man implementera något som liknar ett web api med flera olika typer av datakällor eller externa tjänster att konsumera, så anser jag att man MÅSTE ha ett sätt att konfigurera beroenden på ett bra sätt. Detta ökar förvaltningsbarheten massor och det underlättar mycket för när man vill hålla stringensen i kodbasen. 
 
-Precis som man är van vid från ASP.NET Core's IoC-konfiguration så bygger allt på att man skapar en uppstartsklass, ofta kallad Startup. I Azure Functions låter man klassen ärva från den abstrakta klassen [FunctionsStartup](https://github.com/Azure/azure-functions-dotnet-extensions/blob/main/src/Extensions/DependencyInjection/FunctionsStartup.cs) och den aktiveras vid uppstart med hjälp av attributet `[assembly: FunctionsStartup(typeof(Startup))]`. Basklassen innehåller en abstrakt metod, `void Configure(IFunctionsHostBuilder builder)`, och en metod som man kan överrida vid behov, `void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)`. Den förstnämda är den som ska innehålla IoC-konfigurationen:
+Precis som man är van vid från ASP.NET Core's IoC-konfiguration så bygger allt på att man skapar en uppstartsklass, ofta kallad Startup. I Azure Functions låter man klassen ärva från den abstrakta klassen [FunctionsStartup](https://github.com/Azure/azure-functions-dotnet-extensions/blob/main/src/Extensions/DependencyInjection/FunctionsStartup.cs) och den aktiveras vid uppstart med hjälp av attributet `[assembly: FunctionsStartup(...)]`. 
+
+Basklassen innehåller en abstrakt metod, `void Configure(IFunctionsHostBuilder builder)`, och en metod som man kan överrida vid behov, `void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)`. Den förstnämda är den som ska innehålla IoC-konfigurationen:
 
 ```csharp
 [assembly: FunctionsStartup(typeof(Startup))]
@@ -189,8 +191,8 @@ Man kan såklart uppnå mer eller mindre samma resultat genom att ha en metod so
 ```csharp
 public class AnotherInterceptingFunction : InterceptingBaseFunction
 {
-    public AnotherInterceptingFunction(IHttpContextAccessor httpContextAccessor, ILogger<InterceptingBaseFunction> log) : base(httpContextAccessor, log)
-    { }
+    public AnotherInterceptingFunction(IHttpContextAccessor httpContextAccessor, ILogger<InterceptingBaseFunction> log) 
+        : base(httpContextAccessor, log) { }
 
     [FunctionName("AnotherInterceptingFunction")]
     public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
@@ -289,7 +291,9 @@ public class UpdateUserWorkProcess : IProcess<User>
     public (bool success, User model, int status) Run() => (true, default, 0);
 }
 ```
-> Läs mer om Azure Functions och CQS här [CQS + functional programming = sant, del 1](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-1_2/) och [del 2](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-2_2/).
+Läs mer om Azure Functions och CQS här [CQS + functional programming = sant, del 1](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-1_2/) och [del 2](https://techblogg.infozone.se/blog/cqs-plus-functional-eq-true-2_2/).
+
+> Källkoden för exemplet ovan finns här [RequestToDomainFunction](https://github.com/Fjeddo/az-func-five-tips/tree/master/RequestToDomain).
 
 # Stringent retur-hantering
 En extremt viktig detalj för att göra funktioner möjliga att använda är att dess konsumenter vet hur dom beter sig och varför dom i vissa fall inte returnerar det som man kan förvänta sig. Ett tråkigt men ack så effektivt sätt att få detta att fungera dokumentera varje funktions yttre gränssnitt. Med det menar jag att göra det tydligt vad en funktion vill ha för indata och vad den kan ge för svar och då handlar det både om lyckade och misslyckade anrop, det vill säga alla potentiella felkoder i retur.
