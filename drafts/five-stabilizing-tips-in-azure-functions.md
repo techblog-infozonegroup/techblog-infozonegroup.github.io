@@ -18,7 +18,7 @@ I den här artikeln tänkte jag gå igenom min topp-5-lista med kodförbättrand
 Vi kommer att titta på:
 - [Dependency injection (DI)](#dependency-injection-di)
 - [Model binding](#model-binding)
-- [Request interception (preview + basklass)](#request-interception-mha-functioninvocationfilter-och-ifunctionexceptionfilter-preview)
+- [Request interception (preview + basklass)](#request-interception)
 - [Request/trigger interface => domain](#requesttrigger-interface--domain)
 - [Stringent retur-hantering](#stringent-retur-hantering)
 
