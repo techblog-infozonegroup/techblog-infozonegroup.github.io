@@ -12,6 +12,7 @@ tags:
   - systemutveckling
   - azure-functions
   - serverless
+  - azure
 ---
 # Intro
 I den här artikeln tänkte jag gå igenom min topp-5-lista med kodförbättrande grunder och/eller åtgärder. Vissa av dom är hårt knutna till Http-triggade Azure Functions, en del är applicerbara i andra tillämpningar. Till varje avsnitt finns ett exempel-projekt för att man ska kunna plocka hem och navigera koden i lugn och ro i sin egen utvecklingsmiljö. Koden för alla exempel finns här [**az-func-five-tips**](https://github.com/Fjeddo/az-func-five-tips).
