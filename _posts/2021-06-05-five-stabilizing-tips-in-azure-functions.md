@@ -1,6 +1,6 @@
 ---
 title: "Fem tips för en robust kodbas i Azure Functions"
-date: 2021-06-02
+date: 2021-06-05
 author: Fredde, systemutvecklare
 tagline: "Serverless, såsom Azure Functions, bjuder in till att direkt börja knacka kod, vilket såklart är bra, men det är trots allt bra att ta det lite lugnt och tänka igenom hur man kan skapa en bra grund för att få en stringent och stabil kodbas."
 header:
