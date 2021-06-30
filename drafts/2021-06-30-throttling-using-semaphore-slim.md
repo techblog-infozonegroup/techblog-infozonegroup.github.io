@@ -15,18 +15,17 @@ tags:
   - dotnet 5
 ---
 
-I den här bloggposten vill jag lite snabbt tipsa om en klass som, oförtjänt, verkar leva vid sidan av rampljuset. Jag pratar om [SemaphoreSlim](https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphoreslim?view=net-5.0). SemaphoreSlim är ett utmärkt verktyg när man vill ösa på med anrop mot en funktion eller ett API men samtidigt göra det under kontrollerade former.
+I den här bloggposten vill jag lite snabbt tipsa om en klass som, oförtjänt, verkar leva vid sidan av rampljuset. Jag pratar om [SemaphoreSlim](https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphoreslim?view=net-5.0). SemaphoreSlim är ett utmärkt verktyg när man vill ösa på med anrop mot en funktion eller ett API, under kontrollerade former.
 
 Idén om denna post kommer från ett avsnitt från [DotNetRocks](https://dotnetrocks.com/), där de lyfter fram klassen i det inledande "Better know a framework". 
 
 # Problemställning
-Tänk er ett system som integrerar med API:er av olika slag. Det är inte helt ovanligt att moderna API:er har begränsningar när det kommer till samtidiga anrop, eller antal anrop över en tidsperiod. Säg att begränsningen är 100 samtidiga anrop men att ditt system har betydligt fler inkommande anrop än så. Du har ett problem.
+Tänk er ett system som integrerar med API:er av olika slag. Det är inte ovanligt att moderna API:er har begränsningar när det kommer till samtidiga anrop, eller antal anrop över en tidsperiod. Säg att begränsningen är 100 samtidiga anrop men att ditt system har betydligt fler inkommande anrop än så. Du har ett problem.
 
-Det finns såklart många lösningar på problemet, en kan vara att ha samma begränsning i ditt system eller att batcha anrop. SemaphoreSlim kan dock lösa dessa problem på ett transparent och på ett oinvasivt sätt. Det är det vi ska se närmre på.
+Det finns såklart många lösningar på problemet, en kan vara att ha samma begränsning i ditt system eller att batcha anrop. SemaphoreSlim kan lösa dessa problem på ett transparent och oinvasivt sätt. Detta ska vi se närmre på.
 
 # Kontrollera anropen
-
-Här nedan följer en enkel bit kod som anropar ett API 10 000 gånger, parallelt. Det här API:et har en begränsning om 100 samtidiga anrop. Det är högst sannolikt att nedanstående kod kommer börja kasta fel med statuskod 429 - Too many requests.
+Här nedan följer en enkel bit kod som anropar ett API 10 000 gånger, parallelt. Det här API:et har en *begränsning om 100 samtidiga anrop*. Det är högst sannolikt att nedanstående kod kommer börja kasta fel med statuskod 429 - Too many requests.
 
 ```csharp
 public static void HammerTheApiUnControlled()
@@ -71,3 +70,5 @@ Det fina med detta, utöver dess enkelhet, är att det inte är invasiv kod. Kod
 
 # Sammanfattning
 SemaphoreSlim blir kraftfullt i sin enkelhet och transparens. Lägg på ett abstraktionslager samt konfigurering så har ni snabbt en bra motor för att kontrollera samtidiga anrop mot API:er eller annan kod som kan lida av för hög frekvens av anrop.
+
+Källkoden i dess helhet finner ni [här](https://tbd.com)
