@@ -5,7 +5,7 @@ author: Andreas Hagsten, systemutvecklare
 tagline: "SemaphoreSlim - enkelt och effektivt sätt att strypa anrop mot API:er"
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/semaphoreslim/crowd_queue.jpg
-  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/event-store-db/eventstore-logo.png
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/semaphoreslim/teaser.jpg
 categories:
   - blog
 tags:
