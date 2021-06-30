@@ -65,10 +65,11 @@ public static void HammerTheApi()
     });
 }
 ```
+> Det finns två konstuktorer för ```System.Threading.SemaphoreSlim```, den vi nyttjar i detta exempel tar antalet anrop som, samtidigt, tillåts komma åt efterföljande kod. Överlagringen tar även in ett maxvärde, vilket möjligör dynamisk justering av samtidiga anrop.
 
 Det fina med detta, utöver dess enkelhet, är att det inte är invasiv kod. Koden kommer inte förändra de gränsnitt som finns definierat i ert system. Nytjandet av SemaphoreSlim blir helt transparent för anroparen. 
 
 # Sammanfattning
 SemaphoreSlim blir kraftfullt i sin enkelhet och transparens. Lägg på ett abstraktionslager samt konfigurering så har ni snabbt en bra motor för att kontrollera samtidiga anrop mot API:er eller annan kod som kan lida av för hög frekvens av anrop.
 
-Källkoden i dess helhet finner ni [här](https://tbd.com)
+Källkoden i dess helhet finner ni [här](https://github.com/InfozoneGroup/Blog.SemaphoreSlim)
