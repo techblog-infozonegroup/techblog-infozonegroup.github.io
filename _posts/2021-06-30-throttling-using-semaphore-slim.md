@@ -1,5 +1,5 @@
 ---
-title: "Kontrollera antalet parallela anrop"
+title: "Kontrollera antalet parallella anrop"
 date: 2021-06-30
 author: Andreas Hagsten, systemutvecklare
 tagline: "SemaphoreSlim - enkelt och effektivt sätt att strypa anrop mot API:er"
@@ -25,7 +25,7 @@ Tänk er ett system som integrerar med API:er av olika slag. Det är inte ovanli
 Det finns såklart många lösningar på problemet, en kan vara att ha samma begränsning i ditt system eller att batcha anrop. SemaphoreSlim kan lösa dessa problem på ett transparent och oinvasivt sätt. Detta ska vi se närmre på.
 
 # Kontrollera anropen
-Här nedan följer en enkel bit kod som anropar ett API 10 000 gånger, parallelt. Det här API:et har en *begränsning om 100 samtidiga anrop*. Det är högst sannolikt att nedanstående kod kommer börja kasta fel med statuskod 429 - Too many requests.
+Här nedan följer en enkel bit kod som anropar ett API 10 000 gånger, parallellt. Det här API:et har en *begränsning om 100 samtidiga anrop*. Det är högst sannolikt att nedanstående kod kommer börja kasta fel med statuskod 429 - Too many requests.
 
 ```csharp
 public static void HammerTheApiUnControlled()
@@ -43,7 +43,7 @@ public static void HammerTheApiUnControlled()
 ```
 
 ## SemaphoreSlim
-Vi kan med ett fåtal nya kodrader få ovanstående kod att fungera mycket bättre. Vi behåller all kod, dvs även de 10 000 parallela anropen mot API:et, men lägger en begränsning kring varje enskilt anrop. Vi instansierar ett objekt av typen SemaphoreSlim och begränsar den till 100 samtidiga trådar, samma begränsning som API:et har. Runt funktionskroppen inne i loopen lägger vi ```await semaphore.WaitAsync()``` och ```semaphore.Release()```. Det är allt som behövs. WaitAsync kommer se till att endast 100 trådar får tillgång till den kod som följer, fram till och med anropet till Release.
+Vi kan med ett fåtal nya kodrader få ovanstående kod att fungera mycket bättre. Vi behåller all kod, dvs även de 10 000 parallella anropen mot API:et, men lägger en begränsning kring varje enskilt anrop. Vi instansierar ett objekt av typen SemaphoreSlim och begränsar den till 100 samtidiga trådar, samma begränsning som API:et har. Runt funktionskroppen inne i loopen lägger vi ```await semaphore.WaitAsync()``` och ```semaphore.Release()```. Det är allt som behövs. WaitAsync kommer se till att endast 100 trådar får tillgång till den kod som följer, fram till och med anropet till Release.
 
 ```csharp
 public static void HammerTheApi()
