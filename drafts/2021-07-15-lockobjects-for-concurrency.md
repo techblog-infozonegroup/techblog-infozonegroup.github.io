@@ -114,7 +114,7 @@ public static class KeywordLocker
 
 En konsollapp som med hjälp av _async await_ sätter igång flera samtidiga anrop mot en funktion som sparar ner en inparameter i en lista om den inte redan finns där. Först visas resultatet utan en låsning och sen visas resultatet när vår KeywordLocker används:
 
-![Concurrency Result](https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/lockobjects/assets/images/lockobjects-demo-concurrency-result.PNG)
+![Concurrency Result](https://raw.githubusercontent.com/lenellsarn/techblog-infozonegroup.github.io/lockobjects/assets/images/lockobjects-demo-concurrency-result.PNG)
 
 Som syns ovan får vi ett kaotiskt resultat om vi inte låser funktionen när samtidiga anrop sker. Om vi däremot använder vår _KeywordLocker.WrapInLock()_ så ser vi att det bara sparats ett resultat per biljett-id samtidigt som reservationen av TicketId1 inte blockerat en samtidig reservation av TicketId2 vilket hade varit fallet om vi bara använt _lock_.
 
