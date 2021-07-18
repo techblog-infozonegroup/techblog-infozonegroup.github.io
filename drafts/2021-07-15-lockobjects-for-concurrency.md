@@ -74,40 +74,40 @@ Vi kan göra wrapper-funktioner som tar en Func eller Action som parameter och g
 
 ```csharp
 public static class KeywordLocker
+{
+	private readonly static ConcurrentDictionary<string, object> _lockList = new ConcurrentDictionary<string, object>();
+	public static TResult WrapInLock<TResult>(Func<TResult> function, string keyword)
 	{
-		private readonly static ConcurrentDictionary<string, object> _lockList = new ConcurrentDictionary<string, object>();
-		public static TResult WrapInLock<TResult>(Func<TResult> function, string keyword)
+		var lockObject = _lockList.GetOrAdd(keyword, new object());
+		lock (lockObject)
 		{
-			var lockObject = _lockList.GetOrAdd(keyword, new object());
-			lock (lockObject)
+			try
 			{
-				try
-				{
-					return function();
-				}
-				finally
-				{
-					_lockList.TryRemove(keyword, out _);
-				}
+				return function();
 			}
-		}
-
-		public static void WrapInLock(Action function, string keyword)
-		{
-			var lockObject = _lockList.GetOrAdd(keyword, new object());
-			lock (lockObject)
+			finally
 			{
-				try
-				{
-					function();
-				}
-				finally
-				{
-					_lockList.TryRemove(keyword, out _);
-				}
+				_lockList.TryRemove(keyword, out _);
 			}
 		}
 	}
+
+	public static void WrapInLock(Action function, string keyword)
+	{
+		var lockObject = _lockList.GetOrAdd(keyword, new object());
+		lock (lockObject)
+		{
+			try
+			{
+				function();
+			}
+			finally
+			{
+				_lockList.TryRemove(keyword, out _);
+			}
+		}
+	}
+}
 ```
 
 ## Demo
