@@ -1,3 +1,19 @@
+---
+title: "Lås flera samtidiga anrop på ett nyckelord"
+date: 2021-07-15
+author: Erik Lenells, systemutvecklare
+tagline: "Kontrollera samtidiga anrop med minimal prestandapåverkan"
+header:
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/tuples-might-be-good/pexels-markus-spiske-1089438.jpg
+categories:
+  - blog
+tags:
+  - C# 
+  - lock  
+  - concurrency
+  - keyword
+---
+
 Tänk dig ett scenario där flera användare kan påverka samma databasvärde men att de ändå inte får skriva över varandra, alltså ett ”först till kvarn”-scenario som t.ex. att reservera en specifik sittplats i en biograf. Vi tittar närmare på begreppet lock i C# och framförallt hur det kan nyttjas för att låsa en funktion på ett Id eller annat nyckelord så att funktionen kan köras samtidigt så länge parametrarna skiljer sig. 
 
 ## Lock
