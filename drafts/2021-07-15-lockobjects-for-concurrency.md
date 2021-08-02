@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+=======
+---
+title: "Lås flera samtidiga anrop på ett nyckelord"
+date: 2021-07-15
+author: Erik Lenells, systemutvecklare
+tagline: "Kontrollera samtidiga anrop med minimal prestandapåverkan"
+header:
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/tuples-might-be-good/pexels-markus-spiske-1089438.jpg
+categories:
+  - blog
+tags:
+  - C# 
+  - lock  
+  - concurrency
+  - keyword
+---
+
+>>>>>>> 9ff151368cbbb4ba5a091290f0b97351feae635f
 Tänk dig ett scenario där flera användare kan påverka samma databasvärde men att de ändå inte får skriva över varandra, alltså ett ”först till kvarn”-scenario som t.ex. att reservera en specifik sittplats i en biograf. Vi tittar närmare på begreppet lock i C# och framförallt hur det kan nyttjas för att låsa en funktion på ett Id eller annat nyckelord så att funktionen kan köras samtidigt så länge parametrarna skiljer sig. 
 
 ## Lock
@@ -74,47 +93,47 @@ Vi kan göra wrapper-funktioner som tar en Func eller Action som parameter och g
 
 ```csharp
 public static class KeywordLocker
+{
+	private readonly static ConcurrentDictionary<string, object> _lockList = new ConcurrentDictionary<string, object>();
+	public static TResult WrapInLock<TResult>(Func<TResult> function, string keyword)
 	{
-		private readonly static ConcurrentDictionary<string, object> _lockList = new ConcurrentDictionary<string, object>();
-		public static TResult WrapInLock<TResult>(Func<TResult> function, string keyword)
+		var lockObject = _lockList.GetOrAdd(keyword, new object());
+		lock (lockObject)
 		{
-			var lockObject = _lockList.GetOrAdd(keyword, new object());
-			lock (lockObject)
+			try
 			{
-				try
-				{
-					return function();
-				}
-				finally
-				{
-					_lockList.TryRemove(keyword, out _);
-				}
+				return function();
 			}
-		}
-
-		public static void WrapInLock(Action function, string keyword)
-		{
-			var lockObject = _lockList.GetOrAdd(keyword, new object());
-			lock (lockObject)
+			finally
 			{
-				try
-				{
-					function();
-				}
-				finally
-				{
-					_lockList.TryRemove(keyword, out _);
-				}
+				_lockList.TryRemove(keyword, out _);
 			}
 		}
 	}
+
+	public static void WrapInLock(Action function, string keyword)
+	{
+		var lockObject = _lockList.GetOrAdd(keyword, new object());
+		lock (lockObject)
+		{
+			try
+			{
+				function();
+			}
+			finally
+			{
+				_lockList.TryRemove(keyword, out _);
+			}
+		}
+	}
+}
 ```
 
 ## Demo
 
 En konsollapp som med hjälp av _async await_ sätter igång flera samtidiga anrop mot en funktion som sparar ner en inparameter i en lista om den inte redan finns där. Först visas resultatet utan en låsning och sen visas resultatet när vår KeywordLocker används:
 
-![Concurrency Result](https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/lockobjects/assets/images/lockobjects-demo-concurrency-result.PNG)
+![Concurrency Result](https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/lockobjects-demo-concurrency-result.PNG)
 
 Som syns ovan får vi ett kaotiskt resultat om vi inte låser funktionen när samtidiga anrop sker. Om vi däremot använder vår _KeywordLocker.WrapInLock()_ så ser vi att det bara sparats ett resultat per biljett-id samtidigt som reservationen av TicketId1 inte blockerat en samtidig reservation av TicketId2 vilket hade varit fallet om vi bara använt _lock_.
 
