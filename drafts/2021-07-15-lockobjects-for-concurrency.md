@@ -21,7 +21,7 @@ Tänk dig ett scenario där flera användare kan påverka samma databasvärde me
 Nyckelordet låser ett kodblock för ett givet objekt och när kodblocket är färdigexekverat lyfts låset. Så om funktionen anropas två gånger samtidigt kommer det ena anropet att pausas tills dess att det andra anropet är fädig med kodblocket. 
 
 Mer detaljer finns här:
-https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/lock-statement
+[https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/lock-statement](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/lock-statement)
 
 Följande kodexempel visar hur vi kan låsa reservationen av en sittplats så att om två anrop med samma _seatId_ sker samtidigt kommer det ena att få igenom sin reservation medan det andra får felet _SeatNotAvailableException_.
 
