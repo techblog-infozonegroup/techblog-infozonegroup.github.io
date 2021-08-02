@@ -4,7 +4,8 @@ date: 2021-07-15
 author: Erik Lenells, systemutvecklare
 tagline: "Kontrollera samtidiga anrop med minimal prestandapåverkan"
 header:
-  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/tuples-might-be-good/pexels-markus-spiske-1089438.jpg
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/lockobjects.jpg
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/techblog-infozonegroup.github.io/master/assets/images/lockobjects-teaser.jpg
 categories:
   - blog
 tags:
@@ -135,7 +136,7 @@ En konsollapp som med hjälp av _async await_ sätter igång flera samtidiga anr
 Som syns ovan får vi ett kaotiskt resultat om vi inte låser funktionen när samtidiga anrop sker. Om vi däremot använder vår _KeywordLocker.WrapInLock()_ så ser vi att det bara sparats ett resultat per biljett-id samtidigt som reservationen av TicketId1 inte blockerat en samtidig reservation av TicketId2 vilket hade varit fallet om vi bara använt _lock_.
 
 Koden finns här:
-https://github.com/lenellsarn/blog.lockobjectsdemo
+[https://github.com/lenellsarn/blog.lockobjectsdemo](https://github.com/lenellsarn/blog.lockobjectsdemo)
 
 ## Relaterad läsning
-Om du ute efter att "throttla" dina anrop, det vill säga begränsa antalet anrop som kan köras parallellt rekommenderar jag att kolla närmare på Semaphore Slim, väl sammanfattat här: https://techblogg.infozone.se/blog/throttling-using-semaphore-slim/
+Om du ute efter att "throttla" dina anrop, det vill säga begränsa antalet anrop som kan köras parallellt rekommenderar jag att kolla närmare på Semaphore Slim, väl sammanfattat här: [https://techblogg.infozone.se/blog/throttling-using-semaphore-slim/](https://techblogg.infozone.se/blog/throttling-using-semaphore-slim/)
