@@ -74,7 +74,7 @@ lock(lockObject)
     }
     finally
     {
-        _lockList.TryRemove(keyword, out _);
+        _lockList.TryRemove(seatId, out _);
     }
 }
 ```
@@ -125,6 +125,25 @@ public static class KeywordLocker
         }
     }
 }
+```
+
+Då kan vi skriva om vår kod så här:
+```csharp
+[...]
+
+KeywordLocker.WrapInLock(() => 
+{
+    var isSeatFree = IsThisSeatFree(seatId);
+
+    if (isSeatFree)
+    {
+        ReserveSeat(userId, seatId);
+    }
+    else
+    {
+        throw SeatNotAvailableException();
+    }
+}, seatId);
 ```
 
 ## Demo
