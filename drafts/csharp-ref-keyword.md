@@ -17,11 +17,11 @@ Dom flesta av er som programmerar C# har säkert stött på nyckelordet `ref` vi
 
 I den här posten tittar vi närmare på `ref`-nyckelordet i C# och hur det fungerar.
 
-> All kod och tillhörande skrift finns i en [.NET Interactive Notebook](https://github.com/dotnet/interactive), en [Jupyter Notebook](https://jupyter.org/) för .NET Core. Jag fick upp ögonen för det här sättet att dela exekverbar kod och text i ett och samma dokument när jag tittade på introt för Cherita Ousleys och Scott Hanselmans serie [Let's Learn C# with Scott and Cherita](https://channel9.msdn.com/Shows/Reactor/Lets-Learn-C-with-Scott-and-Cherita-at-the-Microsoft-Reactor-Part-1). Där introducerade dom även Microsofts nya site [.NET for students - Learn to code i C# programming language](https://dotnet.microsoft.com/learntocode) och i kursen använder dom .NET Interactive Notebooks för att dela kod och text, så jag var helt enkelt tvungen att testa! **Alla prerequisites finns i början av filmen och på Learn to code-sajten** men man kan även läsa och ta till sig informationen i notebooken direkt i webbläsaren.
+> All kod och tillhörande skrift finns i en [.NET Interactive Notebook](https://github.com/dotnet/interactive), en [Jupyter Notebook](https://jupyter.org/) för .NET Core. Jag fick upp ögonen för det här sättet att dela exekverbar kod och text i ett och samma dokument när jag tittade på introt för Cherita Ousleys och Scott Hanselmans serie [Let's Learn C# with Scott and Cherita](https://channel9.msdn.com/Shows/Reactor/Lets-Learn-C-with-Scott-and-Cherita-at-the-Microsoft-Reactor-Part-1). Där introducerade dom även Microsofts nya site [.NET for students - Learn to code i C# programming language](https://dotnet.microsoft.com/learntocode) och i kursen använder dom .NET Interactive Notebooks för att dela kod och text, så jag var helt enkelt tvungen att testa! **Alla prerequisites finns i början av filmen och på Learn to code-sajten** men man kan även läsa och ta till sig informationen i notebooken direkt i webbläsaren i .ipynb-format.
 
 # Resurser
 Notebooken som visar användning av `ref` för **value types**, **reference types with value type behaviors** och **reference types** finns på GitHub:
 
-- **[ref-keyword .NET Interactive Notebook](https://github.com/Fjeddo/notebooks/tree/main/ref-keyword/book.ipynb)**
+- **[ref-keyword .NET Interactive Notebook](https://github.com/Fjeddo/notebooks/tree/main/ref-keyword/book.ipynb)** ([.dib-format](https://github.com/Fjeddo/notebooks/tree/main/ref-keyword/book.dib) också tillgängligt)
 
 Dela gärna med er av era intryck och tankar kring det här sättet att dela kod och text!
