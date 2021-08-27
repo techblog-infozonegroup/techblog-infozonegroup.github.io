@@ -13,7 +13,9 @@ tags:
   - c#
 ---
 # Introduktion
-Dom flesta av dom som programmerar C# har säkert stött på nyckelordet `ref` vid något tillfälle? Man har kanske inte funderat så mycket kring dess betydelse utan helt enkelt bara rättat till det fel som C#-kompilatorn sporttar ur sig om man råkar glömma `ref` framför inparametern till funktionen som nyttjar nyckelordet. Det har säkert gått bra i dom flesta fallen, men ibland kan det vara bra att fundera en stund kring vad det har för effekter på koden och systemet. I den här posten tittar vi närmare på `ref`-nyckelordet i C# och hur det fungerar.
+Dom flesta av dom som programmerar C# har säkert stött på nyckelordet `ref` vid något tillfälle? Man har kanske inte funderat så mycket kring dess betydelse utan helt enkelt bara rättat till det fel som C#-kompilatorn sporttar ur sig om man råkar glömma `ref` framför inparametern till funktionen som nyttjar nyckelordet. Det har säkert gått bra i dom flesta fallen, men ibland kan det vara bra att fundera en stund kring vad det har för effekter på koden och systemet. 
+
+I den här posten tittar vi närmare på `ref`-nyckelordet i C# och hur det fungerar.
 
 > All kod och tillhörande skrift finns i en .NET Interactive Notebook, en Jupyter Notebook för .NET Core. Jag fick upp ögonen för det här sättet att dela exekverbar kod och text i ett och samma dokument när jag tittade på introt för Cherita Ousleys och Scott Hanselmans serie [Let's Learn C# with Scott and Cherita](https://channel9.msdn.com/Shows/Reactor/Lets-Learn-C-with-Scott-and-Cherita-at-the-Microsoft-Reactor-Part-1). Där introducerade dom även Microsofts nya site [.NET for students - Learn to code i C# programming language](https://dotnet.microsoft.com/learntocode) och i kursen använder dom .NET Interactive Notebooks för att dela kod och text, så jag var tvungen att testa! Alla prerequisites finns i början av filmen och på Learn to code-sajten.
 
