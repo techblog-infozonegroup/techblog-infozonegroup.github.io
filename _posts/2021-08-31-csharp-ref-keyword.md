@@ -1,6 +1,6 @@
 ---
 title: "Undersökning av ref-nyckelordet i C#"
-date: 2021-08-27
+date: 2021-08-31
 author: Fredde Johnsson, systemutvecklare
 tagline: "I den här posten tittar vi på hur man kan använda nyckelordet ref i C# och vad det har för effekter på funktioners parametrar. Text och kod finns i form av en .NET Interactive/Jupyter Notebook."
 header:
