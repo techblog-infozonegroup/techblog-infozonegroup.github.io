@@ -2,7 +2,7 @@
 title: "Varför du ska börja använda React Hooks idag"
 date: 2021-09-03
 author: Willie Björnbom, systemutvecklare
-tagline: "Hooks är ett ganska nytt begrepp inom react som alla ännu inte använder. Jag vill med dett blogginlägg uppmuntra till att testa på React hooks redan idag."
+tagline: "Hooks är ett ganska nytt begrepp inom react som kommer håller på att ändra på sättet för hur vi bygger applikationer. Jag vill med dett blogginlägg visa hur lätt det är att ett kliv in och testa på react hooks."
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-header.jpg
   teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-teaser.jpg
@@ -16,9 +16,7 @@ tags:
 
 # Introduktion
 
-I denna bloggpost ska vi kolla på hur man kan använda funktionella komponenter med react hooks och varför alla borde börja använda react hooks redan idag.
-
-Hooks är med sina funktionella komponenter ett alternativ till de traditionella klassbaserade komponenterna samt med en annorlunda approach kring state management och användandet av lifecycle methods.
+I denna bloggpost ska vi kolla på hur man kan använda funktionella komponenter med react hooks och varför alla borde börja använda det redan idag.
 
 I den här posten tittar vi närmare på begreppen `useState` och `useEffect` som är två av de mest använda inom `hooks`.
 
@@ -27,6 +25,8 @@ I den här posten tittar vi närmare på begreppen `useState` och `useEffect` so
 I början av 2019 släpptes [version 16.8](https://reactjs.org/blog/2019/02/06/react-v16.8.0.html) av React med ett helt nytt koncept, kallat hooks. Hooks ger oss möjlighet att skriva funktionella komponenter som är lika kraftfulla som de traditionella klasskomponenterna. Begreppet “hooks” kommer från just detta, att kunna “hooka fast” states och livscykel-metoder på funktionella komponenter.
 
 En hook kännetecknas genom att alla metoder börjar med nyckelordet `use`. Som ett illustrerande exempel kommer jag att nedan visa skillnaden mellan en enkel komponent skriven med hooks vs det traditionella sättet.
+
+**Gamla sättet**
 
 ```javascript
 import React from "react";
@@ -51,6 +51,8 @@ class Example extends React.Component {
 }
 ```
 
+**Hook**
+
 ```javascript
 import React, { useState } from "react";
 
@@ -72,9 +74,9 @@ Förutsatt att du åtminstone har React v16.8 så kan du börja använda hooks r
 
 ## State management - useState
 
-React hooks använder hooken “useState” för att “hooka på” state management i funktionella komponenter.
+React hooks använder hooken `useState` för att “hooka på” state management i funktionella komponenter.
 
-När vi deklarerar en statevariabel med useState skickar vi med en parameter som intialt värde och sedan returneras ett par - en array med två items. Det första itemet är det nuvarande värdet och det andra värdet är en funktion som uppdaterar värdet. Vi skulle kunna accessa dessa värden genom att använda arrayen index `[0]` och `[1]` men det är lite förvirrande eftersom de ha en mening. Det är därför vi använder “array destructing” istället.
+När vi deklarerar en statevariabel med useState skickar vi med en parameter som intialt värde och sedan returneras ett par - en array med två items. Det första itemet är det nuvarande värdet och det andra värdet är en funktion som uppdaterar värdet. Vi skulle kunna accessa dessa värden genom att använda arrayens index `[0]` och `[1]` men det är lite förvirrande eftersom det finns en mening att namnsätta dessa värden. Det är därför vi använder [array destructing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) istället.
 
 ```javascript
 function ExampleWithOneState() {
@@ -133,9 +135,7 @@ function Example() {
   }, []);
 
   useEffect(() => {
-    return () => {
-      // Same as componentDidUpdate
-    };
+    // Same as componentDidUpdate
   }, [count]);
 
   useEffect(() => {
@@ -189,7 +189,7 @@ function Example() {
 
 #" Props
 
-Eftersom vi numera inte använder klasser så kommer vi inte heller ha någon användning av `this`. Detta gör att vi på ett snyggare sätt kan hantera användningen av props. Tänk dig att vi har en komponent likt Example nedan.
+Eftersom vi numera inte använder klasser så kommer vi inte heller att ha någon användning av `this`. Detta gör att vi på ett snyggare sätt kan hantera användningen av props. Tänk dig att vi har en komponent likt Example nedan.
 
 ```javascript
 <Example text="Example" />
