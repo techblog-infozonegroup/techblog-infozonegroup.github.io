@@ -2,7 +2,7 @@
 title: "Varför du ska börja använda React Hooks idag"
 date: 2021-09-03
 author: Willie Björnbom, systemutvecklare
-tagline: "Hooks är ett ganska nytt begrepp inom react som kommer håller på att ändra på sättet för hur vi bygger applikationer. Jag vill med dett blogginlägg visa hur lätt det är att ett kliv in och testa på react hooks."
+tagline: "Hooks är ett ganska nytt begrepp inom react som håller på att förändra sättet för hur vi bygger applikationer. Jag vill med dett blogginlägg visa hur lätt det är att komma igång och börja jobba med React hooks."
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-header.jpg
   teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-teaser.jpg
@@ -18,7 +18,7 @@ tags:
 
 I denna bloggpost ska vi kolla på hur man kan använda funktionella komponenter med react hooks och varför alla borde börja använda det redan idag.
 
-I den här posten tittar vi närmare på begreppen `useState` och `useEffect` som är två av de mest använda inom `hooks`.
+Vi kommer titta närmare på greppen `useState` och `useEffect` som är två av de mest använda inom React hooks, jag kommer illustrera hooks med snippets från hur man gjorde på det **Gamla sättet** vs hur man gör med **Hooks**.
 
 # Vad är hooks?
 
@@ -70,26 +70,13 @@ function Example() {
 
 ## Varför du bör använda hooks
 
-Förutsatt att du åtminstone har React v16.8 så kan du börja använda hooks redan idag. Det kräver inte att du refaktoriserar dina nuvarande klasskomponeter eller liknande. React hooks använder färre koncept/termer vilket gör inlärningskurvan betydligt kortare. Eftersom funktionella komponenter varken har en konstruktor eller behöver använda en renderingsmetod så blir koden betydligt kortare och mer lättläst.
+Förutsatt att du har åtminstone v16.8 av React så är du redo att börja använda hooks redan idag. Du behöver inte refaktorera nuvarande klasskomponeter eller liknande då hooks är bakåtkompatibel. React hooks använder färre koncept/termer vilket gör inlärningskurvan betydligt kortare och eftersom funktionella komponenter varken har en konstruktor eller behöver använda en renderingsmetod så blir koden både kortare och mer lättläst.
 
 ## State management - useState
 
 React hooks använder hooken `useState` för att “hooka på” state management i funktionella komponenter.
 
-När vi deklarerar en statevariabel med useState skickar vi med en parameter som intialt värde och sedan returneras ett par - en array med två items. Det första itemet är det nuvarande värdet och det andra värdet är en funktion som uppdaterar värdet. Vi skulle kunna accessa dessa värden genom att använda arrayens index `[0]` och `[1]` men det är lite förvirrande eftersom det finns en mening att namnsätta dessa värden. Det är därför vi använder [array destructing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) istället.
-
-**Gamla sättet**
-
-```javascript
-function ExampleWithSet() {
-  const [fruit, setFruit] = useState(‘apples’);
-
-  function handleOrangeClick() {
-    // Similar to this.setState({ fruit: 'orange' })
-    setFruit('orange');
-  }
-}
-```
+När vi deklarerar en statevariabel med useState-hooken skickar vi med ett argument som blir statets initiala värde och sedan returnerar hooken ett par - en array med två föremål. Det första föremålet i arrayen är statets "nuvarande" värde och det andra är en funktion som uppdaterar statets värde. Vi skulle kunna få tillgång till dessa värden genom att använda arrayens index `[0]` och `[1]` men det är lite förvirrande eftersom det finns en mening med att namnsätta dessa värden. Det är därför vi använder [array destructing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) istället, vilket ger oss möjlighet att namnsätta föremålen i arrayen baserat på dess position.
 
 **Hooks**
 
@@ -107,9 +94,22 @@ function ExampleWithTwoStates() {
 }
 ```
 
-Som vi ser ovan kan states formas i alla typer. För att uppdatera states så använder vi set-funktionen och kan se ut såhär.
+Som vi ser ovan kan states formas i alla olika typer.
 
-Värt att tänka på är att setfunktionerna med hooks alltid ersätter hela statet.
+**Hooks**
+
+```javascript
+function ExampleWithSet() {
+  const [fruit, setFruit] = useState(‘apples’);
+
+  function handleOrangeClick() {
+    // Similar to this.setState({ fruit: 'orange' })
+    setFruit('orange');
+  }
+}
+```
+
+Ovna ser vi hur vi använder set-funktionen för att uppdatera statets värde. Värt att tänka på är att setfunktionerna med hooks alltid ersätter hela statet med det nya värdet, istället för att slå samman statets gamla värde med det nya som de klassbaserade staten gjorde.
 
 ## Side effects - useEffect
 
@@ -127,8 +127,8 @@ function ExampleEffect() {
 
 Som vi ser i exemplet ovan så tar useEffect-metoden emot två parametrar:
 
-1. En funktion som exekveras vid effekten samt
-2. En optional array av beroenden som kan styra när effekten ska triggas (kan vara states eller props).
+1. En funktion som exekveras vid effekten
+2. En optional array av beroenden som kan styra när effekten ska triggas (kan vara states eller props). Eftersom denna är optional så kan denna utelämnas, det som då händer är att effekten kommer köras vid varje rendering.
 
 **Gamla sättet**
 
