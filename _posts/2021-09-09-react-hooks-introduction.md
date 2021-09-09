@@ -2,7 +2,7 @@
 title: "Varför du ska börja använda React Hooks idag"
 date: 2021-09-09
 author: Willie Björnbom, systemutvecklare
-tagline: "Hooks är ett ganska nytt begrepp inom react som håller på att förändra sättet för hur vi bygger applikationer. Jag vill med dett blogginlägg visa hur lätt det är att komma igång och börja jobba med React hooks."
+tagline: "Hooks är ett ganska nytt begrepp inom react som håller på att förändra sättet för hur vi bygger applikationer. Jag vill med detta blogginlägg visa hur lätt det är att komma igång och börja jobba med React hooks."
 header:
   overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-header.png
   teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-teaser.png
@@ -127,7 +127,7 @@ function ExampleEffect() {
 
 Som vi ser i exemplet ovan så tar useEffect-metoden emot två parametrar:
 
-1. En funktion som exekveras vid effekten
+1. En funktion som exekveras vid effekten.
 2. En optional array av beroenden som kan styra när effekten ska triggas (kan vara states eller props). Eftersom denna är optional så kan denna utelämnas, det som då händer är att effekten kommer köras vid varje rendering.
 
 **Gamla sättet**
@@ -232,7 +232,7 @@ function Example({ text }) {
 
 Detta var en övergripande bild av två av de stora förändringarna useState och useEffect för React v16.8 och det finns väldigt många fler områden att beröra när det kommer till funktionella komponenter och hooks. Med denna bloggpost så hoppas jag att fler börjar implementera hooks för det är lite roligare att skriva samt att det bidrar till en betydligt mer lättläslig kod.
 
-Tack för mig!
+Happy coding!💜
 
 # Resurser
 
