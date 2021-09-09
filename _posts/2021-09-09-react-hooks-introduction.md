@@ -1,6 +1,6 @@
 ---
 title: "Varför du ska börja använda React Hooks idag"
-date: 2021-09-03
+date: 2021-09-09
 author: Willie Björnbom, systemutvecklare
 tagline: "Hooks är ett ganska nytt begrepp inom react som håller på att förändra sättet för hur vi bygger applikationer. Jag vill med dett blogginlägg visa hur lätt det är att komma igång och börja jobba med React hooks."
 header:
@@ -109,7 +109,7 @@ function ExampleWithSet() {
 }
 ```
 
-Ovna ser vi hur vi använder set-funktionen för att uppdatera statets värde. Värt att tänka på är att setfunktionerna med hooks alltid ersätter hela statet med det nya värdet, istället för att slå samman statets gamla värde med det nya som de klassbaserade staten gjorde.
+Ovan ser vi hur vi använder set-funktionen för att uppdatera statets värde. Värt att tänka på är att setfunktionerna med hooks alltid ersätter hela statet med det nya värdet, istället för att slå samman statets gamla värde med det nya som de klassbaserade staten gjorde.
 
 ## Side effects - useEffect
 
