@@ -4,8 +4,8 @@ date: 2021-09-09
 author: Willie Björnbom, systemutvecklare
 tagline: "Hooks är ett ganska nytt begrepp inom react som håller på att förändra sättet för hur vi bygger applikationer. Jag vill med dett blogginlägg visa hur lätt det är att komma igång och börja jobba med React hooks."
 header:
-  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-header.jpg
-  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-teaser.jpg
+  overlay_image: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-header.png
+  teaser: https://raw.githubusercontent.com/techblog-infozonegroup/resources.techblog-infozonegroup/main/react-hooks-introduction/hooks-teaser.png
 categories:
   - blog
 tags:
