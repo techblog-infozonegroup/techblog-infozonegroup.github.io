@@ -33,6 +33,8 @@ static void DeconstructTuples()
     var (success1, model, _) = (true, new Person(), 0);
     var (success2, _, status) = (false, default(Person), 123);
 }
+
+public class Person { ... }
 ```
 
 Här ser vi två olika fall av deconstructing, där tuplen består av **(bool, object, int)**. Booleanen indikerar success = true/false, objektet är en returnerad modell/default av modellen och heltalet är en status. Variablerna till vänster i tilldelningar, t.ex. isSuccess1, successModel och successStatus är direkt tillgängliga för användning i koden.
@@ -59,6 +61,8 @@ static void DeconstructResultAsClassesWithClassModel()
     var (success1, model, _) = new ResultAsClass<Person>(true, new Person(), 0);
     var (success2, _, status) = new ResultAsClass<Person>(false, default, 123);
 }
+  
+public class Person { ... }
   
 public class ResultAsClass<T>
 {
@@ -100,6 +104,8 @@ static void DeconstructResultAsRecordWithClassModel()
     var (success1, model, _) = new ResultAsRecord<Person>(true, new(), 0);
     var (success2, _, status) = new ResultAsRecord<Person>(false, default, 123);
 }
+ 
+public class Person { ... }
 
 public record ResultAsRecord<T>(bool Success, T Model, int Status);
 ```
