@@ -34,6 +34,7 @@ static void DeconstructTuples()
     var (success2, _, status) = (false, default(Person), 123);
 }
 ```
+
 Här ser vi två olika fall av deconstructing, där tuplen består av **(bool, object, int)**. Booleanen indikerar success = true/false, objektet är en returnerad modell/default av modellen och heltalet är en status. Variablerna till vänster i tilldelningar, t.ex. isSuccess1, successModel och successStatus är direkt tillgängliga för användning i koden.
 
 På dom två sista raderna i exemplet ser man även möjligheten av ignorera fält i tuplen. Detta gör man genom att ange "variabelnamnet" **_** (underscore/understreck).
@@ -44,6 +45,7 @@ I exemplet nedan ser man hur deconstructing av den egendefinierade typen ResultA
 Deconstructing-beteende hos den egendefinierade typen åstadkommer man genom att implementera funktionen **Deconstruct** som syns i form av en medlemsfunktion i klassen, sist i exemplet. 
   
 Ignore/discard uppnår man på samma sätt som i tuple-exemplet ovan, mha **_** (underscore/understreck).
+  
 ```csharp
 static void DeconstructResultAsClassesWithClassModel()
 {
@@ -56,19 +58,6 @@ static void DeconstructResultAsClassesWithClassModel()
     // Ignore/discard things
     var (success1, model, _) = new ResultAsClass<Person>(true, new Person(), 0);
     var (success2, _, status) = new ResultAsClass<Person>(false, default, 123);
-}
-
-static void DeconstructResultAsClassesWithRecordModel()
-{
-    var successClass = new ResultAsClass<Human>(true, new Human(1, "Test"), 0);
-    var (isSuccess1, successModel, successStatuts) = successClass;
-
-    var failClass = new ResultAsClass<Human>(false, default, 123);
-    var (isSuccess2, failModel, failStatus) = failClass;
-
-    // Ignore/discard things
-    var (success1, model, _) = new ResultAsClass<Human>(true, new Human(1, "Test"), 0);
-    var (success2, _, status) = new ResultAsClass<Human>(false, default, 123);
 }
   
 public class ResultAsClass<T>
@@ -92,7 +81,12 @@ public class ResultAsClass<T>
     }
 }
 ```
-
+  
+## Deconstructing av record
+I C#9 infördes en ny referenstyp som har samma beteende som en värdetyp, **record**. I record byggde man även in direkt stöd för deconstruting, dvs man behöver INTE implementera någon deconstruct-metod i typen. Detta gör alltså att deconstruting uppnås som en kombination av tupler och egendefinierade typer. 
+  
+Exemplet nedan visar hur deconstructing ser ut, med record, tillsammans med själva record-typen sist i exemplet.
+  
 ```csharp
 static void DeconstructResultAsRecordWithClassModel()
 {
@@ -107,16 +101,11 @@ static void DeconstructResultAsRecordWithClassModel()
     var (success2, _, status) = new ResultAsRecord<Person>(false, default, 123);
 }
 
-static void DeconstructResultAsRecordWithRecordModel()
-{
-    var successRecord = new ResultAsRecord<Human>(true, new(1, "Test"), 0);
-    var (isSuccess1, successModel, successStatuts) = successRecord;
-
-    var failRecord = new ResultAsRecord<Human>(false, default, 123);
-    var (isSuccess2, failModel, failStatus) = failRecord;
-
-    // Ignore/discard things
-    var (success1, model, _) = new ResultAsRecord<Human>(true, new(1, "Test"), 0);
-    var (success2, _, status) = new ResultAsRecord<Human>(false, default, 123);
-}
+public record ResultAsRecord<T>(bool Success, T Model, int Status);
 ```
+Ignore uppnås på samma sätt som i dom tidigare exemplen, genom **_** (underscore/understreck).
+  
+# Avslutning
+Hoppas det här har väckt en smula lust att skriva kompakt och effektiv kod och att det även har väckt lusten att undersöka C#-språkets andra finurliga konstruktioner.
+
+Komplett kod för exemplen ovan finns [här]().
