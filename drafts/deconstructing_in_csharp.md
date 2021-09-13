@@ -13,10 +13,13 @@ tags:
   - c#
 ---
 # Introduktion
+I javascript finns något som kallas på **destructuring** vilket innebär att man kan direkt tilldela separata variabler värdena hos egenskaper hos ett objekt. Läs om det [här](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment). I C# finns ungefär motsvarande konstruktion till hands men där kallar man det istället **deconstructing**. I det enklaste av fallen, där man använder sig av tupler, finns möjligheten till deconstructing direkt i språket. I andra fall, såsom egendefinierad referenstyper, måste man skriva lite kod för att uppnå samma resultat. Läs om deconstructing i C# [här](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/deconstruct).
 
-# Bakgrund
+Nedan följer ett antal exempel på deconstructing, som kan ge en kompakt och samtidigt läsbar och robust kod.
 
 # Kod
+## Deconstructing av tupler
+Det här är det enkla fallet, där C# genom sin tuple-typ, har deconstructing-stöd i språket direkt.
 ```csharp
 static void DeconstructTuples()
 {
@@ -31,7 +34,16 @@ static void DeconstructTuples()
     var (success2, _, status) = (false, default(Person), 123);
 }
 ```
+Här ser vi två olika fall av deconstructing, där tuplen består av **(bool, object, int)**. Booleanen indikerar success = true/false, objektet är en returnerad modell/default av modellen och heltalet är en status. Variablerna till vänster i tilldelningar, t.ex. isSuccess1, successModel och successStatus är direkt tillgängliga för användning i koden.
 
+På dom två sista raderna i exemplet ser man även möjligheten av ignorera fält i tuplen. Detta gör man genom att ange "variabelnamnet" **_** (underscore/understreck).
+
+## Deconstructing av klasser
+I exemplet nedan ser man hur deconstructing av den egendefinierade typen ResultAsClass<T> ser ut vid användning. Syntaxen ser precis ut som i tuple-fallet ovan, med den enda skillnaden som är new-operatorn vid själva skapandet av objektet.
+  
+Deconstructing-beteende hos den egendefinierade typen åstadkommer man genom att implementera funktionen **Deconstruct** som syns i form av en medlemsfunktion i klassen, sist i exemplet. 
+  
+Ignore/discard uppnår man på samma sätt som i tuple-exemplet ovan, mha **_** (underscore/understreck).
 ```csharp
 static void DeconstructResultAsClassesWithClassModel()
 {
@@ -57,6 +69,27 @@ static void DeconstructResultAsClassesWithRecordModel()
     // Ignore/discard things
     var (success1, model, _) = new ResultAsClass<Human>(true, new Human(1, "Test"), 0);
     var (success2, _, status) = new ResultAsClass<Human>(false, default, 123);
+}
+  
+public class ResultAsClass<T>
+{
+    private bool IsSuccess { get; }
+    private int Status { get; }
+    private T Model { get; }
+
+    public ResultAsClass(bool isSuccess, T model, int status)
+    {
+        IsSuccess = isSuccess;
+        Model = model;
+        Status = status;
+    }
+
+    public void Deconstruct(out bool success, out T model, out int status)
+    {
+        success = IsSuccess;
+        model = Model;
+        status = Status;
+    }
 }
 ```
 
