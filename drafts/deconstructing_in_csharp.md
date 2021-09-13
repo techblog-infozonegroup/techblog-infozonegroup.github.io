@@ -114,4 +114,4 @@ Ignore uppnås på samma sätt som i dom tidigare exemplen, genom **_** (undersc
 # Avslutning
 Hoppas det här har väckt en smula lust att skriva kompakt och effektiv kod och att det även har väckt lusten att undersöka C#-språkets andra finurliga konstruktioner.
 
-Komplett kod för exemplen ovan finns [här]().
+Komplett kod för exemplen ovan finns [här](https://github.com/Fjeddo/Deconstructing).
