@@ -21,7 +21,7 @@ Nedan följer ett antal exempel på deconstructing, som kan ge en kompakt och sa
 
 # Kod
 ## Deconstructing av tupler
-Det här är det enkla fallet, där C# genom sin tuple-typ, har deconstructing-stöd i språket direkt.
+Det här är det enkla fallet, där C# genom sin **tuple**-typ, har **deconstructing-stöd i språket** direkt.
 ```csharp
 static void DeconstructTuples()
 {
@@ -46,7 +46,7 @@ På dom två sista raderna i exemplet ser man även möjligheten av ignorera fä
 ## Deconstructing av klasser
 I exemplet nedan ser man hur deconstructing av den egendefinierade typen ResultAsClass<T> ser ut vid användning. Syntaxen ser precis ut som i tuple-fallet ovan, med den enda skillnaden som är new-operatorn vid själva skapandet av objektet.
   
-Deconstructing-beteende hos den egendefinierade typen åstadkommer man genom att implementera funktionen **Deconstruct** som syns i form av en medlemsfunktion i klassen, sist i exemplet. 
+**Deconstructing**-beteende hos den **egendefinierade typen** åstadkommer man genom att implementera funktionen **Deconstruct** som syns i form av en medlemsfunktion i klassen, sist i exemplet. 
   
 Ignore/discard uppnår man på samma sätt som i tuple-exemplet ovan, mha **_** (underscore/understreck).
   
@@ -85,6 +85,40 @@ public class ResultAsClass<T>
         model = Model;
         status = Status;
     }
+}
+```
+  
+> Deconstruct-metoden är något som implementatören själv består detaljerna i, så länge signaturen följer mönstret `public void Deconstruct(out ...)` så kommer den att göra jobbet. Se exemplet nedan på andra deconstruct-implementationer:
+```csharp
+public class SomeClass
+{
+    public SomeClass() { }
+
+    public void Deconstruct(out bool ticksIsEven, out DateTimeOffset at)
+    {
+        var  utcNow = DateTimeOffset.UtcNow;
+
+        ticksIsEven = utcNow.Ticks % 2 == 0;
+        at = utcNow;
+    }
+
+    public void Deconstruct(out int min, out int max, out int[] readings)
+    {
+        var random = new Random((int)DateTimeOffset.UtcNow.Ticks);
+
+        readings = Enumerable.Range(1, 100).Select(x => random.Next(-100, 100)).ToArray();
+        min = readings.Min();
+        max = readings.Max();
+    }
+}  
+  
+static void DeconstructingSpecial()
+{
+    // Deconstructing with DateTimeOffset
+    var (isSuccess, at) = new SomeClass();
+
+    // Deconstructing odd use case
+    var (min, max, readings) = new SomeClass();
 }
 ```
   
