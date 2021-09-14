@@ -89,6 +89,7 @@ public class ResultAsClass<T>
 ```
   
 > Deconstruct-metoden är något som implementatören själv består detaljerna i, så länge signaturen följer mönstret `public void Deconstruct(out ...)` så kommer den att göra jobbet. Se exemplet nedan på andra deconstruct-implementationer:
+  
 ```csharp
 public class SomeClass
 {
