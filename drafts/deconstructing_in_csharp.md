@@ -43,8 +43,8 @@ Här ser vi två olika fall av deconstructing, där tuplen består av **(bool, o
 
 På dom två sista raderna i exemplet ser man även möjligheten att **ignorera fält** i tuplen. Detta gör man genom att ange "variabelnamnet" **_** (underscore/understreck).
 
-## Deconstructing av klasser
-I exemplet nedan ser man hur deconstructing av den egendefinierade typen ResultAsClass<T> ser ut vid användning. Syntaxen ser precis ut som i tuple-fallet ovan, med den enda skillnaden som är new-operatorn vid själva skapandet av objektet.
+## Deconstructing av egendefinierade typer
+I exemplet nedan ser man hur deconstructing av den egendefinierade typen `ResultAsClass<T>` ser ut vid användning. Syntaxen ser precis ut som i tuple-fallet ovan, med den enda skillnaden som är new-operatorn vid själva skapandet av objektet.
   
 **Deconstructing**-beteende hos den **egendefinierade typen** åstadkommer man genom att implementera funktionen **Deconstruct** som syns i form av en medlemsfunktion i klassen, sist i exemplet. 
   
@@ -123,7 +123,7 @@ static void DeconstructingSpecial()
 }
 ```
   
-## Deconstructing av record
+## Deconstructing av records
 I C#9 infördes en ny referenstyp som har samma beteende som en värdetyp, **record**. I record byggde man även in direkt stöd för deconstruting, dvs man behöver INTE implementera någon deconstruct-metod i typen. Detta gör alltså att deconstruting uppnås som en kombination av tupler och egendefinierade typer. 
   
 Exemplet nedan visar hur deconstructing ser ut, med record, tillsammans med själva record-typen sist i exemplet.
