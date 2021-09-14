@@ -41,14 +41,14 @@ public class Person { ... }
 
 Här ser vi två olika fall av deconstructing, där tuplen består av **(bool, object, int)**. Booleanen indikerar success = true/false, objektet är en returnerad modell/default av modellen och heltalet är en status. Variablerna till vänster i tilldelningar, t.ex. isSuccess1, successModel och successStatus är direkt tillgängliga för användning i koden.
 
-På dom två sista raderna i exemplet ser man även möjligheten av ignorera fält i tuplen. Detta gör man genom att ange "variabelnamnet" **_** (underscore/understreck).
+På dom två sista raderna i exemplet ser man även möjligheten att **ignorera fält** i tuplen. Detta gör man genom att ange "variabelnamnet" **_** (underscore/understreck).
 
 ## Deconstructing av klasser
 I exemplet nedan ser man hur deconstructing av den egendefinierade typen ResultAsClass<T> ser ut vid användning. Syntaxen ser precis ut som i tuple-fallet ovan, med den enda skillnaden som är new-operatorn vid själva skapandet av objektet.
   
 **Deconstructing**-beteende hos den **egendefinierade typen** åstadkommer man genom att implementera funktionen **Deconstruct** som syns i form av en medlemsfunktion i klassen, sist i exemplet. 
   
-Ignore/discard uppnår man på samma sätt som i tuple-exemplet ovan, mha **_** (underscore/understreck).
+**Ignore/discard uppnår man på samma sätt** som i tuple-exemplet ovan, mha **_** (underscore/understreck).
   
 ```csharp
 static void DeconstructResultAsClassesWithClassModel()
@@ -146,7 +146,7 @@ public class Person { ... }
 
 public record ResultAsRecord<T>(bool Success, T Model, int Status);
 ```
-Ignore uppnås på samma sätt som i dom tidigare exemplen, genom **_** (underscore/understreck).
+**Ignore uppnås på samma** sätt som i dom tidigare exemplen, genom **_** (underscore/understreck).
   
 # Avslutning
 Hoppas det här har väckt en smula lust att skriva kompakt och effektiv kod och att det även har väckt lusten att undersöka C#-språkets andra finurliga konstruktioner.
