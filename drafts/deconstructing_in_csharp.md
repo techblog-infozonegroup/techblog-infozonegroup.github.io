@@ -15,7 +15,7 @@ tags:
 # Introduktion
 I javascript finns något som kallas på **destructuring** vilket innebär att man kan direkt tilldela separata variabler värdena hos egenskaper hos ett objekt. Läs om det [här](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment). 
 
-I C# finns ungefär motsvarande konstruktion till hands men där kallar man det istället **deconstructing**. I det enklaste av fallen, där man använder sig av tupler, finns möjligheten till deconstructing direkt i språket. I andra fall, såsom egendefinierad referenstyper, måste man skriva lite kod för att uppnå samma resultat. Läs om deconstructing i C# [här](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/deconstruct).
+I C# 7.0 och senare finns ungefär motsvarande konstruktion till hands men där kallar man det istället **deconstructing**. I det enklaste av fallen, där man använder sig av tupler, finns möjligheten till deconstructing direkt i språket. I andra fall, såsom egendefinierad referenstyper, måste man skriva lite kod för att uppnå samma resultat. Läs om deconstructing i C# [här](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/deconstruct).
 
 Nedan följer ett antal exempel på deconstructing, som kan ge en kompakt och samtidigt läsbar och robust kod.
 
