@@ -1,6 +1,6 @@
 ---
 title: "Undersökning av deconstructing i C#"
-date: 2021-09-10
+date: 2021-09-16
 author: Fredde Johnsson, systemutvecklare
 tagline: "I tidigare post har vi tittat på tuples och hur man kan använda dessa för att returnera flera värden samtidigt utan definiera en klass. I den här posten undersöker vi hur man kan nyttja sk deconstructing för att 'veckla ut' typer på ett smidigt sätt."
 header:
