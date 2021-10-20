@@ -33,4 +33,4 @@ Dom features som han går igenom är följande. Varning! Dom på slutet är en s
 - AsyncMethodBuilder
 - Static abstract members
 
-Vill man läsa om den senaste release-kandidaten av C# 10 så kan man göra det här [Announcing .NET 6 Release Candidate 2](https://devblogs.microsoft.com/dotnet/announcing-net-6-release-candidate-2/).
+Vill man läsa om den senaste release-kandidaten av.NET 6 och C# 10 så kan man göra det här [Announcing .NET 6 Release Candidate 2](https://devblogs.microsoft.com/dotnet/announcing-net-6-release-candidate-2/).
